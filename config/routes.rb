@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # bot 2 news part1
   
   # bot 3 eitango 
+  
+  # bot 4 quizPart1
 
   
   # The priority is based upon order of creation: first created -> highest priority.
