@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   
   # bot 3 eitango 
   
-  # bot 4 quizPart1
+  # bot 4 quizPart1 eng
   
   
   
