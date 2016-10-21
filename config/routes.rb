@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   # bot1 flash anzan
+
+
   
   
   # The priority is based upon order of creation: first created -> highest priority.
