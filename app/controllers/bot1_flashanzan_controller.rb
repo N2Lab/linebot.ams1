@@ -1,6 +1,7 @@
-class Bot1FlashanzanController < ApiController
+require 'line/bot'
+require 'resque'
 
-  require 'line/bot'
+class Bot1FlashanzanController < ApiController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
