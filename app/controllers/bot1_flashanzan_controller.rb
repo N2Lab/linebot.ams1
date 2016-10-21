@@ -4,8 +4,8 @@ class Bot1FlashanzanController < ApiController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-    config.channel_secret = "b093a614227cef8191fb0aad8eeeb0d8"
-    config.channel_token = "G22jOdiQ9AfPOqPB/OdwHsKwotWtFRKbcS3G+KzGZecGLAA0nfdS0zhMcvSduIvzdPC2L2sffP9wvXbmGt0qXyb8zVuhTOQJAKx23XDHNC/3Vyh9er3Ls98J3b9is66dSLanJAMPhrayYIoxYLFnBQdB04t89/1O/w1cDnyilFU="
+      config.channel_secret = "b093a614227cef8191fb0aad8eeeb0d8"
+      config.channel_token = "G22jOdiQ9AfPOqPB/OdwHsKwotWtFRKbcS3G+KzGZecGLAA0nfdS0zhMcvSduIvzdPC2L2sffP9wvXbmGt0qXyb8zVuhTOQJAKx23XDHNC/3Vyh9er3Ls98J3b9is66dSLanJAMPhrayYIoxYLFnBQdB04t89/1O/w1cDnyilFU="
     }
   end
 
@@ -28,6 +28,8 @@ class Bot1FlashanzanController < ApiController
             text: event.message['text']
           }
           client.reply_message(event['replyToken'], message)
+          Resque.enqueue(SendTextWorker, client.channel_secret, clinet.channel_token, event.message['id'], "worker")
+          
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
           response = client.get_message_content(event.message['id'])
           tf = Tempfile.open("content")
@@ -35,6 +37,7 @@ class Bot1FlashanzanController < ApiController
         end
       end
     }
+
   
     render text: "OK"
   end
