@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
   # bot1 flash anzan v1
-  post 'bot1_flashanzan/index'
+  post 'bot1_flashanzan'
   
   # bot 2 news part1
   

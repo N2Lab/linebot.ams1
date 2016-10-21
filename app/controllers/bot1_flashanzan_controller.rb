@@ -38,6 +38,6 @@ class Bot1FlashanzanController < ActionController::Base
       end
     }
   
-    "OK"
+    render text: "OK"
   end
 end
