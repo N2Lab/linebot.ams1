@@ -12,7 +12,8 @@ class Bot1FlashanzanController < ActionController::Base
   end
 
   def index
-    body = request.body.read, {:symbolize_names => true}
+    body = request.body.read
+#    body = request.body.read, {:symbolize_names => true}
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
       error 400 do 'Bad Request' end
