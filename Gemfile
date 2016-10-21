@@ -39,6 +39,8 @@ gem 'sass-rails', '~> 5.0'
 
 gem 'delayed_job_active_record'
 
+gem "resque"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
