@@ -15,6 +15,7 @@ class NewsFeed < ActiveRecord::Base
           Rails.logger.debug("item.title=#{item.title}")
           Rails.logger.debug("item.link=#{item.link}")
           Rails.logger.debug("item.description=#{item.description}")
+          Rails.logger.debug("item.=#{item.inspect}")
         }
       rescue => e
         Rails.logger.error(e)
