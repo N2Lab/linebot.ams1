@@ -16,6 +16,7 @@ class NewsFeed < ActiveRecord::Base
           Rails.logger.debug("item.link=#{item.link}")
           Rails.logger.debug("item.description=#{item.description}")
           Rails.logger.debug("item.=#{item.inspect}")
+          Rails.logger.debug("img url=#{get_img(item.link)}")
         }
       rescue => e
         Rails.logger.error(e)
@@ -23,5 +24,16 @@ class NewsFeed < ActiveRecord::Base
     end
     return result
   end
+  
+  def self.get_img(url)
+     charset = nil
+     html = open(url) do |f|
+       charset = f.charset
+       f.read
+     end
+     doc = Nokogiri::HTML.parse(html, nil, charset)
+     images = doc.xpath("//img[@width>300]/@src")
+     puts images[0].text
+ end
   
 end
