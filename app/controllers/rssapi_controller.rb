@@ -28,6 +28,10 @@ class RssapiController < ApiController
     next_no = send_feed_all.count - 1 if next_no < 0
     next_no = 0 if next_no >= send_feed_all.count
     send_feed = send_feed_all[next_no]
+    
+    if send_feed.blank?
+      return [{ type: 'text', text: "現在配信準備中です。"}]
+    end
 
     # 最後に配信した時間_userごとに 配信noを保存 > 不要か
 #    Attr.save(2, "#{ymd}_#{event['source']['userId']}", 2, next_no, "")    
