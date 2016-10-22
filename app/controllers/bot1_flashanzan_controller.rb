@@ -93,7 +93,40 @@ class Bot1FlashanzanController < ApiController
   
   # 答え合わせ
   def check_answer(event)
-    msg = "あなたの答え→"
+    
+    attr = Attr.get(1, event['source']['userId'], 1)
+    
+    return [{
+            type: 'text',
+            text: "メニューから問題に調整してください。"
+          }] if attr.blank?
+
+    text = event.message['text']
+    
+    # 回答までの秒数
+    qa_sec = (Time.now - attr.updated_at).round
+    
+    # 時間に応じて IQかあなたのレベルを返す
+    lebel_name = "天才"
+    
+    # 正解かどうかを説明
+    input_answer = text.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
+    
+    result_label = "おめでとう！正解"
+    if input_answer.to_i == attr.val
+      # 正解！
+      # TODO 正解までの時間でメッセージを分岐する
+    else
+      # 不正解
+      result_label = "残念 不正解"
+    end
+    
+    msg = "「　#{result_label}　」
+    あなたの答え #{input_answer}
+    問題の答え #{attr.val}
+    あなたの計算力 #{label_name}
+    回答までにかかった時間 #{qa_sec}秒"
+    
     return [
           {
             type: 'text',
