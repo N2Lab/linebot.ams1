@@ -99,8 +99,8 @@ class Bot1FlashanzanController < ApiController
     return [{
             type: 'text',
             text: "<<遊び方>>
-            リッチメニューから問題レベルを選んでください。
-            数字返信されるので合計を計算して入力してください。"
+リッチメニューから問題レベルを選んでください。
+数字が返信されるので合計を計算して入力してください。"
           }] if attr.blank?
 
     text = event.message['text']
@@ -120,26 +120,32 @@ class Bot1FlashanzanController < ApiController
       # 時間毎にメッセージを変える
       if qa_sec < 2.0
         result_label = "正解#￼￼￼！速い！素晴らしい！"
+        label_name = "天才"
       elsif qa_sec < 4.0
-        result_label = "正解！速い！"
+        result_label = "正解！なかなか速い！"
+        label_name = "大人"
       elsif qa_sec <= 5.0 # 
-        result_label = "正解！おめでとう！"
+        result_label = "正解！合格！"
+        label_name = "学生"
       elsif qa_sec <= 10.0 #
-        result_label = "正解"
+        result_label = "正解！もう少し計算してみよう！"
+        label_name = "小学生"
       else 
-        result_label = "正解！"
+        result_label = "正解！もっと早く計算してみよう！"
+        label_name = "おさるさん"
       end
       # TODO 正解までの時間でメッセージを分岐する
     else
       # 不正解
       result_label = "残念 不正解です"
+      label_name = "-"
     end
     
-    msg = "#{[ 0x10006C ].pack( "U*" )}「　#{result_label}　」
-    あなたの答え #{input_answer}
-    問題の答え #{attr.val}
-    あなたの計算力 #{label_name}
-    回答時間 #{qa_sec}秒"
+    msg = "#{em(0x100041)}「　#{result_label}　」
+あなたの答え：#{input_answer}
+問題の答え　：#{attr.val}
+あなたの計算力：#{label_name}
+回答時間：#{qa_sec}秒"
     
     attr.delete
     return [
