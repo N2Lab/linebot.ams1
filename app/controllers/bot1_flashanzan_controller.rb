@@ -76,7 +76,7 @@ class Bot1FlashanzanController < ApiController
     end
     
     # 問題を保存
-    Attr.save(1, event.message['id'], 1, qas.sum, qas.to_s)
+    Attr.save(1, event.source['userId'], 1, qas.sum, qas.to_s)
     
     #配信メッセージ作成
     return [
