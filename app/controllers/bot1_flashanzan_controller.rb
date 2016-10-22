@@ -67,7 +67,7 @@ class Bot1FlashanzanController < ApiController
     # 問題数
     qnums = [3, 5, 10, 10]
     # 桁数 (出題範囲)
-    ketas = [*1..9, *1..9, *1..9, *1..99]
+    ketas = [[*1..9], [*1..9], [*1..9], [*1..99]]
     
     #問題作成
     qas = []
