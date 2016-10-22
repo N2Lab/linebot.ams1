@@ -106,8 +106,8 @@ class Bot1FlashanzanController < ApiController
     # 回答までの秒数
     qa_sec = (Time.now - attr.updated_at).round
     
-    # 時間に応じて IQかあなたのレベルを返す
-    lebel_name = "天才"
+    # 時間に応じて IQかあなたのレベルを返す TODO 総合的に文言を決定する
+    label_name = "天才"
     
     # 正解かどうかを説明
     input_answer = text.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
