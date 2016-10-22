@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   # bot1 flash anzan v1
   post 'bot1_flashanzan/index'
   
-  # bot 2 news part1
+  # bot 2 n2 news
+  post 'bot2_n2news/index'
   
   # bot 3 eitango 
   
