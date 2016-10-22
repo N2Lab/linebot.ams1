@@ -29,7 +29,7 @@ class Bot1FlashanzanController < ApiController
             text: event.message['text']
           }
           client.reply_message(event['replyToken'], message)
-          Resque.enqueue(SendTextWorker, client.channel_secret, clinet.channel_token, event.message['id'], "worker")
+          Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
           
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
           response = client.get_message_content(event.message['id'])
