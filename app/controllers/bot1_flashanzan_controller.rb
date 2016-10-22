@@ -43,7 +43,7 @@ class Bot1FlashanzanController < ApiController
 
     # リッチメニュー選択肢
     BOT1_MENUS = [
-      "1桁5回", "2桁5回", "1桁10回", "2桁10回"
+      "初級", "中級", "上級", "鬼"
     ]
   
   # メインロジック
@@ -65,24 +65,28 @@ class Bot1FlashanzanController < ApiController
     text = event.message['text']
     qtype = BOT1_MENUS.index(text)
     # 問題数
-    qnums = [5, 5, 10, 10]
+    qnums = [3, 5, 10, 10]
     # 桁数 (出題範囲)
-    ketas = [1..9, 1..99, 1..9, 1..99]
+    ketas = [*1..9, *1..9, *1..9, *1..99]
     
-    #問題作成 TODO 
-    qas = [5, 6, 7, 8, 9]
+    #問題作成
+    qas = []
+    qnums[qtype].times do|index|
+      qas << ketas[qtype].sample
+    end
     
     # 問題を保存
+    Attr.save(1, event.message['id'], 1, qas.sum, qas.to_s)
     
     #配信メッセージ作成
     return [
           {
             type: 'text',
-            text: "${text}の問題です。3秒以内に回答してください。"
+            text: "#{text}の問題です。5秒以内に回答してください。"
           },
           {
             type: 'text',
-            text: qas.join("¥n")
+            text: qas.join("\n")
           }
     ]
   end

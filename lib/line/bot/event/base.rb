@@ -23,6 +23,10 @@ module Line
         def [](key)
           @src[key]
         end
+        
+        def mid
+          message['id']
+        end
 
       end
     end
