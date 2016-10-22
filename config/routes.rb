@@ -9,9 +9,15 @@ Rails.application.routes.draw do
   # bot3 n2 news sports
   post 'bot3_n2newssp/index'
   
-  # bot 3 eitango 
+  # bot4 n2 news geinou
+  post 'bot4_n2newsgn/index'
   
-  # bot 4 quizPart1 eng
+  # bot5 n2 news bz
+  post 'bot5_n2newsbz/index'
+  
+  # bot  eitango 
+  
+  # bot  quizPart1 eng
   
   # resque
   mount Resque::Server.new, at: "/resque"
