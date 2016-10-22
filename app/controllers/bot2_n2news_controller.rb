@@ -86,23 +86,23 @@ class Bot2N2newsController < ApiController
     
     # 送信実行 仮
     return [
-      # プレビュー表示されるためのURL配信
-      {
-            type: 'text',
-            text: "コメント1"
-      },
-      {
-            type: 'text',
-            text: "コメント2"
-      },
-      {
-            type: 'text',
-            text: "コメント3"
-      },
-      {
-            type: 'text',
-            text: "コメント4"
-      },
+      # コメント付版は別途開発かも
+      # {
+            # type: 'text',
+            # text: "コメント1"
+      # },
+      # {
+            # type: 'text',
+            # text: "コメント2"
+      # },
+      # {
+            # type: 'text',
+            # text: "コメント3"
+      # },
+      # {
+            # type: 'text',
+            # text: "コメント4"
+      # },
       # 操作配信 TODO 引用元
       {
         "type": "template",

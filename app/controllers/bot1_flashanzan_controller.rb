@@ -55,15 +55,13 @@ class Bot1FlashanzanController < ApiController
       # 新規問題配信
       return create_qa(event)
     else
-      # 答え合わせ
+      # 答え合わせ or 再配信
       return check_answer(event)
     end
   end
   
   # 問題新規作成配信
-  def create_qa(event)
-    text = event.message['text']
-    qtype = BOT1_MENUS.index(text)
+  def create_qa_by_qtype(event, qtype)
     # 問題数
     qnums = [3, 5, 10, 10]
     # 桁数 (出題範囲)
@@ -77,6 +75,8 @@ class Bot1FlashanzanController < ApiController
     
     # 問題を保存
     Attr.save(1, event['source']['userId'], 1, qas.sum, qas.to_s)
+    # 最終問題のレベルを保存
+    Attr.save(1, event['source']['userId'], 2, qtype, "")
     
     #配信メッセージ作成
     return [
@@ -91,18 +91,33 @@ class Bot1FlashanzanController < ApiController
     ]
   end
   
+  # 問題新規作成配信
+  def create_qa(event)
+    text = event.message['text']
+    qtype = BOT1_MENUS.index(text)
+    create_qa_by_qtype(event, qtype)
+  end
+  
   # 答え合わせ
   def check_answer(event)
     
     attr = Attr.get(1, event['source']['userId'], 1)
     
-    return [{
+    if attr.blank?
+      last_qtype_attr = Attr.get(1, event['source']['userId'], 2)
+      
+      # 最後出題した記録があれば過去のレベルで再出題
+      return create_qa_by_qtype(event, last_qtype_attr.val) unless last_qtype_attr.blank?
+      
+      # 初回
+      return [{
             type: 'text',
             text: "<<遊び方>>
 リッチメニューから問題レベルを選んでください。
 数字が返信されるので合計を計算して入力してください。"
-          }] if attr.blank?
-
+          }]
+      
+    end
     text = event.message['text']
     
     # 回答までの秒数 (xx.x sec)
@@ -128,7 +143,7 @@ class Bot1FlashanzanController < ApiController
         result_label = "正解！合格！"
         label_name = "学生"
       elsif qa_sec <= 10.0 #
-        result_label = "正解！もう少し計算してみよう！"
+        result_label = "正解！5秒以内を目指して計算してみよう！"
         label_name = "小学生"
       else 
         result_label = "正解！もっと早く計算してみよう！"
@@ -145,7 +160,8 @@ class Bot1FlashanzanController < ApiController
 あなたの答え：#{input_answer}
 問題の答え　：#{attr.val}
 あなたの計算力：#{label_name}
-回答時間：#{qa_sec}秒"
+回答時間：#{qa_sec}秒
+何かメッセージを送って次の問題に挑戦しよう！"
     
     attr.delete
     return [
