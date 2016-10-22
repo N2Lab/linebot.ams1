@@ -16,6 +16,12 @@ class RssapiController < ApiController
     ymdh = DateTime.now.strftime("%Y%m%d%H")
     
     attr = Attr.get(bot_id, ymdh, 1) # 記事データ
+    if attr.blank?
+      create_news_by_bot_id(bot_id, ymdh) # ニュースがなければ再構築
+      attr = Attr.get(bot_id, ymdh, 1)  # 再取得
+      next_no = 0 # 先頭から
+    end
+    
     send_feed_all = eval(attr.text) # 送信対象 TODO 最後チェック
     
     # next_no が配列の範囲内であること
