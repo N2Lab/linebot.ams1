@@ -16,6 +16,7 @@ class Attr < ActiveRecord::Base
       # 新規作成時に行いたい処理を記述
       obj.save!
     end
+    return obj
   end
   
   def self.save(bot_id, mid, no, val, text)
