@@ -119,6 +119,10 @@ class Bot2N2newsController < ApiController
     # 最後に配信した時間_userごとに 配信noを保存 > 不要か
 #    Attr.save(2, "#{ymd}_#{event['source']['userId']}", 2, next_no, "")    
     
+    # 本文
+    text = "「#{send_feed[:title]}」
+#{send_feed[:desc]}
+#{send_feed[:nf_title]} - #{send_feed[:dt]}"
     # 送信実行 仮
     return [
       # コメント付版は別途開発かも
@@ -144,7 +148,7 @@ class Bot2N2newsController < ApiController
         "altText": send_feed[:title],
         "template": {
             "type": "confirm",
-            "text": send_feed[:title],
+            "text": text,
             "actions": [
                 {
                   "type": "postback",
