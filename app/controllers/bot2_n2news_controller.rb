@@ -74,8 +74,8 @@ class Bot2N2newsController < ApiController
     # news array
     news = NewsFeed.get_news_hash_array()
     
-    # ニュース作成 TODO 
-#    Attr.save(2, ymdh, 1, 0, news.to_s)
+    # ニュース作成保存
+    Attr.save(2, ymdh, 1, 0, news.to_s)
   end
   
   # 次の記事を配信

@@ -15,8 +15,14 @@ class NewsFeed < ActiveRecord::Base
           Rails.logger.debug("item.title=#{item.title}")
           Rails.logger.debug("item.link=#{item.link}")
           Rails.logger.debug("item.description=#{item.description}")
-          Rails.logger.debug("item.=#{item.inspect}")
-          Rails.logger.debug("img url=#{get_img(item.link).inspect}")
+#          Rails.logger.debug("item.=#{item.inspect}")
+#          Rails.logger.debug("img url=#{get_img(item.link).inspect}")
+          result << {
+            :title => item.title,
+            :link => item.link,
+            :desc => item.description,
+            :dt => item.pubDate.strftime("%Y-%m-%d %H:%M:%S")
+          }
         }
       rescue => e
         Rails.logger.error(e)
@@ -24,7 +30,8 @@ class NewsFeed < ActiveRecord::Base
     end
     return result
   end
-  
+
+  # 画像は厳しそう 一旦なし 
   def self.get_img(url)
      charset = nil
      html = open(url) do |f|
