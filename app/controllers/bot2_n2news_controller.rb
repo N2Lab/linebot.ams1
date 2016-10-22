@@ -46,14 +46,25 @@ class Bot2N2newsController < ApiController
     BOT2_MENUS = ["今日のニュース", "次へ"]
   
   # メインロジック (postback)
+  # ユーザーのアクションに応じて記事を配信
   def execute_for_postback_event(event)
     postback = event["postback"]
     Rails.logger.debug("postback = #{postback.inspect}")
+    
+    data_hash = eval(postback)
+    
+    Rails.logger.debug("data_hash = #{data_hash.inspect}")
     
     return [ {
              type: 'text',
              text: postback.to_s
       }]
+      
+    # current_no = -1 # 初期値
+    # next_no = current_no + 1
+# 
+    # send_news_by_last_no(event, next_no)
+      
   end
   
   # メインロジック (テキストメッセージ)
@@ -81,13 +92,10 @@ class Bot2N2newsController < ApiController
     send_next_news(event)
   end
   
-  # 現在日時の次のニュースを配信
-  def send_next_news(event)
+  #  現在日時の指定noのニュースを配信
+  # last_no = 最終配信no
+  def send_news_by_last_no(event, next_no)
     
-    # TODO 番号は仮
-    
-    current_no = -1
-    next_no = current_no + 1
     ymdh = DateTime.now.strftime("%Y%m%d%H")
     
     attr = Attr.get(2, ymdh, 1)
@@ -145,7 +153,15 @@ class Bot2N2newsController < ApiController
         }
       }
     ]
+  end
     
+  
+  # 現在日時の次のニュースを配信
+  def send_next_news(event)
+    current_no = -1 # 初期値
+    next_no = current_no + 1
+
+    send_news_by_last_no(event, next_no)
   end
   
   # 現在時でニュース作成
@@ -154,7 +170,7 @@ class Bot2N2newsController < ApiController
     # news array
     news = NewsFeed.get_news_hash_array()
     
-    # ニュース作成保存
+    # ニュース保存
     Attr.save(2, ymdh, 1, 0, news.to_s)
   end
   
