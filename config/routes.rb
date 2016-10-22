@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post 'bot2_n2news/index'
   
   # bot3 n2 news sports
-  post 'bot2_n2newssp/index'
+  post 'bot3_n2newssp/index'
   
   # bot 3 eitango 
   
