@@ -18,6 +18,7 @@ class NewsFeed < ActiveRecord::Base
 #          Rails.logger.debug("item.=#{item.inspect}")
 #          Rails.logger.debug("img url=#{get_img(item.link).inspect}")
           result << {
+            :nf_title => nf.title,
             :title => item.title,
             :link => item.link,
             :desc => item.description,

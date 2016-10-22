@@ -63,8 +63,47 @@ class Bot2N2newsController < ApiController
     ymdh = DateTime.now.strftime("%Y%m%d%H")
     attr = Attr.get(2, ymdh, 1)
     create_news(ymdh) if attr.blank?
-    attr = Attr.get(2, ymdh, 1)
+
+    # 先頭を配信
+    send_next_news(event)
+  end
+  
+  # 現在日時の次のニュースを配信
+  def send_next_news(event)
     
+    # TODO 番号は仮
+    
+    current_no = -1
+    next_no = current_no + 1
+    
+    attr = Attr.get(2, ymdh, 1)
+    send_feed = attr[next_no] # 送信対象
+    
+    # 送信実行 仮
+    return [
+      {
+        "type": "template",
+        "altText": "このメッセージはLINE最新バージョンでご確認ください。",
+        "template": {
+            "type": "confirm",
+            "text": "Are you sure?",
+            "actions": [
+                {
+                  "type": "postback",
+                  "label": "前のニュースへ",
+                  "text": "前へ",
+                  "data": "111"
+                },
+                {
+                  "type": "postback",
+                  "label": "次のニュースへ",
+                  "text": "次へ",
+                  "data": "111"
+                }
+            ]
+        }
+      }
+    ]
     
   end
   
@@ -76,11 +115,6 @@ class Bot2N2newsController < ApiController
     
     # ニュース作成保存
     Attr.save(2, ymdh, 1, 0, news.to_s)
-  end
-  
-  # 次の記事を配信
-  def send_next_news(event)
-    
   end
   
 
