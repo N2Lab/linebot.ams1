@@ -16,7 +16,7 @@ default: &default
 
 development:
   <<: *default
-  database: ams1
+  database: bot1
   username: root
   password: ep82130
   host: localhost
@@ -30,7 +30,7 @@ test:
 
 production:
   <<: *default
-  database: ams1
+  database: bot1
   username: root
   password: ep82130
   host: localhost
