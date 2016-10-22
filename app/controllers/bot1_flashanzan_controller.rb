@@ -98,35 +98,50 @@ class Bot1FlashanzanController < ApiController
     
     return [{
             type: 'text',
-            text: "メニューから問題に調整してください。"
+            text: "<<遊び方>>
+            リッチメニューから問題レベルを選んでください。
+            数字返信されるので合計を計算して入力してください。"
           }] if attr.blank?
 
     text = event.message['text']
     
-    # 回答までの秒数
-    qa_sec = (Time.now - attr.updated_at).round
+    # 回答までの秒数 (xx.x sec)
+    qa_sec = (Time.now - attr.updated_at).round(1)
     
-    # 時間に応じて IQかあなたのレベルを返す TODO 総合的に文言を決定する
+    # 時間に応じて IQかあなたのレベルを返す TODO 総合的に文言を決定する TODO 絵文字も使う
     label_name = "天才"
     
     # 正解かどうかを説明
     input_answer = text.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
     
-    result_label = "おめでとう！正解"
+    result_label = "おめでとう！正解です"
     if input_answer.to_i == attr.val
       # 正解！
+      # 時間毎にメッセージを変える
+      if qa_sec < 2.0
+        result_label = "正解#￼￼￼！速い！素晴らしい！"
+      elsif qa_sec < 4.0
+        result_label = "正解！速い！"
+      elsif qa_sec <= 5.0 # 
+        result_label = "正解！おめでとう！"
+      elsif qa_sec <= 10.0 #
+        result_label = "正解"
+      else 
+        result_label = "正解！"
+      end
       # TODO 正解までの時間でメッセージを分岐する
     else
       # 不正解
-      result_label = "残念 不正解"
+      result_label = "残念 不正解です"
     end
     
-    msg = "「　#{result_label}　」
+    msg = "#{[ 0x10006C ].pack( "U*" )}「　#{result_label}　」
     あなたの答え #{input_answer}
     問題の答え #{attr.val}
     あなたの計算力 #{label_name}
-    回答までにかかった時間 #{qa_sec}秒"
+    回答時間 #{qa_sec}秒"
     
+    attr.delete
     return [
           {
             type: 'text',
