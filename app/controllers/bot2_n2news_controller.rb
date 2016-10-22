@@ -33,6 +33,8 @@ class Bot2N2newsController < ApiController
           tf = Tempfile.open("content")
           tf.write(response.body)
         end
+      when Line::Bot::Event::Postback # 次へ など選択
+        client.reply_message(event['replyToken'], execute_for_postback_event(event))
       end
     }
 
@@ -43,7 +45,18 @@ class Bot2N2newsController < ApiController
     # リッチメニュー選択肢
     BOT2_MENUS = ["今日のニュース", "次へ"]
   
-  # メインロジック
+  # メインロジック (postback)
+  def execute_for_postback_event(event)
+    postback = event["postback"]
+    Rails.logger.debug("postback = #{postback.inspect}")
+    
+    return [ {
+             type: 'text',
+             text: postback.to_s
+      }]
+  end
+  
+  # メインロジック (テキストメッセージ)
   def execute(event)
     #状態によって分岐
     text = event.message['text']
