@@ -56,7 +56,7 @@ class Bot2N2newsController < RssapiController
     # postback = {"data"=>"{:next_no=>\"1\", :ymdh=>\"2016102307\"}"}
     
     data = eval(postback["data"])
-    # Rails.logger.debug("data = #{data.inspect}")
+    Rails.logger.debug("data = #{data.inspect}")
     next_no = data[:next_no].to_i
     
     send_news_by_next_no(event, next_no)
