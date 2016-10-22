@@ -53,7 +53,7 @@ class Bot2N2newsController < ApiController
     Rails.logger.debug("postback.class = #{postback.class}")
     # postback = {"data"=>"{:next_no=>\"1\", :ymdh=>\"2016102307\"}"}
     
-    data = postback["data"]
+    data = eval(postback["data"])
     Rails.logger.debug("data = #{data.inspect}")
     next_no = data[:next_no].to_i
     
