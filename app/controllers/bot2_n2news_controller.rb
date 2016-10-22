@@ -42,8 +42,8 @@ class Bot2N2newsController < ApiController
     render text: "OK"
   end
 
-    # リッチメニュー選択肢
-    BOT2_MENUS = ["今日のニュース", "次へ"]
+    # 無視KWリスト
+    BOT2_MENUS = ["前へ", "読む", "次へ"]
   
   # メインロジック (postback)
   # ユーザーのアクションに応じて記事を配信
@@ -82,8 +82,9 @@ class Bot2N2newsController < ApiController
     text = event.message['text']
     
     if (BOT2_MENUS.include?(text))
-      # 次の記事へ
-      return send_next_news(event)
+      # 何もしない
+      return []
+#      return send_next_news(event)
     else
       # 作成へ
       return send_today_top_news(event)
