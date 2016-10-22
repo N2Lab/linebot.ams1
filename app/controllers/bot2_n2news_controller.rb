@@ -128,8 +128,7 @@ class Bot2N2newsController < ApiController
                   "type": "postback",
                   "label": "前へ",
                   "text": "前へ",
-                  "next_no": (next_no-1).to_s,
-                  "ymdh": ymdh
+                  "data": {:next_no => (next_no-1).to_s, :ymdh => ymdh}.to_s
                 },
                 {
                   "type": "uri",
@@ -140,8 +139,7 @@ class Bot2N2newsController < ApiController
                   "type": "postback",
                   "label": "次へ",
                   "text": "次へ",
-                  "next_no": (next_no+1).to_s,
-                  "ymdh": ymdh
+                  "data": {:next_no => (next_no+1).to_s, :ymdh => ymdh}.to_s
                 }
             ]
         }
