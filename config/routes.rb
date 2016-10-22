@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   
   # bot 4 quizPart1 eng
   
+  # resque
+  mount Resque::Server.new, at: "/resque"
   
   
   # root 'welcome#index'
