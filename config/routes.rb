@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   # bot 2 n2 news
   post 'bot2_n2news/index'
   
+  # bot3 n2 news sports
+  post 'bot2_n2newssp/index'
+  
   # bot 3 eitango 
   
   # bot 4 quizPart1 eng
