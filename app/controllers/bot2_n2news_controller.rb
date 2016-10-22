@@ -50,15 +50,22 @@ class Bot2N2newsController < ApiController
   def execute_for_postback_event(event)
     postback = event["postback"]
     Rails.logger.debug("postback = #{postback.inspect}")
+    # postback = {"data"=>"{:next_no=>\"1\", :ymdh=>\"2016102307\"}"}
     
-    data_hash = eval(postback)
+    data = postback["data"]
+    next_no = data[:next_no].to_i
     
-    Rails.logger.debug("data_hash = #{data_hash.inspect}")
-    
-    return [ {
-             type: 'text',
-             text: postback.to_s
-      }]
+    send_news_by_next_no(event, next_no)
+    # next_no = if next_no < 0
+#     
+    # data_hash = eval(postback)
+#     
+    # Rails.logger.debug("data_hash = #{data_hash.inspect}")
+#     
+    # return [ {
+             # type: 'text',
+             # text: postback.to_s
+      # }]
       
     # current_no = -1 # 初期値
     # next_no = current_no + 1
@@ -94,16 +101,20 @@ class Bot2N2newsController < ApiController
   
   #  現在日時の指定noのニュースを配信
   # last_no = 最終配信no
-  def send_news_by_last_no(event, next_no)
+  def send_news_by_next_no(event, next_no)
     
     ymdh = DateTime.now.strftime("%Y%m%d%H")
     
-    attr = Attr.get(2, ymdh, 1)
+    attr = Attr.get(2, ymdh, 1) # 記事データ
     send_feed_all = eval(attr.text) # 送信対象 TODO 最後チェック
     
+    # next_no が配列の範囲内であること
+    next_no = send_feed_all.count - 1 if next_no < 0
+    next_no = 0 if next_no >= send_feed_all.count
     send_feed = send_feed_all[next_no]
-    
-    Rails.logger.debug("send_feed=#{send_feed.inspect}")
+
+    # 最後に配信した時間_userごとに 配信noを保存 > 不要か
+#    Attr.save(2, "#{ymd}_#{event['source']['userId']}", 2, next_no, "")    
     
     # 送信実行 仮
     return [
@@ -161,7 +172,7 @@ class Bot2N2newsController < ApiController
     current_no = -1 # 初期値
     next_no = current_no + 1
 
-    send_news_by_last_no(event, next_no)
+    send_news_by_next_no(event, next_no)
   end
   
   # 現在時でニュース作成
