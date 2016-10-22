@@ -24,16 +24,7 @@ class Bot1FlashanzanController < ApiController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = [
-            {
-            type: 'text',
-            text: event.message['text']
-          },
-            {
-            type: 'text',
-            text: event.message['text']
-          }
-          ]
+          message = execute(event)
           client.reply_message(event['replyToken'], message)
           # 下記はプロプランのみ
           # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
@@ -49,4 +40,62 @@ class Bot1FlashanzanController < ApiController
   
     render text: "OK"
   end
+
+    # リッチメニュー選択肢
+    BOT1_MENUS = [
+      "1桁5回", "2桁5回", "1桁10回", "2桁10回"
+    ]
+  
+  # メインロジック
+  def execute(event)
+    #状態によって分岐
+    text = event.message['text']
+    
+    if (BOT1_MENUS.include?(text))
+      # 新規問題配信
+      return create_qa(event)
+    else
+      # 答え合わせ
+      return check_answer(event)
+    end
+  end
+  
+  # 問題新規作成配信
+  def create_qa(event)
+    text = event.message['text']
+    qtype = BOT1_MENUS.index(text)
+    # 問題数
+    qnums = [5, 5, 10, 10]
+    # 桁数 (出題範囲)
+    ketas = [1..9, 1..99, 1..9, 1..99]
+    
+    #問題作成 TODO 
+    qas = [5, 6, 7, 8, 9]
+    
+    # 問題を保存
+    
+    #配信メッセージ作成
+    return [
+          {
+            type: 'text',
+            text: "${text}の問題です。3秒以内に回答してください。"
+          },
+          {
+            type: 'text',
+            text: qas.join("¥n")
+          }
+    ]
+  end
+  
+  # 答え合わせ
+  def check_answer(event)
+    msg = "あなたの答え→"
+    return [
+          {
+            type: 'text',
+            text: msg
+          }
+    ]
+  end
+
 end
