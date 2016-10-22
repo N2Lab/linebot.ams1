@@ -87,17 +87,22 @@ class Bot2N2newsController < ApiController
         "altText": "このメッセージはLINE最新バージョンでご確認ください。",
         "template": {
             "type": "confirm",
-            "text": "Are you sure?",
+            "text": send_feed[:title],
             "actions": [
                 {
                   "type": "postback",
-                  "label": "前のニュースへ",
+                  "label": "前へ",
                   "text": "前へ",
                   "data": "111"
                 },
                 {
+                  "type": "uri",
+                  "label": "読む",
+                  "uri": send_feed[:link]
+                },
+                {
                   "type": "postback",
-                  "label": "次のニュースへ",
+                  "label": "次へ",
                   "text": "次へ",
                   "data": "111"
                 }
