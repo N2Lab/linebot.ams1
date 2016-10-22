@@ -122,7 +122,7 @@ class Bot2N2newsController < ApiController
     # 本文
     text = "「#{send_feed[:title]}」
 #{send_feed[:desc]}
-#{send_feed[:nf_title]} - #{helper.time_ago_in_words(DateTime.parse(send_feed[:dt]))}"
+#{send_feed[:nf_title]} - #{view_context.time_ago_in_words(DateTime.parse(send_feed[:dt]))}"
     # 送信実行 仮
     return [
       # コメント付版は別途開発かも
