@@ -128,7 +128,8 @@ class Bot2N2newsController < ApiController
                   "type": "postback",
                   "label": "前へ",
                   "text": "前へ",
-                  "data": (next_no-1).to_s
+                  "next_no": (next_no-1).to_s,
+                  "ymdh" : ymdh
                 },
                 {
                   "type": "uri",
@@ -139,7 +140,8 @@ class Bot2N2newsController < ApiController
                   "type": "postback",
                   "label": "次へ",
                   "text": "次へ",
-                  "data": (next_no+1).to_s
+                  "next_no": (next_no+1).to_s,
+                  "ymdh" : ymdh
                 }
             ]
         }
