@@ -100,6 +100,6 @@ class Bot3N2newsspController < RssapiController
   
   # 現在時でニュース作成
   def create_news(ymdh)
-    create_news_by_bot_id(BOT_ID)
+    create_news_by_bot_id(BOT_ID, ymdh)
   end
 end

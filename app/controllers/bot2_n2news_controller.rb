@@ -187,7 +187,7 @@ class Bot2N2newsController < RssapiController
   
   # 現在時でニュース作成
   def create_news(ymdh)
-    create_news_by_bot_id(BOT_ID)
+    create_news_by_bot_id(BOT_ID, ymdh)
     # # news array
     # news = NewsFeed.get_news_hash_array()
 #     
