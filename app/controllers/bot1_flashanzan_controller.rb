@@ -24,12 +24,19 @@ class Bot1FlashanzanController < ApiController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
+          message = [
+            {
+            type: 'text',
+            text: event.message['text']
+          },
+            {
             type: 'text',
             text: event.message['text']
           }
+          ]
           client.reply_message(event['replyToken'], message)
-          Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
+          # 下記はプロプランのみ
+          # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
           
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
           response = client.get_message_content(event.message['id'])

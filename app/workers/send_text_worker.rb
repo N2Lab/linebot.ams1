@@ -1,3 +1,5 @@
+# テキストメッセージをPush APIで配信
+# 要プロプラン
 class SendTextWorker
   @queue = :default # queue名を指定
 
