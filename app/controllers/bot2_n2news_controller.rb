@@ -86,9 +86,15 @@ class Bot2N2newsController < ApiController
     
     # 送信実行 仮
     return [
+      # プレビュー表示されるためのURL配信
+      {
+            type: 'text',
+            text: send_feed[:link]
+      },
+      # 操作配信 TODO 引用元
       {
         "type": "template",
-        "altText": "このメッセージはLINE最新バージョンでご確認ください。",
+        "altText": send_feed[:title],
         "template": {
             "type": "confirm",
             "text": send_feed[:title],
@@ -97,7 +103,7 @@ class Bot2N2newsController < ApiController
                   "type": "postback",
                   "label": "前へ",
                   "text": "前へ",
-                  "data": "111"
+                  "data": (next_no-1).to_s
                 },
                 {
                   "type": "uri",
@@ -108,7 +114,7 @@ class Bot2N2newsController < ApiController
                   "type": "postback",
                   "label": "次へ",
                   "text": "次へ",
-                  "data": "111"
+                  "data": (next_no+1).to_s
                 }
             ]
         }
