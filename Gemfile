@@ -40,6 +40,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'delayed_job_active_record'
 
 gem "resque"
+gem "resque-scheduler"
 
 gem "bigdecimal"
 
