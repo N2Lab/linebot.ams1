@@ -62,6 +62,11 @@ class Bot1FlashanzanController < ApiController
   
   # 問題新規作成配信
   def create_qa_by_qtype(event, qtype)
+    text = event.message['text']
+    
+    # レベル名
+    qtype_name = BOT1_MENUS[qtype]
+    
     # 問題数
     qnums = [3, 5, 10, 10]
     # 桁数 (出題範囲)
@@ -82,7 +87,7 @@ class Bot1FlashanzanController < ApiController
     return [
           {
             type: 'text',
-            text: "#{text}の問題です。5秒以内に回答してください。"
+            text: "#{qtype_name}の問題です。5秒以内に回答してください。"
           },
           {
             type: 'text',
