@@ -8,7 +8,7 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: 5
-  username: root
+  username: ams1
   password: ep82130
   socket: /var/lib/mysql/mysql.sock
   local_infile: true
@@ -17,7 +17,7 @@ default: &default
 development:
   <<: *default
   database: bot1
-  username: root
+  username: ams1
   password: ep82130
   host: localhost
 
@@ -31,6 +31,6 @@ test:
 production:
   <<: *default
   database: bot1
-  username: root
+  username: ams1
   password: ep82130
   host: localhost
