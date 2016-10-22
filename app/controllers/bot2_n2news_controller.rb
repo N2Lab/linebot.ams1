@@ -50,9 +50,11 @@ class Bot2N2newsController < ApiController
   def execute_for_postback_event(event)
     postback = event["postback"]
     Rails.logger.debug("postback = #{postback.inspect}")
+    Rails.logger.debug("postback.class = #{postback.class}")
     # postback = {"data"=>"{:next_no=>\"1\", :ymdh=>\"2016102307\"}"}
     
     data = postback["data"]
+    Rails.logger.debug("data = #{data.inspect}")
     next_no = data[:next_no].to_i
     
     send_news_by_next_no(event, next_no)
