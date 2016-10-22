@@ -75,9 +75,10 @@ class Bot2N2newsController < ApiController
     
     current_no = -1
     next_no = current_no + 1
+    ymdh = DateTime.now.strftime("%Y%m%d%H")
     
     attr = Attr.get(2, ymdh, 1)
-    send_feed = attr[next_no] # 送信対象
+    send_feed = attr[next_no] # 送信対象 TODO 最後チェック
     
     # 送信実行 仮
     return [
