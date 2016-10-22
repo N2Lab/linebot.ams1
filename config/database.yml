@@ -13,7 +13,9 @@ default: &default
   socket: /var/lib/mysql/mysql.sock
   local_infile: true
   reconnect: true
-
+  variables:
+    sql_mode: :default
+    
 development:
   <<: *default
   database: bot1
