@@ -1,4 +1,4 @@
-class Bot2N2newsspController < RssapiController
+class Bot3N2newsspController < RssapiController
 
   require 'line/bot'
   
