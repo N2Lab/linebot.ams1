@@ -89,7 +89,19 @@ class Bot2N2newsController < ApiController
       # プレビュー表示されるためのURL配信
       {
             type: 'text',
-            text: send_feed[:link]
+            text: "コメント1"
+      },
+      {
+            type: 'text',
+            text: "コメント2"
+      },
+      {
+            type: 'text',
+            text: "コメント3"
+      },
+      {
+            type: 'text',
+            text: "コメント4"
       },
       # 操作配信 TODO 引用元
       {
