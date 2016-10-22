@@ -78,7 +78,9 @@ class Bot2N2newsController < ApiController
     ymdh = DateTime.now.strftime("%Y%m%d%H")
     
     attr = Attr.get(2, ymdh, 1)
-    send_feed = eval(attr.text) # 送信対象 TODO 最後チェック
+    send_feed_all = eval(attr.text) # 送信対象 TODO 最後チェック
+    
+    send_feed = send_feed_all[next_no]
     
     Rails.logger.debug("send_feed=#{send_feed.inspect}")
     
