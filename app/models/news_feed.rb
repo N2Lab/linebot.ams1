@@ -17,12 +17,13 @@ class NewsFeed < ActiveRecord::Base
           Rails.logger.debug("item.description=#{item.description}")
 #          Rails.logger.debug("item.=#{item.inspect}")
 #          Rails.logger.debug("img url=#{get_img(item.link).inspect}")
+          dt = item.pubDate.blank? ? "" : item.pubDate.strftime("%Y-%m-%d %H:%M:%S")
           result << {
             :nf_title => nf.title,
             :title => item.title,
             :link => item.link,
             :desc => item.description,
-            :dt => item.pubDate.strftime("%Y-%m-%d %H:%M:%S")
+            :dt => dt
           }
         }
       rescue => e
