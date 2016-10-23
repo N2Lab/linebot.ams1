@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   # bot6 n2 news IT
   post 'bot6_n2newsit/index'
   
+  # bot7 n2 matome
+  post 'bot7_n2matome/index'
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
