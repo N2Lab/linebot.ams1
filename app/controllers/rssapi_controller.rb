@@ -29,6 +29,9 @@ class RssapiController < ApiController
     next_no = 0 if next_no >= send_feed_all.count
     send_feed = send_feed_all[next_no]
     
+    Rails.logger.debug("send_feed = #{send_feed}")
+    Rails.logger.debug("send_feed = #{send_feed.inspect}")
+    
     if send_feed.blank?
       return [{ type: 'text', text: "現在配信準備中です。"}]
     end
@@ -37,6 +40,8 @@ class RssapiController < ApiController
 #    Attr.save(2, "#{ymd}_#{event['source']['userId']}", 2, next_no, "")    
     
     # 本文
+    begin
+      
     text = "「#{send_feed[:title]}」
 #{send_feed[:desc]}
 #{send_feed[:nf_title]} - #{view_context.time_ago_in_words(DateTime.parse(send_feed[:dt]))}前"
@@ -88,5 +93,9 @@ class RssapiController < ApiController
         }
       }
     ]
+    
+    rescue => e
+      Rails.logger.error(e)
+    end
   end
 end
