@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   # bot7 n2 matome
   post 'bot7_n2matome/index'
   
+  # bot8 n2 asiato
+  post 'bot8_n2asiato/index'
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
