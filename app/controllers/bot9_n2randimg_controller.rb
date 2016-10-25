@@ -50,7 +50,7 @@ class Bot9N2randimgController < ApplicationController
       end
     }
     
-    Rails.logger.debug("response=#{response.inspect}")
+    Rails.logger.debug("response=#{response.code} #{response.body}")
   
     render text: "OK"
   end
