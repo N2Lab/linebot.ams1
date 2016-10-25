@@ -66,7 +66,7 @@ class Bot9N2randimgController < ApplicationController
     img = image_list.first
     image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
     
-    return [
+    message = 
       {
   type: "template",
   altText: "this is a buttons template",
@@ -94,8 +94,9 @@ class Bot9N2randimgController < ApplicationController
       ]
   }
 }
-    ]
     
+    Rails.logger.debug("message=#{message.inspect}")
+    return message    
     # カルーセルの場合 ... うまく動作しないのでやめる
     # テンプレートメッセージのカルーセルで返す
 #    columns = []
