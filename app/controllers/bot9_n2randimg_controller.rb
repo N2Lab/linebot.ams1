@@ -54,17 +54,19 @@ class Bot9N2randimgController < ApplicationController
 
   # メインロジック (テキストメッセージ)
   def execute_text(event)
-    text = event.message['text']
+#    text = event.message['text']
 
     image_list = get_random_image_list()
     # [{"id":"5AX","ext":"jpg","height":219,"width":333,"source_url":"http://mar.2chan.net/jun/b/src/1343375952522.jpg"},
       # {"id":"sg","ext":"jpg","height":531,"width":419,"source_url":"http://feb.2chan.net/jun/b/src/1258964461577.jpg"},
     
+    Rails.logger.debug("image_list=#{image_list.inspect}")
     # テンプレートメッセージのカルーセルで返す
     columns = []
     
     image_list[0,4].each do |img|
       image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
+      Rails.logger.debug("add image_url=#{image_url}")
       columns << {
             thumbnailImageUrl: image_url,
             title: "おすすめネタ画像です！",
@@ -88,12 +90,16 @@ class Bot9N2randimgController < ApplicationController
       type: "carousel",
       columns: columns
     }
+
     
-    {
+    message = {
       type: "template",
       altText: "ネタ画像です！",
       template: template
     }
+    Rails.logger.debug("message=#{message.inspect}")
+
+    return message
     
     # # 以前のメッセージを取得
     # attr = Attr.get(BOT_ID, "last_msg", 1)
