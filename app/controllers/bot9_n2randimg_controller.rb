@@ -93,7 +93,7 @@ class Bot9N2randimgController < ApplicationController
       type: "buttons",
       thumbnailImageUrl: image_url,
       title: "おすすめネタ画像です！",
-      text: "",
+      text: image_url,
       actions: [
           {
             type: "postback",
