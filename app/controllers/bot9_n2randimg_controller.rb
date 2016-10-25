@@ -86,6 +86,8 @@ class Bot9N2randimgController < ApplicationController
         # }        
     # end
     
+    img = image_list.first
+    image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
           columns = [ {
             thumbnailImageUrl: image_url,
             title: "おすすめネタ画像です！",
