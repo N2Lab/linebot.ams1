@@ -64,7 +64,7 @@ class Bot9N2randimgController < ApplicationController
     # テンプレートメッセージのカルーセルで返す
     columns = []
     
-    image_list[0,0].each do |img|
+    image_list[0,1].each do |img|
       image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
       Rails.logger.debug("add image_url=#{image_url}")
       columns << {
