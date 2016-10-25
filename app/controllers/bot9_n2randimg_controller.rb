@@ -29,13 +29,14 @@ class Bot9N2randimgController < ApplicationController
     end
   
     events = client.parse_events_from(body)
+    response = nil
     events.each { |event|
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
           message = execute_text(event)
-          client.reply_message(event['replyToken'], message)
+          response = client.reply_message(event['replyToken'], message)
           # 下記はプロプランのみ
           # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
           
@@ -45,9 +46,11 @@ class Bot9N2randimgController < ApplicationController
           tf.write(response.body)
         end
       when Line::Bot::Event::Postback # 他の画像
-        client.reply_message(event['replyToken'], execute_text(event))
+        response = client.reply_message(event['replyToken'], execute_text(event))
       end
     }
+    
+    Rails.logger.debug("response=#{response.inspect}")
   
     render text: "OK"
   end
