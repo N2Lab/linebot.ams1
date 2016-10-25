@@ -56,12 +56,13 @@ class Bot9N2randimgController < ApplicationController
   def execute_text(event)
 #    text = event.message['text']
 
-    return [
-          {
-            type: 'text',
-            text: "テスト"
-          }
-    ]
+    # OK
+    # return [
+          # {
+            # type: 'text',
+            # text: "テスト"
+          # }
+    # ]
 
 
     image_list = get_random_image_list()
@@ -75,6 +76,7 @@ class Bot9N2randimgController < ApplicationController
     image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
     
     message = 
+    [
       {
   type: "template",
   altText: "this is a buttons template",
@@ -101,7 +103,7 @@ class Bot9N2randimgController < ApplicationController
           }
       ]
   }
-}
+}]
     
     Rails.logger.debug("message=#{message.inspect}")
     return message    
