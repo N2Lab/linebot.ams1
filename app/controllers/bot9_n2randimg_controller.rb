@@ -78,9 +78,9 @@ class Bot9N2randimgController < ApplicationController
     # [{"id":"5AX","ext":"jpg","height":219,"width":333,"source_url":"http://mar.2chan.net/jun/b/src/1343375952522.jpg"},
       # {"id":"sg","ext":"jpg","height":531,"width":419,"source_url":"http://feb.2chan.net/jun/b/src/1258964461577.jpg"},
     
-    Rails.logger.debug("image_list=#{image_list.inspect}")
+#    Rails.logger.debug("image_list=#{image_list.inspect}")
     
-    # Buttonsメッセージの場合
+    # Buttonsメッセージの場合 1件だけ表示
     img = image_list.first
     image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
     
@@ -92,22 +92,17 @@ class Bot9N2randimgController < ApplicationController
   template: {
       type: "buttons",
       thumbnailImageUrl: image_url,
-      title: "Menu",
-      text: "Please select",
+      title: "おすすめネタ画像です！",
+      text: "",
       actions: [
           {
             type: "postback",
-            label: "Buy",
-            data: "action=buy&itemid=123"
-          },
-          {
-            type: "postback",
-            label: "Add to cart",
-            data: "action=add&itemid=123"
+            label: "他の画像をさがす",
+            data: "action=other"
           },
           {
             type: "uri",
-            label: "View detail",
+            label: "画像を見る",
             uri: image_url
           }
       ]
