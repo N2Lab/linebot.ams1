@@ -66,14 +66,14 @@ class Bot9N2randimgController < ApplicationController
             # text: "テスト"
           # }
     # ]
-    # image test
-    image_url = "https://img.tiqav.com/5AX.jpg"
-    return [{
-    type: "image",
-    originalContentUrl: image_url,
-    previewImageUrl: image_url
-}]
-    # NG
+    # image test OK
+    # image_url = "https://img.tiqav.com/5AX.jpg"
+    # return [{
+    # type: "image",
+    # originalContentUrl: image_url,
+    # previewImageUrl: image_url
+# }]
+    # template & buttons
     image_list = get_random_image_list()
     # [{"id":"5AX","ext":"jpg","height":219,"width":333,"source_url":"http://mar.2chan.net/jun/b/src/1343375952522.jpg"},
       # {"id":"sg","ext":"jpg","height":531,"width":419,"source_url":"http://feb.2chan.net/jun/b/src/1258964461577.jpg"},
