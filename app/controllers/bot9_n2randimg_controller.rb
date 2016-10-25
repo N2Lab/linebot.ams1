@@ -92,11 +92,11 @@ class Bot9N2randimgController < ApplicationController
     }
 
     
-    message = {
+    message = [{
       type: "template",
       altText: "ネタ画像です！",
       template: template
-    }
+    }]
     Rails.logger.debug("message=#{message.inspect}")
 
     return message
