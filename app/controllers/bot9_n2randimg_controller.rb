@@ -56,6 +56,14 @@ class Bot9N2randimgController < ApplicationController
   def execute_text(event)
 #    text = event.message['text']
 
+    return [
+          {
+            type: 'text',
+            text: "テスト"
+          }
+    ]
+
+
     image_list = get_random_image_list()
     # [{"id":"5AX","ext":"jpg","height":219,"width":333,"source_url":"http://mar.2chan.net/jun/b/src/1343375952522.jpg"},
       # {"id":"sg","ext":"jpg","height":531,"width":419,"source_url":"http://feb.2chan.net/jun/b/src/1258964461577.jpg"},
