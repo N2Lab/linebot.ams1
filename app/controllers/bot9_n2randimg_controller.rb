@@ -82,7 +82,7 @@ class Bot9N2randimgController < ApplicationController
     
     # Buttonsメッセージの場合
     img = image_list.first
-    image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
+    image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
     
     message = 
     [
