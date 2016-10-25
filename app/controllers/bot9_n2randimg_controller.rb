@@ -64,10 +64,29 @@ class Bot9N2randimgController < ApplicationController
     # テンプレートメッセージのカルーセルで返す
     columns = []
     
-    image_list[0,1].each do |img|
-      image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
-      Rails.logger.debug("add image_url=#{image_url}")
-      columns << {
+    # image_list[0,1].each do |img|
+      # image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
+      # Rails.logger.debug("add image_url=#{image_url}")
+      # columns << {
+            # thumbnailImageUrl: image_url,
+            # title: "おすすめネタ画像です！",
+            # text: "description",
+            # actions: [
+                # {
+                    # type: "postback",
+                    # label: "他の画像をさがす",
+                    # data: "action=research"
+                # },
+                # {
+                    # type: "uri",
+                    # label: "画像を見る",
+                    # uri: image_url
+                # }
+            # ]
+        # }        
+    # end
+    
+          columns = [ {
             thumbnailImageUrl: image_url,
             title: "おすすめネタ画像です！",
             text: "description",
@@ -76,16 +95,10 @@ class Bot9N2randimgController < ApplicationController
                     type: "postback",
                     label: "他の画像をさがす",
                     data: "action=research"
-                },
-                {
-                    type: "uri",
-                    label: "画像を見る",
-                    uri: image_url
                 }
             ]
-        }        
-    end
-    
+        }  
+        ]
     template = {
       type: "carousel",
       columns: columns
