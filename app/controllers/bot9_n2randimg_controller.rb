@@ -15,8 +15,8 @@ class Bot9N2randimgController < ApplicationController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ""
-      config.channel_token = ""
+      config.channel_secret = "b39f1f66dbfc21b0397a26fdb41c5ed8"
+      config.channel_token = "66+9pgE27LdckXiBTc/jgfKcsVYxhvLw2koo4FJshZJh8/nd6GkORVx6tROAYbCsn6C4omjadwYkQBBBsTx6RE8WEHLLkx9LjBby0NEFtLQ9CAKciPiAdWpCnnhfD29+u+0yKUPSZIXqzKW3mWoI3gdB04t89/1O/w1cDnyilFU="
     }
   end
 
