@@ -61,8 +61,44 @@ class Bot9N2randimgController < ApplicationController
       # {"id":"sg","ext":"jpg","height":531,"width":419,"source_url":"http://feb.2chan.net/jun/b/src/1258964461577.jpg"},
     
     Rails.logger.debug("image_list=#{image_list.inspect}")
+    
+    # Buttonsメッセージの場合
+    img = image_list.first
+    image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
+    
+    return [
+      {
+  type: "template",
+  altText: "this is a buttons template",
+  template: {
+      type: "buttons",
+      thumbnailImageUrl: image_url,
+      title: "Menu",
+      text: "Please select",
+      actions: [
+          {
+            type: "postback",
+            label: "Buy",
+            data: "action=buy&itemid=123"
+          },
+          {
+            type: "postback",
+            label: "Add to cart",
+            data: "action=add&itemid=123"
+          },
+          {
+            type: "uri",
+            label: "View detail",
+            uri: image_url
+          }
+      ]
+  }
+}
+    ]
+    
+    # カルーセルの場合 ... うまく動作しないのでやめる
     # テンプレートメッセージのカルーセルで返す
-    columns = []
+#    columns = []
     
     # image_list[0,1].each do |img|
       # image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
@@ -85,48 +121,37 @@ class Bot9N2randimgController < ApplicationController
             # ]
         # }        
     # end
-    
-    img = image_list.first
-    image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
-          columns = [ {
-            thumbnailImageUrl: image_url,
-            title: "おすすめネタ画像です！",
-            text: "description",
-            actions: [
-                {
-                    type: "postback",
-                    label: "他の画像をさがす",
-                    data: "action=research"
-                }
-            ]
-        }  
-        ]
-    template = {
-      type: "carousel",
-      columns: columns
-    }
-    
-    message = [{
-      type: "template",
-      altText: "ネタ画像です！",
-      template: template
-    }]
-    Rails.logger.debug("message=#{message.inspect}")
-
-    return message
-    
-    # # 以前のメッセージを取得
-    # attr = Attr.get(BOT_ID, "last_msg", 1)
 #     
-    # msg = attr.blank? ? "最初のメッセージありがとうございます!" : attr.text
+    # img = image_list.first
+    # image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
+          # columns = [ {
+            # thumbnailImageUrl: image_url,
+            # title: "おすすめネタ画像です！",
+            # text: "description",
+            # actions: [
+                # {
+                    # type: "postback",
+                    # label: "他の画像をさがす",
+                    # data: "action=research"
+                # }
+            # ]
+        # }  
+        # ]
+    # template = {
+      # type: "carousel",
+      # columns: columns
+    # }
 #     
-    # # 受信メッセージを保存
-    # Attr.save(BOT_ID, "last_msg", 1, 0, text)
-#     
-    # [{
-      # type: 'text',
-      # text: msg
+    # message = [{
+      # type: "template",
+      # altText: "ネタ画像です！",
+      # template: template
     # }]
+    # Rails.logger.debug("message=#{message.inspect}")
+# 
+    # return message
+    
+
   end
   
   def get_random_image_list()
