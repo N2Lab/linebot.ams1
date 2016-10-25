@@ -67,7 +67,7 @@ class Bot9N2randimgController < ApplicationController
           # }
     # ]
     # image test
-    image_url = "http://img.tiqav.com/5AX.jpg"
+    image_url = "https://img.tiqav.com/5AX.jpg"
     return [{
     type: "image",
     originalContentUrl: image_url,
