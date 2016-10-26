@@ -159,7 +159,7 @@ https://www.facebook.com/n2lab.inc/
     # 1. http://api.tiqav.com/search.json?q=[query]&callback=[fucntion_name]
     # 2. http://img.tiqav.com/[id].[ext] で画像をテンプレートメッセージで返して次の画像へ
 
-    uri = URI.parse("http://api.tiqav.com/search.json?q=#{query}")
+    uri = URI.parse("http://api.tiqav.com/search.json?q=#{URI.escape(query)}")
     json = Net::HTTP.get(uri)
     JSON.parse(json)
   end
