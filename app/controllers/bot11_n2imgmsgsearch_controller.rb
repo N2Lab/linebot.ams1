@@ -111,7 +111,7 @@ https://www.facebook.com/n2lab.inc/
 
     next_page = page.to_i == 0 ? 5 : 0
     
-    image_list[page, page+5].each do |img|
+    image_list[page, 5].each do |img|
       image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
       Rails.logger.debug("add image_url=#{image_url}")
       columns << {
