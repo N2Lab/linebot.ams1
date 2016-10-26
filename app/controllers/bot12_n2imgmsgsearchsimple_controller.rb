@@ -28,32 +28,62 @@ class Bot12N2imgmsgsearchsimpleController < ApplicationController
   
     events = client.parse_events_from(body)
     response = nil
-    events.each { |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = execute_text_event(event)
-          response = client.reply_message(event['replyToken'], message)
-          # 下記はプロプランのみ
-          # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
-          
-        when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-          response = client.get_message_content(event.message['id'])
-          tf = Tempfile.open("content")
-          tf.write(response.body)
-        end
-      when Line::Bot::Event::Postback # 他の画像
-        response = client.reply_message(event['replyToken'], execute_postback_event(event))
-      when Line::Bot::Event::Join # グループ・ルーム追加
-        response = client.reply_message(event['replyToken'], on_join_grp(event))
-      when Line::Bot::Event::Leave # グループ・ルーム退出
-      end
-    }
-    
-    Rails.logger.debug("response=#{response.try(:code)} #{response.try(:body)}")
+    # events.each { |event|
+      # case event
+      # when Line::Bot::Event::Message
+        # case event.type
+        # when Line::Bot::Event::MessageType::Text
+          # message = execute_text_event(event)
+          # response = client.reply_message(event['replyToken'], message)
+          # # 下記はプロプランのみ
+          # # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
+#           
+        # when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
+          # response = client.get_message_content(event.message['id'])
+          # tf = Tempfile.open("content")
+          # tf.write(response.body)
+        # end
+      # when Line::Bot::Event::Postback # 他の画像
+        # response = client.reply_message(event['replyToken'], execute_postback_event(event))
+      # when Line::Bot::Event::Join # グループ・ルーム追加
+        # response = client.reply_message(event['replyToken'], on_join_grp(event))
+      # when Line::Bot::Event::Leave # グループ・ルーム退出
+      # end
+    # }
+#     
+    # Rails.logger.debug("response=#{response.try(:code)} #{response.try(:body)}")
   
     render text: "OK"
+    
+    t1 = Thread.start {
+        sleep(3)
+        
+        events.each { |event|
+          case event
+          when Line::Bot::Event::Message
+            case event.type
+            when Line::Bot::Event::MessageType::Text
+              message = execute_text_event(event)
+              response = client.reply_message(event['replyToken'], message)
+              # 下記はプロプランのみ
+              # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
+              
+            when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
+              response = client.get_message_content(event.message['id'])
+              tf = Tempfile.open("content")
+              tf.write(response.body)
+            end
+          when Line::Bot::Event::Postback # 他の画像
+            response = client.reply_message(event['replyToken'], execute_postback_event(event))
+          when Line::Bot::Event::Join # グループ・ルーム追加
+            response = client.reply_message(event['replyToken'], on_join_grp(event))
+          when Line::Bot::Event::Leave # グループ・ルーム退出
+          end
+        }
+        
+        Rails.logger.debug("response=#{response.try(:code)} #{response.try(:body)}")
+    }
+
   end
   
   # グループ参加時
@@ -106,6 +136,7 @@ https://www.facebook.com/n2lab.inc/
     img = image_list.sample
     
     # イメージメッセージで返す
+    # 少し間をあける
     image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
     [{
       type: "image",
