@@ -95,7 +95,7 @@ https://www.facebook.com/n2lab.inc/
     Rails.logger.debug("data = #{data.inspect}")
     text = data[:query]
     page = data[:page]
-    page = page == 5 ? 0 : 5
+    page = page.to_i > 0 ? 5 : 0
     execute_text(text, page)
   end
   
@@ -121,7 +121,7 @@ https://www.facebook.com/n2lab.inc/
                 {
                     type: "postback",
                     label: "他の画像をさがす",
-                    data: {:query => text, :page => page + 5}.to_s
+                    data: {:query => text, :page => page}.to_s
                 },
                 {
                     type: "uri",
