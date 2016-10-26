@@ -82,6 +82,7 @@ https://www.facebook.com/n2lab.inc/
 
   def execute_text_event(event)
     text = event.message['text']
+    execute_text(text)
   end
 
   def execute_postback_event(event)
