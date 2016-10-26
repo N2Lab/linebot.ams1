@@ -94,12 +94,13 @@ https://www.facebook.com/n2lab.inc/
     data = eval(postback["data"])
     Rails.logger.debug("data = #{data.inspect}")
     text = data[:query]
-    
-    execute_text(text)
+    page = data[:page]
+    page = page == 5 ? 0 : 5
+    execute_text(text, page)
   end
   
   # メインロジック (テキストメッセージ)にカルーセルで返す
-  def execute_text(text)
+  def execute_text(text, page = 0)
 
     # find images
     image_list = find_image_list(text)
@@ -114,13 +115,13 @@ https://www.facebook.com/n2lab.inc/
       Rails.logger.debug("add image_url=#{image_url}")
       columns << {
             thumbnailImageUrl: image_url,
-            title: "おすすめネタ画像です！",
+            title: "こんな気分？",
             text: image_url,
             actions: [
                 {
                     type: "postback",
                     label: "他の画像をさがす",
-                    data: {:query => text}.to_s
+                    data: {:query => text, :page => page}.to_s
                 },
                 {
                     type: "uri",
