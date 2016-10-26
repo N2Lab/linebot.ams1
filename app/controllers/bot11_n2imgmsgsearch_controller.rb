@@ -121,7 +121,7 @@ https://www.facebook.com/n2lab.inc/
                 {
                     type: "postback",
                     label: "他の画像をさがす",
-                    data: {:query => text, :page => page}.to_s
+                    data: {:query => text, :page => page + 5}.to_s
                 },
                 {
                     type: "uri",
