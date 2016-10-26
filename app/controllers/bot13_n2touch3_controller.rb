@@ -134,7 +134,7 @@ class Bot13N2touch3Controller < ApplicationController
     start_at = DateTime.parse(attr.text)
 # 秒の場合    ((DateTime.now - start_at) * 24 * 60 * 60).to_i
     # スコアの差を出すため1/100秒=1点とする
-    score = 100000000 / ((DateTime.now - start_at) * 24 * 60 * 60 * 100).to_i
+    score = 1000000 / ((DateTime.now - start_at) * 24 * 60 * 60 * 100).to_i
     secs = ((DateTime.now - start_at) * 24 * 60 * 60).to_i
     
     # get profile
@@ -147,15 +147,18 @@ class Bot13N2touch3Controller < ApplicationController
     get_best_msg = ""
     if best.blank?
       # 自分をベストスコアとして保存
-      Attr.save(BOT_ID, ymd, 1, score, name)
+      best = Attr.save(BOT_ID, ymd, 1, score, name)
       get_best_msg = "おめでとう！本日のベストスコアです！"
     else
       # 自分のスコアが上なら更新
       if best.val <= score
-        Attr.save(BOT_ID, ymd, 1, score, name)
+        best = Attr.save(BOT_ID, ymd, 1, score, name)
         get_best_msg = "おめでとう！本日のベストスコアです！"
       end
     end
+    best_name = best.text
+    best_score = best.val
+        
     # 
     text = "⭕ すべて正解！　お疲れ様です。
 #{get_best_msg}

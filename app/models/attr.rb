@@ -25,6 +25,7 @@ class Attr < ActiveRecord::Base
       :val => val,
       :text => text
     })
+    obj
   end
   
 end
