@@ -78,6 +78,16 @@ class Bot13N2touch3Controller < ApplicationController
                   type: "postback",
                   label: next_no + 1,
                   data: {:no => next_no + 1}.to_s
+                },
+                {
+                  type: "postback",
+                  label: next_no + 2,
+                  data: {:no => next_no + 2}.to_s
+                },
+                {
+                  type: "postback",
+                  label: next_no - 2,
+                  data: {:no => next_no - 2}.to_s
                 }
     ].shuffle
     return [
