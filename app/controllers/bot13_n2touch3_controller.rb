@@ -146,16 +146,17 @@ class Bot13N2touch3Controller < ApplicationController
     
     # get best
     ymd = DateTime.now.strftime("%Y%m%d")
-    best = Attr.get(BOT_ID, ymd, 10)
+    best_id = 10
+    best = Attr.get(BOT_ID, ymd, best_id)
     get_best_msg = ""
     if best.blank?
       # 自分をベストスコアとして保存
-      best = Attr.save(BOT_ID, ymd, 1, score, name)
+      best = Attr.save(BOT_ID, ymd, best_id, score, name)
       get_best_msg = "おめでとう！本日のベストスコアです！"
     else
       # 自分のスコアが上なら更新
       if best.val <= score
-        best = Attr.save(BOT_ID, ymd, 1, score, name)
+        best = Attr.save(BOT_ID, ymd, best_id, score, name)
         get_best_msg = "おめでとう！本日のベストスコアです！"
       end
     end
