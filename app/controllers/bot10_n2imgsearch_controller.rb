@@ -115,13 +115,13 @@ class Bot10N2imgsearchController < ApplicationController
     # テンプレートメッセージのカルーセルで返す
     columns = []
     
-    image_list[0,4].each do |img|
+    image_list[0,5].each do |img|
       image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
       Rails.logger.debug("add image_url=#{image_url}")
       columns << {
             thumbnailImageUrl: image_url,
             title: "おすすめネタ画像です！",
-            text: "description",
+            text: image_url,
             actions: [
                 {
                     type: "postback",
@@ -159,7 +159,7 @@ class Bot10N2imgsearchController < ApplicationController
 #     
     message = [{
       type: "template",
-      altText: "ネタ画像です！",
+      altText: "ネタ画像をどうぞ",
       template: template
     }]
     Rails.logger.debug("message=#{message.inspect}")
