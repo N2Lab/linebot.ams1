@@ -95,7 +95,6 @@ https://www.facebook.com/n2lab.inc/
     Rails.logger.debug("data = #{data.inspect}")
     text = data[:query]
     page = data[:page]
-    page = page.to_i > 0 ? 5 : 0
     execute_text(text, page)
   end
   
@@ -109,6 +108,8 @@ https://www.facebook.com/n2lab.inc/
     
     # テンプレートメッセージのカルーセルで返す
     columns = []
+
+    next_page = page.to_i == 0 ? 5 : 0
     
     image_list[0,5].each do |img|
       image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
@@ -121,7 +122,7 @@ https://www.facebook.com/n2lab.inc/
                 {
                     type: "postback",
                     label: "他の画像をさがす",
-                    data: {:query => text, :page => page}.to_s
+                    data: {:query => text, :page => next_page}.to_s
                 },
                 {
                     type: "uri",
