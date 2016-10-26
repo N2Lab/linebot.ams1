@@ -27,8 +27,11 @@ Rails.application.routes.draw do
   # bot9 n2 ネタ画像探し
   post 'bot9_n2randimg/index'
   
-  # bot10 n2 ネタ画像検索 
+  # bot10 n2 ネタ画像探し5 
   post 'bot10_n2imgsearch/index'
+  
+  # bot11 n2 ネタ画像検索 group対応
+  post 'bot11_n2imgmsgsearch/index'
   
   # bot  eitango 
   

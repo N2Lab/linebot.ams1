@@ -1,22 +1,21 @@
 # キーワードからネタ画像を返す ランダム画像を返す bot
 # 1. http://api.tiqav.com/search/random.json
 # 2. http://img.tiqav.com/[id].[ext] で画像をテンプレートメッセージで返して次の画像へ
-# TODO 画像からタグ検索してタグを選択肢に表示
-class Bot10N2imgsearchController < ApplicationController
+class Bot11N2imgmsgsearchController < ApplicationController
 
   require 'line/bot'
   require 'net/http'
   require 'uri'
   require 'json'
   
-  BOT_ID = 10
+  BOT_ID = 11
   # 無視KWリスト
   MENUS = ["前へ", "読む", "次へ"]
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = "b39f1f66dbfc21b0397a26fdb41c5ed8"
-      config.channel_token = "66+9pgE27LdckXiBTc/jgfKcsVYxhvLw2koo4FJshZJh8/nd6GkORVx6tROAYbCsn6C4omjadwYkQBBBsTx6RE8WEHLLkx9LjBby0NEFtLQ9CAKciPiAdWpCnnhfD29+u+0yKUPSZIXqzKW3mWoI3gdB04t89/1O/w1cDnyilFU="
+      config.channel_secret = "691699982b754444f86c71faabb46dcf"
+      config.channel_token = "kgxB0T459Fx8cSQtVRZrfcAu9FhtzrBy0WGk0gW+lrePDkYqc13Zd0fynNQOcUjU+FEh7fTiiFj0EXzW+Zt1eXleO+yrhkFwZnP2U1gfHHf/s75shDPoBMHh9YZTAKILSCn5Hz/jFTxterflBYNXqAdB04t89/1O/w1cDnyilFU="
     }
   end
 
@@ -35,7 +34,7 @@ class Bot10N2imgsearchController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = execute_text(event)
+          message = execute_text_event(event)
           response = client.reply_message(event['replyToken'], message)
           # 下記はプロプランのみ
           # Resque.enqueue(SendTextWorker, client.channel_secret, client.channel_token, event.message['id'], "worker")
@@ -46,7 +45,10 @@ class Bot10N2imgsearchController < ApplicationController
           tf.write(response.body)
         end
       when Line::Bot::Event::Postback # 他の画像
-        response = client.reply_message(event['replyToken'], execute_text(event))
+        response = client.reply_message(event['replyToken'], execute_postback_event(event))
+      when Line::Bot::Event::Join # グループ・ルーム追加
+        response = client.reply_message(event['replyToken'], on_join_grp(event))
+      when Line::Bot::Event::Leave # グループ・ルーム退出
       end
     }
     
@@ -54,64 +56,55 @@ class Bot10N2imgsearchController < ApplicationController
   
     render text: "OK"
   end
+  
+  # グループ参加時
+  # 適当にメッセージを返すで良い
+  def on_join_grp(event)
+    msg = "招待ありがとう！
+N2ネタ画像検索アカウントは、何かメッセージを送信すると、そのメッセージでネタ画像を検索して返すアカウントです！
+是非末永くご利用ください。
 
-  # メインロジック (テキストメッセージ)
-  def execute_text(event)
-#    text = event.message['text']
+本アカウントに関するお問合わせは
+https://www.facebook.com/n2lab.inc/
+にメッセージ送信でお願いします！"
+    [
+      {
+        type: 'text',
+        text: msg
+      }
+    ]
+  end
+  
+  # グループ退出時
+  def on_leave_grp(event)
+    
+  end
 
-    # OK
-    # return [
-          # {
-            # type: 'text',
-            # text: "テスト"
-          # }
-    # ]
-    # image test OK
-    # image_url = "https://img.tiqav.com/5AX.jpg"
-    # return [{
-    # type: "image",
-    # originalContentUrl: image_url,
-    # previewImageUrl: image_url
-# }]
-    # template & buttons
-    image_list = get_random_image_list()
+  def execute_text_event(event)
+    text = event.message['text']
+  end
+
+  def execute_postback_event(event)
+    postback = event["postback"]
+    # Rails.logger.debug("postback = #{postback.inspect}")
+    # Rails.logger.debug("postback.class = #{postback.class}")
+    # postback = {"data"=>"{:next_no=>\"1\", :ymdh=>\"2016102307\"}"}
+    
+    data = eval(postback["data"])
+    Rails.logger.debug("data = #{data.inspect}")
+    text = data[:query]
+    
+    execute_text(text)
+  end
+  
+  # メインロジック (テキストメッセージ)にカルーセルで返す
+  def execute_text(text)
+
+    # find images
+    image_list = find_image_list(text)
     # [{"id":"5AX","ext":"jpg","height":219,"width":333,"source_url":"http://mar.2chan.net/jun/b/src/1343375952522.jpg"},
       # {"id":"sg","ext":"jpg","height":531,"width":419,"source_url":"http://feb.2chan.net/jun/b/src/1258964461577.jpg"},
     
-#    Rails.logger.debug("image_list=#{image_list.inspect}")
-    
-    # Buttonsメッセージの場合 1件だけ表示 OK
-    # img = image_list.first
-    # image_url = "https://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
-#     
-    # message = 
-    # [
-      # {
-  # type: "template",
-  # altText: "this is a buttons template",
-  # template: {
-      # type: "buttons",
-      # thumbnailImageUrl: image_url,
-      # title: "おすすめネタ画像です！",
-      # text: image_url,
-      # actions: [
-          # {
-            # type: "postback",
-            # label: "他の画像をさがす",
-            # data: "action=other"
-          # },
-          # {
-            # type: "uri",
-            # label: "画像を見る",
-            # uri: image_url
-          # }
-      # ]
-  # }
-# }]
-#     
-    # Rails.logger.debug("message=#{message.inspect}")
-    # return message    
-    # カルーセルの場合 ... うまく動作しないのでやめる
     # テンプレートメッセージのカルーセルで返す
     columns = []
     
@@ -126,7 +119,7 @@ class Bot10N2imgsearchController < ApplicationController
                 {
                     type: "postback",
                     label: "他の画像をさがす",
-                    data: "action=research"
+                    data: {:query => text}.to_s
                 },
                 {
                     type: "uri",
@@ -137,44 +130,37 @@ class Bot10N2imgsearchController < ApplicationController
         }        
     end
      
-    # img = image_list.first
-    # image_url = "http://img.tiqav.com/#{img["id"]}.#{img["ext"]}"
-          # columns = [ {
-            # thumbnailImageUrl: image_url,
-            # title: "おすすめネタ画像です！",
-            # text: "description",
-            # actions: [
-                # {
-                    # type: "postback",
-                    # label: "他の画像をさがす",
-                    # data: "action=research"
-                # }
-            # ]
-        # }  
-        # ]
     template = {
       type: "carousel",
       columns: columns
     }
-#     
+     
     message = [{
       type: "template",
-      altText: "ネタ画像をどうぞ",
+      altText: "こんな気分？",
       template: template
     }]
     Rails.logger.debug("message=#{message.inspect}")
 
     return message
-    
-
   end
   
   def get_random_image_list()
-# 1. http://api.tiqav.com/search/random.json
-# 2. http://img.tiqav.com/[id].[ext] で画像をテンプレートメッセージで返して次の画像へ
+    # 1. http://api.tiqav.com/search/random.json
+    # 2. http://img.tiqav.com/[id].[ext] で画像をテンプレートメッセージで返して次の画像へ
 
     uri = URI.parse('http://api.tiqav.com/search/random.json')
     json = Net::HTTP.get(uri)
     JSON.parse(json)
   end
+  
+  def find_image_list(query)
+    # 1. http://api.tiqav.com/search.json?q=[query]&callback=[fucntion_name]
+    # 2. http://img.tiqav.com/[id].[ext] で画像をテンプレートメッセージで返して次の画像へ
+
+    uri = URI.parse('http://api.tiqav.com/search.json?q=#{query}')
+    json = Net::HTTP.get(uri)
+    JSON.parse(json)
+  end
+  
 end
