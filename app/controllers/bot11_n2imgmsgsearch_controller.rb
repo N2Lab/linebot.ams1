@@ -52,7 +52,7 @@ class Bot11N2imgmsgsearchController < ApplicationController
       end
     }
     
-    Rails.logger.debug("response=#{response.code} #{response.body}")
+    Rails.logger.debug("response=#{response.try(:code)} #{response.try(:body)}")
   
     render text: "OK"
   end
