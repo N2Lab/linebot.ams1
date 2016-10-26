@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   # bot12 n2 ネタ画像Sbot group対応
   post 'bot12_n2imgmsgsearchsimple/index'
   
+  # bot13 n2 タッチスリー
+  post 'bot13_n2touch3/index'
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
