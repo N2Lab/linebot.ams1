@@ -152,10 +152,10 @@ class Bot10N2imgsearchController < ApplicationController
             # ]
         # }  
         # ]
-    # template = {
-      # type: "carousel",
-      # columns: columns
-    # }
+    template = {
+      type: "carousel",
+      columns: columns
+    }
 #     
     message = [{
       type: "template",
