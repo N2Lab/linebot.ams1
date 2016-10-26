@@ -53,7 +53,9 @@ class Bot13N2touch3Controller < ApplicationController
   # 新規プレイ開始
   def execute_new_play(event)
     # 次の正解を保存＆プレイ開始
-    Attr.save(BOT_ID, event['source']['userId'], 1, 1, DateTime.now.strftime("%Y/%m/%d %H:%M:%S"))
+    start_at = DateTime.now.strftime("%Y/%m/%d %H:%M:%S")
+    Attr.save(BOT_ID, event['source']['userId'], 1, 1, start_at) # 現在の数字
+    Attr.save(BOT_ID, event['source']['userId'], 2, 0, start_at) # 開始時間
     send_selector_by_next_no(event, 1, "プレイ開始！１から１０まで順番に選択してください！")
   end
   
@@ -127,7 +129,7 @@ class Bot13N2touch3Controller < ApplicationController
   def on_finish(event)
     mid = event['source']['userId']
     # プレイ時間計算
-    attr = Attr.get(BOT_ID, mid, 1)
+    attr = Attr.get(BOT_ID, mid, 2)
     #プレイ開始時間
     start_at = DateTime.parse(attr.text)
 # 秒の場合    ((DateTime.now - start_at) * 24 * 60 * 60).to_i
