@@ -56,7 +56,7 @@ class Bot12N2imgmsgsearchsimpleController < ApplicationController
     render text: "OK"
     
     t1 = Thread.start {
-        sleep(3)
+        sleep(1)
         
         events.each { |event|
           case event
