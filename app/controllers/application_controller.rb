@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   
   def get_profile(client, user_id)
-    JSON.parse(client.get_profile(user_id))
+    response = client.get_profile(user_id)
+    JSON.parse(response.body)
   end
 end
