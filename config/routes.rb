@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   # bot13 n2 タッチスリー
   post 'bot13_n2touch3/index'
   
+  # bot15 N2リアFAQ
+  post 'bot15_n2realtimefaq/index'
+  get 'bot15_n2realtimefaq/show' # PC/SPブラウザ向け閲覧ページ
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
