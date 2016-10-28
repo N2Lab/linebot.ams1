@@ -54,15 +54,19 @@ class Bot15N2realtimefaqController < ApplicationController
   # メッセージ受信内容保存 & 応答
   def execute_text(event)
     # get user info
+    mid = event['source']['userId']
+    profile = get_profile(@client, mid)
+    
     # save
-    attr = Attr.save(BOT_ID, event['source']['userId'], 1, 1, event.to_json) # NO=1 を受信msg
+    event["profile"] = profile
+    attr = Attr.save(BOT_ID, mid, 1, 1, event.to_json) # NO=1 を受信msg
 
     # reply
     text = "投稿ありがとう！"
      actions = [
                 {
                   type: "uri",
-                  label: "ブラウザで見る",
+                  label: "全ユーザーの投稿を見る",
                   uri: "https://ams1.n2bot.net/bot15_n2realtimefaq/show?attr_id=#{attr.id}"
                 }
     ]
@@ -77,6 +81,11 @@ class Bot15N2realtimefaqController < ApplicationController
         }
       }      
    ] 
+    
+  end
+  
+  # PC/SPブラウザ向け ユーザーの投稿を閲覧する
+  def show()
     
   end
 end
