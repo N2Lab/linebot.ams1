@@ -28,4 +28,17 @@ class Attr < ActiveRecord::Base
     obj
   end
   
+  # 常にinsertする
+  def self.insert(bot_id, mid, no, val, text)
+    obj = Attr.new({
+      :bot_id => bot_id,
+      :mid => mid,
+      :no => no,
+      :val => val,
+      :text => text,
+    })
+    obj.save
+    obj
+  end
+  
 end

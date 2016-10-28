@@ -61,7 +61,7 @@ class Bot15N2realtimefaqController < ApplicationController
     event_hash = JSON.parse(event.to_json)
     event_hash["profile"] = profile
     
-    attr = Attr.save(BOT_ID, mid, 1, 1, event_hash.to_json) # NO=1 を受信msg
+    attr = Attr.insert(BOT_ID, mid, 1, 1, event_hash.to_json) # NO=1 を受信msg, val はダミー
 
     # reply
     text = "投稿ありがとう！"
