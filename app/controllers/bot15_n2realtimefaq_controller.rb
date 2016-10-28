@@ -58,8 +58,10 @@ class Bot15N2realtimefaqController < ApplicationController
     profile = get_profile(@client, mid)
     
     # save
-    event["profile"] = profile
-    attr = Attr.save(BOT_ID, mid, 1, 1, event.to_json) # NO=1 を受信msg
+    event_hash = event.to_json.to_hash
+    event_hash["profile"] = profile
+    
+    attr = Attr.save(BOT_ID, mid, 1, 1, event_hash.to_json) # NO=1 を受信msg
 
     # reply
     text = "投稿ありがとう！"
