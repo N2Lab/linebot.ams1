@@ -66,7 +66,7 @@ class Bot15N2realtimefaqController < ApplicationController
                 {
                   type: "uri",
                   label: "全ユーザーの投稿を見る",
-                  uri: "https://ams1.n2bot.net/bot15_n2realtimefaq/show?attr_id=#{attr.id}"
+                  uri: "https://ams1.n2bot.net/bot15_n2realtimefaq/show?user_event_id=#{user_event.id}"
                 }
     ]
     return [
