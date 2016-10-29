@@ -66,7 +66,7 @@ class Bot15N2realtimefaqController < ApplicationController
                 {
                   type: "uri",
                   label: "全ユーザーの投稿を見る",
-                  uri: "https://ams1.n2bot.net/bot15_n2realtimefaq/show?user_event_id=#{user_event.id}"
+                  uri: "https://ams1.n2bot.net/bot15_n2realtimefaq/show?bot_id=#{BOT_ID}&user_event_id=#{user_event.id}"
                 }
     ]
     return [
@@ -83,8 +83,16 @@ class Bot15N2realtimefaqController < ApplicationController
     
   end
   
-  # PC/SPブラウザ向け ユーザーの投稿を閲覧する
+  # PC/SPブラウザ向け ユーザーの投稿を閲覧するhtmlを返す
   def show()
+    bot_id = params[:bot_id]
+    user_event_id = params[:user_event_id]
+    Rails.logger.debug("show bot_id=#{bot_id} user_event_id=#{user_event_id}")
+    
+    # 10個前のメッセージから表示開始
+    last_ue = UserEvent.where(:bot_id => bot_id).order(:id => "desc").limit(10).last
+    Rails.logger.debug("last_ue=#{last_ue.inspect}")
+    @start_user_event_id =  last_ue.id
     
   end
 end
