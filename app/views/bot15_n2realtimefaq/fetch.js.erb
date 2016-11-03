@@ -4,7 +4,7 @@
 <% if @ues && @ues.count > 0 %>
   <% @ues.each do |ue| %>
 //    console.log("ue.id = <%= ue.id %>");
-    add_msg(<%= ue.id %>, "<%= ue.mid %>", "<%= ue.user_name %>", "<%= ue.user_url %>", "<%= ue.user_status %>","<%= ue.msg %>", "<%= ue.created_at %>", "<%= ue.created_at.to_s(:human) %>")
+    add_msg(<%= ue.id %>, "<%= ue.mid %>", "<%= j(ue.user_name) %>", "<%= j(ue.user_url) %>", "<%= j(ue.user_status) %>","<%= j(ue.msg) %>", "<%= ue.created_at %>", "<%= ue.created_at.to_s(:human) %>")
   <% end %>
 <% end %>
 
