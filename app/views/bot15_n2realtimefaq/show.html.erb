@@ -1,12 +1,34 @@
 <script>
-  $(document).ready(function() {
-    function insert_new_msgs() {
-      var html = '<div class="col-sm-4"><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Panel title</h3></div></div></div>';
-      $("#panel_parent").before(html);
-    }
+$(document).ready(function() {
+  // fetch
+  function fetch() {
+    $(".form-ajax").submit();
+  }  
 
-    insert_new_msgs(); // TODO レイアウトは後で考える
-  }); 
+  // 定期fetch
+  $(function(){
+    setInterval(function(){
+      fetch();
+    },3000);
+  });
+}); 
+
+function insert_new_msgs(title, msg, user_url, before_at) {
+  var html = '<div class="col-sm-4 msg" style="display: none;"><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><img src="' + user_url + '">'+title+'</h3></div><div class="panel-body">'+msg+'</div><div class="panel-time">'+before_at+'</div></div></div>';
+  $("#panel_parent").before(html);
+  $(".msg").fadeIn();
+}
+
+function add_msg(ue_id, mid, user_name, user_url, user_status, msg, created_at, before_at) {
+  console.log("ue_id=" + ue_id);
+  console.log("mid=" + mid);
+  console.log("user_name=" + user_name);
+  console.log("user_url=" + user_url);
+  console.log("msg=" + msg);
+  console.log("created_at=" + created_at);
+  console.log("before_at=" + before_at);
+  insert_new_msgs(user_name, msg, user_url, before_at);
+}
 </script>
 
 <!-- style http://getbootstrap.com/examples/theme/ -->
@@ -17,27 +39,14 @@
   <div class="col-sm-4" id="panel_parent">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Panel title</h3>
+        <h3 class="panel-title">発言者</h3>
       </div>
       <div class="panel-body">
-        Panel content1
-      </div>
-    </div>
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        <h3 class="panel-title">Panel title</h3>
-      </div>
-      <div class="panel-body">
-        Panel content1
-      </div>
-    </div>
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        <h3 class="panel-title">Panel title</h3>
-      </div>
-      <div class="panel-body">
-        Panel content1
+        ここにメッセージが表示されます
       </div>
     </div>
   </div><!-- /.col-sm-4 -->
 </div>
+<%= form_tag({:controller => 'bot15_n2realtimefaq', :action => 'fetch'}, :remote => true, :class => 'form-ajax') do -%>
+<%= hidden_field_tag :last_user_event_id, @last_user_event_id -%>
+<% end %>

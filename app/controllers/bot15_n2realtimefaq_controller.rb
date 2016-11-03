@@ -85,21 +85,30 @@ class Bot15N2realtimefaqController < ApplicationController
   
   # PC/SPブラウザ向け ユーザーの投稿を閲覧するhtmlを返す
   def show()
-    bot_id = params[:bot_id]
+    bot_id = BOT_ID
     user_event_id = params[:user_event_id]
     Rails.logger.debug("show bot_id=#{bot_id} user_event_id=#{user_event_id}")
     
     # 10個前のメッセージから表示開始
     last_ue = UserEvent.where(:bot_id => bot_id).order(:id => "desc").limit(10).last
     Rails.logger.debug("last_ue=#{last_ue.inspect}")
-    @start_user_event_id =  last_ue.try(:id)
+    @last_user_event_id =  last_ue.try(:id)
+    @last_user_event_id = 0 if @last_user_event_id.blank?
     
+    @last_user_event_id = 0
   end
   
   # ajax 最新投稿をフェッチして返す
   def fetch()
+    bot_id = BOT_ID
     @last_user_event_id = params[:last_user_event_id]
+        
+    @ues = UserEvent.find_by_sql(["select * from user_events where bot_id = ? AND id > ? order by id limit 10",
+        bot_id, @last_user_event_id])
     
+    if @ues.count > 0
+      @last_user_event_id = @ues.last.try(:id)
+    end
     
   end
 end

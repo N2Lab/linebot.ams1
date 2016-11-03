@@ -1,1 +1,11 @@
-alert(<%= @last_user_event_id %>);
+//console.log("@last_user_event_id = <%= @last_user_event_id %>");
+//console.log("@ues.count = <%= @ues.count %>");
+
+<% if @ues && @ues.count > 0 %>
+  <% @ues.each do |ue| %>
+//    console.log("ue.id = <%= ue.id %>");
+    add_msg(<%= ue.id %>, "<%= ue.mid %>", "<%= ue.user_name %>", "<%= ue.user_url %>", "<%= ue.user_status %>","<%= ue.msg %>", "<%= ue.created_at %>", "<%= ue.created_at.to_s(:human) %>")
+  <% end %>
+<% end %>
+
+$("#last_user_event_id").val(<%= @last_user_event_id %>);

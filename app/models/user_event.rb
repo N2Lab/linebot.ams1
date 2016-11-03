@@ -40,4 +40,18 @@ class UserEvent < ActiveRecord::Base
     obj
   end
   
+  def msg
+    # げんざいはテキストメッセージのみ
+    JSON.parse(event_json)["src"]["message"]["text"]
+  end
+  def user_name
+    JSON.parse(profile_json)["displayName"]
+  end
+  def user_url
+    JSON.parse(profile_json)["pictureUrl"]
+  end
+  def user_status
+    JSON.parse(profile_json)["statusMessage"]
+  end
+  
 end
