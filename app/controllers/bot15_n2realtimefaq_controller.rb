@@ -92,7 +92,14 @@ class Bot15N2realtimefaqController < ApplicationController
     # 10個前のメッセージから表示開始
     last_ue = UserEvent.where(:bot_id => bot_id).order(:id => "desc").limit(10).last
     Rails.logger.debug("last_ue=#{last_ue.inspect}")
-    @start_user_event_id =  last_ue.id
+    @start_user_event_id =  last_ue.try(:id)
+    
+  end
+  
+  # ajax 最新投稿をフェッチして返す
+  def fetch()
+    @last_user_event_id = params[:last_user_event_id]
+    
     
   end
 end

@@ -1,1 +1,43 @@
-show
+<script>
+  $(document).ready(function() {
+    function insert_new_msgs() {
+      var html = '<div class="col-sm-4"><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Panel title</h3></div></div></div>';
+      $("#panel_parent").before(html);
+    }
+
+    insert_new_msgs(); // TODO レイアウトは後で考える
+  }); 
+</script>
+
+<!-- style http://getbootstrap.com/examples/theme/ -->
+<div class="page-header">
+  <h1>みなさんからのメッセージ</h1>
+</div>
+<div class="row" id="msgs_parent">
+  <div class="col-sm-4" id="panel_parent">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+      </div>
+      <div class="panel-body">
+        Panel content1
+      </div>
+    </div>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+      </div>
+      <div class="panel-body">
+        Panel content1
+      </div>
+    </div>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+      </div>
+      <div class="panel-body">
+        Panel content1
+      </div>
+    </div>
+  </div><!-- /.col-sm-4 -->
+</div>
