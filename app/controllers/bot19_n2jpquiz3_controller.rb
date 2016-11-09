@@ -130,14 +130,14 @@ class Bot19N2jpquiz3Controller < ApplicationController
       # 正解￼
       messages << {
             type: 'text',
-            text: "#{name} さん 正解です￼￼！！￼￼￼􀨁
-さすが！！"
+            text: "⭕正解⭕
+#{name} さんさすが！！"
           }
     else
       # 不正解
       messages << {
             type: 'text',
-            text: "􀴂 不正解
+            text: "❌不正解❌
 正解は #{PREF_CD_NAME[answer_pref]} です。"
           }
     end
@@ -196,16 +196,19 @@ https://www.facebook.com/n2lab.inc/
     }
   end
   
-  def get_dummy_answer(answer_pref)
+  def get_dummy_answer(answer_pref, del_pref = nil)
     dummy = [*1..47]
     dummy.delete(answer_pref.to_i)
+    dummy.delete(del_pref.to_i) unless del_pref.blank?
     sprintf("%02d", dummy.sample)
   end
   
   # 問題の回答選択肢を作成
   def create_qa(answer_pref)
-    dummy_pref1 = get_dummy_answer(answer_pref)
-    dummy_pref2 = get_dummy_answer(answer_pref)
+    # dummy_pref1 = get_dummy_answer(answer_pref)
+    # ダミー回答１は近い県にする
+    dummy_pref1 = sprintf("%02d", (answer_pref.to_i + 1) % 47 + 1)
+    dummy_pref2 = get_dummy_answer(answer_pref, dummy_pref1)
 
     text = "ここは何県（なにけん）？"
      actions = [
