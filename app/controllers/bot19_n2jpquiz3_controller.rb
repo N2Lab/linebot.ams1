@@ -143,7 +143,7 @@ https://www.facebook.com/n2lab.inc/
   
   # 問題の画像を配信
   def create_qa_img(answer_pref)
-    url = "http://img.n2bot.net/bot19/pref/pref#{answer_pref}.png"
+    url = "https://img.n2bot.net/bot19/pref/pref#{answer_pref}.png"
     {
       type: "image",
       originalContentUrl: url,
