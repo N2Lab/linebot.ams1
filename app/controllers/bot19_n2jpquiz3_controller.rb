@@ -154,7 +154,7 @@ https://www.facebook.com/n2lab.inc/
   def get_dummy_answer(answer_pref)
     dummy = [*1..47]
     dummy.delete(answer_pref.to_i)
-    sprintf("%02d", dummy1.sample)
+    sprintf("%02d", dummy.sample)
   end
   
   # 問題の回答選択肢を作成
