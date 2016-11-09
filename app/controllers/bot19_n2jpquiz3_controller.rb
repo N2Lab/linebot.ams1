@@ -179,7 +179,7 @@ https://www.facebook.com/n2lab.inc/
                     label: PREF_CD_NAME[dummy_pref2],
                     data: {:action_pref => dummy_pref2, :answer_pref => answer_pref}.to_s
                 },
-    ].shuffule
+    ].shuffle
     
       {
         type: "template",
