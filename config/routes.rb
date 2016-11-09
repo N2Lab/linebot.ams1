@@ -46,7 +46,8 @@ Rails.application.routes.draw do
   
   # bot19 日本地図クイズ ３択
   post 'bot19_n2jpquiz3/index'
-  
+  # bot20 日本地図クイズ ３択 ひらがな版
+  post 'bot20_n2jpquiz3hira/index'
   
   # bot  eitango 
   
