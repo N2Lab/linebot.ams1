@@ -58,7 +58,7 @@ class Bot19N2jpquiz3Controller < ApplicationController
 "43" => "熊本県",
 "44" => "大分県",
 "45" => "宮崎県",
-"46" => "児島県",
+"46" => "鹿児島県",
 "47" => "沖縄県",
   }
 
@@ -99,8 +99,9 @@ class Bot19N2jpquiz3Controller < ApplicationController
           # tf = Tempfile.open("content")
           # tf.write(response.body)
         end
-      when Line::Bot::Event::Postback # 回答した
-#        response = client.reply_message(event['replyToken'], execute_postback(event))
+      when Line::Bot::Event::Postback # 回答したので答え合わせ
+        message = execute_answer_check(event)
+        response = client.reply_message(event['replyToken'], message)
       end
     }
     
@@ -109,11 +110,55 @@ class Bot19N2jpquiz3Controller < ApplicationController
     render text: ""
   end
   
+  # 答え合わせ
+  def execute_answer_check(event)
+    # get user info
+    mid = event['source']['userId']
+    profile = get_profile(@client, mid)
+    name = profile["displayName"]
+    
+    messages = []
+    
+    # 答え合わせ結果
+    postback = event["postback"]
+    data = eval(postback["data"])
+    Rails.logger.debug("data = #{data.inspect}")
+    action_pref = data[:action_pref]
+    answer_pref = data[:answer_pref]
+    
+    if (action_pref == answer_pref)
+      # 正解￼
+      messages << {
+            type: 'text',
+            text: "#{name} さん 正解です￼￼！！￼￼￼􀨁
+さすが！！"
+          }
+    else
+      # 不正解
+      messages << {
+            type: 'text',
+            text: "􀴂 不正解
+正解は #{PREF_CD_NAME[answer_pref]} です。"
+          }
+    end
+    
+    # 次の問題作成
+    answer_pref = sprintf("%02d", rand(47) + 1) # 01〜47
+    messages << create_qa_img(answer_pref)
+    messages << create_qa(answer_pref)
+     
+    # save
+    # user_event = UserEvent.insert(BOT_ID, mid, event.to_json, profile.to_json) 
+
+    # reply
+    messages
+  end
+  
   # 新しく問題を発行
   def execute_start_map(event, follow_flg = false)
     # get user info
     mid = event['source']['userId']
-    profile = get_profile(@client, mid)
+#    profile = get_profile(@client, mid)
     
     messages = []
     
