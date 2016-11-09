@@ -138,7 +138,7 @@ class Bot19N2jpquiz3Controller < ApplicationController
       messages << {
             type: 'text',
             text: "❌不正解❌
-正解は #{PREF_CD_NAME[answer_pref]} です。"
+正解は「#{PREF_CD_NAME[answer_pref]} 」です。"
           }
     end
     
