@@ -44,6 +44,10 @@ Rails.application.routes.draw do
   get 'bot15_n2realtimefaq/show' # PC/SPブラウザ向け閲覧ページ
   post 'bot15_n2realtimefaq/fetch' # ajax定期フェッチ
   
+  # bot19 日本地図クイズ ３択
+  post 'bot19_n2jpquiz3/index'
+  
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
