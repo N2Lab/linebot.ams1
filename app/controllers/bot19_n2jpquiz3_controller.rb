@@ -10,6 +10,57 @@ class Bot19N2jpquiz3Controller < ApplicationController
   BOT_ID = 19
   # 無視KWリスト
   MENUS = ["前へ", "読む", "次へ"]
+  
+  # 都道府県
+  PREF_CD_NAME = {
+"01" => "北海道",
+"02" => "青森県",
+"03" => "岩手県",
+"04" => "宮城県",
+"05" => "秋田県",
+"06" => "山形県",
+"07" => "福島県",
+"08" => "茨城県",
+"09" => "栃木県",
+"10" => "群馬県",
+"11" => "埼玉県",
+"12" => "千葉県",
+"13" => "東京都",
+"14" => "神奈川県",
+"15" => "新潟県",
+"16" => "富山県",
+"17" => "石川県",
+"18" => "福井県",
+"19" => "山梨県",
+"20" => "長野県",
+"21" => "岐阜県",
+"22" => "静岡県",
+"23" => "愛知県",
+"24" => "三重県",
+"25" => "滋賀県",
+"26" => "京都府",
+"27" => "大阪府",
+"28" => "兵庫県",
+"29" => "奈良県",
+"30" => "和歌山県",
+"31" => "鳥取県",
+"32" => "島根県",
+"33" => "岡山県",
+"34" => "広島県",
+"35" => "山口県",
+"36" => "徳島県",
+"37" => "香川県",
+"38" => "愛媛県",
+"39" => "高知県",
+"40" => "福岡県",
+"41" => "佐賀県",
+"42" => "長崎県",
+"43" => "熊本県",
+"44" => "大分県",
+"45" => "宮崎県",
+"46" => "児島県",
+"47" => "沖縄県",
+  }
 
   def client
     @client ||= Line::Bot::Client.new { |config|
@@ -75,11 +126,13 @@ N2日本地図３択は、地図上の都道府県がどの県か３択で回答
 
 本アカウントに関するお問合わせは
 https://www.facebook.com/n2lab.inc/
-にメッセージ送信でお願いします。(grin)"
+にメッセージ送信でお願いします。􀀁"
           }
     end
     
-    messages << create_qa()
+    answer_pref = sprintf("%02d", rand(47) + 1) # 01〜47
+    messages << create_qa_img(answer_pref)
+    messages << create_qa(answer_pref)
      
     # save
     # user_event = UserEvent.insert(BOT_ID, mid, event.to_json, profile.to_json) 
@@ -88,25 +141,45 @@ https://www.facebook.com/n2lab.inc/
     messages
   end
   
-  def create_qa()
+  # 問題の画像を配信
+  def create_qa_img(answer_pref)
+    url = "http://img.n2bot.net/bot19/pref/pref#{answer_pref}.png"
+    {
+      type: "image",
+      originalContentUrl: url,
+      previewImageUrl: url
+    }
+  end
+  
+  def get_dummy_answer(answer_pref)
+    dummy = [*1..47]
+    dummy.delete(answer_pref.to_i)
+    sprintf("%02d", dummy1.sample)
+  end
+  
+  # 問題の回答選択肢を作成
+  def create_qa(answer_pref)
+    dummy_pref1 = get_dummy_answer(answer_pref)
+    dummy_pref2 = get_dummy_answer(answer_pref)
+
     text = "ここは何県（なにけん）？"
      actions = [
                 {
                     type: "postback",
-                    label: "和歌山県",
-                    data: {:action_pref => 20, :answer_pref => 10}.to_s
+                    label: PREF_CD_NAME[answer_pref],
+                    data: {:action_pref => answer_pref, :answer_pref => answer_pref}.to_s
                 },
                 {
                     type: "postback",
-                    label: "和歌山県",
-                    data: {:action_pref => 20, :answer_pref => 10}.to_s
+                    label: PREF_CD_NAME[dummy_pref1],
+                    data: {:action_pref => dummy_pref1, :answer_pref => answer_pref}.to_s
                 },
                 {
                     type: "postback",
-                    label: "和歌山県",
-                    data: {:action_pref => 20, :answer_pref => 10}.to_s
+                    label: PREF_CD_NAME[dummy_pref2],
+                    data: {:action_pref => dummy_pref2, :answer_pref => answer_pref}.to_s
                 },
-    ]
+    ].shuffule
     
       {
         type: "template",
