@@ -49,6 +49,10 @@ Rails.application.routes.draw do
   # bot20 日本地図クイズ ３択 ひらがな版
   post 'bot20_n2jpquiz3hira/index'
   
+  # bot21 宿予約
+  post 'bot21_n2rsvinn/index' # bot
+  get 'bot21_n2rsvinn/mgr' # 管理画面トップ
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
