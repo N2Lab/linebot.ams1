@@ -14,52 +14,52 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
   # 都道府県
   PREF_CD_NAME = {
 "01" => "ほっかいどう",
-"02" => "あおもり",
-"03" => "いわて",
-"04" => "みやぎ",
-"05" => "あきた",
-"06" => "やまがた",
-"07" => "ふくしま",
-"08" => "いばらき",
-"09" => "とちぎ",
-"10" => "ぐんま",
-"11" => "さいたま",
-"12" => "ちば",
-"13" => "とうきょう",
-"14" => "かながわ",
-"15" => "にいがた",
-"16" => "とまや",
-"17" => "いしかわ",
-"18" => "ふくい",
-"19" => "やまなし",
-"20" => "ながの",
-"21" => "ぎふ",
-"22" => "しずおか",
-"23" => "あいち",
-"24" => "みえ",
-"25" => "しが",
+"02" => "あおもりけん",
+"03" => "いわてけん",
+"04" => "みやぎけん",
+"05" => "あきたけん",
+"06" => "やまがたけん",
+"07" => "ふくしまけん",
+"08" => "いばらきけん",
+"09" => "とちぎけん",
+"10" => "ぐんまけん",
+"11" => "さいたまけん",
+"12" => "ちばけん",
+"13" => "とうきょうと",
+"14" => "かながわけん",
+"15" => "にいがたけん",
+"16" => "とまやけん",
+"17" => "いしかわけん",
+"18" => "ふくいけん",
+"19" => "やまなしけん",
+"20" => "ながのけん",
+"21" => "ぎふけん",
+"22" => "しずおかけん",
+"23" => "あいちけん",
+"24" => "みえけん",
+"25" => "しがけん",
 "26" => "きょうとふ",
 "27" => "おおさかふ",
-"28" => "ひょうご",
-"29" => "なら",
-"30" => "わかやま",
-"31" => "とっとり",
-"32" => "しまね",
-"33" => "おかやま",
-"34" => "ひろしま",
-"35" => "やまぐち",
-"36" => "とくしま",
-"37" => "かがわ",
-"38" => "えひめ",
-"39" => "こうち",
-"40" => "ふくおか",
-"41" => "さが",
-"42" => "ながさき",
-"43" => "くまもと",
-"44" => "おおいた",
-"45" => "みやざき",
-"46" => "かごしま",
-"47" => "おきなわ",
+"28" => "ひょうごけん",
+"29" => "ならけん",
+"30" => "わかやまけん",
+"31" => "とっとりけん",
+"32" => "しまねけん",
+"33" => "おかやまけん",
+"34" => "ひろしまけん",
+"35" => "やまぐちけん",
+"36" => "とくしまけん",
+"37" => "かがわけん",
+"38" => "えひめけん",
+"39" => "こうちけん",
+"40" => "ふくおかけん",
+"41" => "さがけん",
+"42" => "ながさきけん",
+"43" => "くまもとけん",
+"44" => "おおいたけん",
+"45" => "みやざきけん",
+"46" => "かごしまけん",
+"47" => "おきなわけん",
   }
 
   def client
@@ -112,13 +112,6 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
   
   # 答え合わせ
   def execute_answer_check(event)
-    # get user info
-    mid = event['source']['userId']
-    profile = get_profile(@client, mid)
-    name = profile["displayName"]
-    
-    messages = []
-    
     # 答え合わせ結果
     postback = event["postback"]
     data = eval(postback["data"])
@@ -126,11 +119,28 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
     action_pref = data[:action_pref]
     answer_pref = data[:answer_pref]
     
+    if action_pref.to_i == -1
+      # 次の問題を作成して返す
+      answer_pref = sprintf("%02d", rand(47) + 1) # 01〜47
+      messages << create_qa_img(answer_pref)
+      messages << create_qa(answer_pref)
+      return messages     
+    end
+    
+    
+    # get user info
+    mid = event['source']['userId']
+    profile = get_profile(@client, mid)
+    name = profile["displayName"]
+    
+    messages = []
+    
+    
     if (action_pref == answer_pref)
       # 正解￼
       messages << {
             type: 'text',
-            text: "⭕せいかい⭕
+            text: "􀀄せいかい􀀄
 せいかいは「#{PREF_CD_NAME[answer_pref]} 」です。
 #{name} さん すごい！！"
           }
@@ -138,23 +148,46 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
       # 不正解
       messages << {
             type: 'text',
-            text: "❌まちがい❌
+            text: "￼￼􀄃􀄛astonished􏿿まちがい
 せいかいは「#{PREF_CD_NAME[answer_pref]} 」です。"
           }
     end
     
-    # 次の問題作成
-    answer_pref = sprintf("%02d", rand(47) + 1) # 01〜47
-    messages << create_qa_img(answer_pref)
-    messages << create_qa(answer_pref)
+    # 次の問題作成 > ここではやらない
+    # answer_pref = sprintf("%02d", rand(47) + 1) # 01〜47
+    # messages << create_qa_img(answer_pref)
+    # messages << create_qa(answer_pref)
+    
+    # つぎのもんだいへ
+    messages << create_next_qa_link()
      
-    # save
-    # user_event = UserEvent.insert(BOT_ID, mid, event.to_json, profile.to_json) 
-
+ 
     # reply
     messages
   end
   
+  # 次の問題へのリンクを表示
+  def create_next_qa_link()
+    title = "もう１っかいちょうせんする？"
+    actions = [
+                {
+                    type: "postback",
+                    label: "ちょうせんする",
+                    data: {:action_pref => -1}.to_s
+                },
+      ].shuffle
+    
+      {
+        type: "template",
+        altText: text,
+        template: {
+            type: "buttons",
+            text: text,
+            actions: actions
+        }
+      }          
+  end
+
   # 新しく問題を発行
   def execute_start_map(event, follow_flg = false)
     # get user info
@@ -177,6 +210,7 @@ https://www.facebook.com/n2lab.inc/
           }
     end
     
+    # 問題作成
     answer_pref = sprintf("%02d", rand(47) + 1) # 01〜47
     messages << create_qa_img(answer_pref)
     messages << create_qa(answer_pref)
@@ -216,7 +250,7 @@ https://www.facebook.com/n2lab.inc/
     dummy_pref3 = get_dummy_answer(answer_pref, dummy_pref1, dummy_pref2)
 
     title = "ここはなにけん？"
-    text = "ここはなにけん"
+    text = "ここはなにけん？"
     actions = [
                 {
                     type: "postback",
