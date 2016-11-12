@@ -198,10 +198,11 @@ https://www.facebook.com/n2lab.inc/
     }
   end
   
-  def get_dummy_answer(answer_pref, del_pref = nil)
+  def get_dummy_answer(answer_pref, del_pref = nil, del_pref2 = nil)
     dummy = [*1..47]
     dummy.delete(answer_pref.to_i)
     dummy.delete(del_pref.to_i) unless del_pref.blank?
+    dummy.delete(del_pref2.to_i) unless del_pref2.blank?
     sprintf("%02d", dummy.sample)
   end
   
