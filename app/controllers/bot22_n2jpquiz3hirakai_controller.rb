@@ -1,71 +1,71 @@
-# 日本地図都道府県クイズ３択
+# 日本地図都道府県クイズ３択 ひらがな版 改良版
 # 
-class Bot19N2jpquiz3Controller < ApplicationController
+class Bot22N2jpquiz3hirakaiController < ApplicationController
 
   require 'line/bot'
   require 'net/http'
   require 'uri'
   require 'json'
   
-  BOT_ID = 19
+  BOT_ID = 22
   # 無視KWリスト
   MENUS = ["前へ", "読む", "次へ"]
   
   # 都道府県
   PREF_CD_NAME = {
-"01" => "北海道",
-"02" => "青森県",
-"03" => "岩手県",
-"04" => "宮城県",
-"05" => "秋田県",
-"06" => "山形県",
-"07" => "福島県",
-"08" => "茨城県",
-"09" => "栃木県",
-"10" => "群馬県",
-"11" => "埼玉県",
-"12" => "千葉県",
-"13" => "東京都",
-"14" => "神奈川県",
-"15" => "新潟県",
-"16" => "富山県",
-"17" => "石川県",
-"18" => "福井県",
-"19" => "山梨県",
-"20" => "長野県",
-"21" => "岐阜県",
-"22" => "静岡県",
-"23" => "愛知県",
-"24" => "三重県",
-"25" => "滋賀県",
-"26" => "京都府",
-"27" => "大阪府",
-"28" => "兵庫県",
-"29" => "奈良県",
-"30" => "和歌山県",
-"31" => "鳥取県",
-"32" => "島根県",
-"33" => "岡山県",
-"34" => "広島県",
-"35" => "山口県",
-"36" => "徳島県",
-"37" => "香川県",
-"38" => "愛媛県",
-"39" => "高知県",
-"40" => "福岡県",
-"41" => "佐賀県",
-"42" => "長崎県",
-"43" => "熊本県",
-"44" => "大分県",
-"45" => "宮崎県",
-"46" => "鹿児島県",
-"47" => "沖縄県",
+"01" => "ほっかいどう",
+"02" => "あおもり",
+"03" => "いわて",
+"04" => "みやぎ",
+"05" => "あきた",
+"06" => "やまがた",
+"07" => "ふくしま",
+"08" => "いばらき",
+"09" => "とちぎ",
+"10" => "ぐんま",
+"11" => "さいたま",
+"12" => "ちば",
+"13" => "とうきょう",
+"14" => "かながわ",
+"15" => "にいがた",
+"16" => "とまや",
+"17" => "いしかわ",
+"18" => "ふくい",
+"19" => "やまなし",
+"20" => "ながの",
+"21" => "ぎふ",
+"22" => "しずおか",
+"23" => "あいち",
+"24" => "みえ",
+"25" => "しが",
+"26" => "きょうとふ",
+"27" => "おおさかふ",
+"28" => "ひょうご",
+"29" => "なら",
+"30" => "わかやま",
+"31" => "とっとり",
+"32" => "しまね",
+"33" => "おかやま",
+"34" => "ひろしま",
+"35" => "やまぐち",
+"36" => "とくしま",
+"37" => "かがわ",
+"38" => "えひめ",
+"39" => "こうち",
+"40" => "ふくおか",
+"41" => "さが",
+"42" => "ながさき",
+"43" => "くまもと",
+"44" => "おおいた",
+"45" => "みやざき",
+"46" => "かごしま",
+"47" => "おきなわ",
   }
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = "b3ff1a1f5b22d6096a54148acdc575fc"
-      config.channel_token = "EksKcc1u+F62Fr1sVhXvT2UV7K1UZG18JNhu9CzTh9HVkuUrZNdaVDdiDFPaEnwRZHNdQvuZnc7naIn20pCb1jcnn/LGZy3ahpm2DGiHs5BWuzCSkB5pPtMSQjtVIwgKTtusy+ycP1AGGNSW1puDAwdB04t89/1O/w1cDnyilFU="
+      config.channel_secret = "00a88e6a2d55e1dc062d1c15b48b99e9"
+      config.channel_token = "UjMaQmWcKPq4TDYDX8EFFy3YtoiujTICbLU5ze7Dj0WqSdaFezIIjzsTQPuMkswm2YY0m3MiQkw7qRVDRnb558gLrsOOlwUx2dJekUEDfB1fA0hrI0c6DCH0AkzyzEvWWLHwaRxrf5Tq/OujNyKMOQdB04t89/1O/w1cDnyilFU="
     }
   end
 
@@ -130,15 +130,16 @@ class Bot19N2jpquiz3Controller < ApplicationController
       # 正解￼
       messages << {
             type: 'text',
-            text: "⭕正解⭕
-#{name} さんさすが！！"
+            text: "⭕せいかい⭕
+せいかいは「#{PREF_CD_NAME[answer_pref]} 」です。
+#{name} さん すごい！！"
           }
     else
       # 不正解
       messages << {
             type: 'text',
-            text: "❌不正解❌
-正解は「#{PREF_CD_NAME[answer_pref]} 」です。"
+            text: "❌まちがい❌
+せいかいは「#{PREF_CD_NAME[answer_pref]} 」です。"
           }
     end
     
@@ -158,15 +159,16 @@ class Bot19N2jpquiz3Controller < ApplicationController
   def execute_start_map(event, follow_flg = false)
     # get user info
     mid = event['source']['userId']
-#    profile = get_profile(@client, mid)
+    profile = get_profile(@client, mid)
+    name = profile["displayName"]
     
     messages = []
     
     if follow_flg
       messages << {
             type: 'text',
-            text: "友だち登録ありがとうございます(happy)
-N2日本地図３択は、地図上の都道府県がどの県か３択で回答し続けるアカウントです。
+            text: "#{name}さん 友だち登録ありがとうございます(happy)
+「N2日本地図４択幼児向け」は、地図上の都道府県がどの県か４択で回答し続けるアカウントです。
 是非末永くご利用ください。
 
 本アカウントに関するお問合わせは
@@ -196,23 +198,25 @@ https://www.facebook.com/n2lab.inc/
     }
   end
   
-  def get_dummy_answer(answer_pref, del_pref = nil, del_pref2 = nil)
+  def get_dummy_answer(answer_pref, del_pref = nil)
     dummy = [*1..47]
     dummy.delete(answer_pref.to_i)
     dummy.delete(del_pref.to_i) unless del_pref.blank?
-    dummy.delete(del_pref2.to_i) unless del_pref2.blank?
     sprintf("%02d", dummy.sample)
   end
   
   # 問題の回答選択肢を作成
+  # ボタン式テンプレートメッセージにする
   def create_qa(answer_pref)
     # dummy_pref1 = get_dummy_answer(answer_pref)
     # ダミー回答１は近い県にする
     dummy_pref1 = sprintf("%02d", (answer_pref.to_i + 1) % 47 + 1)
     dummy_pref2 = get_dummy_answer(answer_pref, dummy_pref1)
+    dummy_pref3 = get_dummy_answer(answer_pref, dummy_pref1, dummy_pref2)
 
-    text = "ここは何県（なにけん）？"
-     actions = [
+    title = "ここはなにけん？"
+    text = "ここはなにけん"
+    actions = [
                 {
                     type: "postback",
                     label: PREF_CD_NAME[answer_pref],
@@ -228,13 +232,18 @@ https://www.facebook.com/n2lab.inc/
                     label: PREF_CD_NAME[dummy_pref2],
                     data: {:action_pref => dummy_pref2, :answer_pref => answer_pref}.to_s
                 },
-    ].shuffle
+                {
+                    type: "postback",
+                    label: PREF_CD_NAME[dummy_pref3],
+                    data: {:action_pref => dummy_pref3, :answer_pref => answer_pref}.to_s
+                },
+      ].shuffle
     
       {
         type: "template",
         altText: text,
         template: {
-            type: "confirm",
+            type: "buttons",
             text: text,
             actions: actions
         }

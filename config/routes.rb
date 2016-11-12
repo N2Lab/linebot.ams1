@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   get 'bot21_n2rsvinn/imagemap/cal/:year/:month/:size' => 'bot21_n2rsvinn#cal_img' # bot 日付選択カレンダー画像を返す 1040x1040
   get 'bot21_n2rsvinn/mgr' # 管理画面トップ
   
+  # bot22 日本地図クイズ幼児ひらがな版 ４択
+  post 'bot22_n2jpquiz3hirakai/index'
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
