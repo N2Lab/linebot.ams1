@@ -112,6 +112,8 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
   
   # 答え合わせ
   def execute_answer_check(event)
+    messages = []
+    
     # 答え合わせ結果
     postback = event["postback"]
     data = eval(postback["data"])
@@ -133,7 +135,6 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
     profile = get_profile(@client, mid)
     name = profile["displayName"]
     
-    messages = []
     
     
     if (action_pref == answer_pref)
