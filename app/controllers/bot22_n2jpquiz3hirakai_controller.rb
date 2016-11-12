@@ -168,7 +168,7 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
   
   # 次の問題へのリンクを表示
   def create_next_qa_link()
-    title = "もう１っかいちょうせんする？"
+    text = "もういっかいちょうせんする？"
     actions = [
                 {
                     type: "postback",
