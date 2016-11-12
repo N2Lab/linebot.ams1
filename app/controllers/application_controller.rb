@@ -8,4 +8,19 @@ class ApplicationController < ActionController::Base
     response = client.get_profile(user_id)
     JSON.parse(response.body)
   end
+  
+  
+  def  make_template_buttons_message(title, text, url, actions)
+      {
+        type: "template",
+        altText: text,
+        template: {
+            type: "buttons",
+            thumbnailImageUrl: url,
+            title: title,
+            text: text,
+            actions: actions
+        }
+      }      
+  end
 end

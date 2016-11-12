@@ -7,6 +7,8 @@ class Bot21N2rsvinnController < ApplicationController
   require 'net/http'
   require 'uri'
   require 'json'
+  require 'RMagick' 
+  include Magick
   
   BOT_ID = 21
   
@@ -57,8 +59,7 @@ class Bot21N2rsvinnController < ApplicationController
           response = client.reply_message(event['replyToken'], execute_main_menu(event))
         end
       when Line::Bot::Event::Postback # 各種コマンド
-        # message = execute_answer_check(event)
-        # response = client.reply_message(event['replyToken'], message)
+        response = client.reply_message(event['replyToken'], execute_postback(event))
       end
     }
     
@@ -70,7 +71,7 @@ class Bot21N2rsvinnController < ApplicationController
   # メインメニュー応答
   # 1. 予約したい
   # 2. 予約内容を確認したい
-  # 3. 宿の情報を知りたい
+  # 3. 宿の情報,行き方を知りたい
   # 4. 問い合わせしたい
   def execute_main_menu(event)
     # get user info
@@ -95,18 +96,13 @@ class Bot21N2rsvinnController < ApplicationController
                 },
                 {
                     type: "postback",
-                    label: "宿の情報を知りたい",
+                    label: "宿の情報・行き方を知りたい",
                     data: {:menu => 1, :sel => 3}.to_s
                 },
                 {
                     type: "postback",
-                    label: "行き方を知りたい",
-                    data: {:menu => 1, :sel => 4}.to_s
-                },
-                {
-                    type: "postback",
                     label: "問い合わせしたい",
-                    data: {:menu => 1, :sel => 5}.to_s
+                    data: {:menu => 1, :sel => 4}.to_s
                 },
       ]
     
@@ -123,5 +119,153 @@ class Bot21N2rsvinnController < ApplicationController
       }   
   end
   
+  # アクション選択時応答
+  def execute_postback(event)
+    # get user info
+    mid = event['source']['userId']
+#    profile = get_profile(@client, mid)
+#    name = profile["displayName"]
 
+    postback = event["postback"]
+    
+    data = eval(postback["data"])
+    Rails.logger.debug("data = #{data.inspect}")
+    menu = data[:menu] # メニュー
+    sel = data[:sel] # 選択した選択肢
+    
+    # メソッド作成
+    method = "postback_#{menu}_#{sel}"
+    send(method, event)
+    
+  end
+  
+  ################################################
+  # 予約したい 
+  ################################################
+  
+  # 希望日選択イメージマップ用画像を返す
+  def cal_img()
+    year = params[:year]
+    month = params[:month]
+    
+    # とりあえず固定画像を返す
+    image = Image.new(1040, 1040)
+    
+    # draw days
+    draw = Draw.new
+     draw.pointsize = 16
+     draw.gravity = CenterGravity
+      draw.annotate(image, 100, 200, 300, 400, "foo")
+      # 将来はs3管理か (CF> origin:Ec2)
+      
+   send_data(image.to_blob, :type => 'image/png', :disposition=>'inline')
+  end
+  
+  # 1-1 予約したい メニュー
+  # 希望日選択カレンダー (将来的に空室カレンダー)
+  def postback_1_1(event)
+    # get user info
+    mid = event['source']['userId']
+    profile = get_profile(@client, mid)
+    name = profile["displayName"]
+    
+    # imagemapの場合
+    image_url = "https://ams1.n2bot.net/bot21_n2rsvinn/imagemap/cal/2016/11"
+    {
+      "type": "imagemap",
+      "baseUrl": image_url,
+      "altText": "予約カレンダー",
+      "baseSize": {
+          "height": 1040,
+          "width": 1040
+      },
+      "actions": [
+          {
+              "type": "message",
+              "text": "1_1_20161112",
+              "area": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 520,
+                  "height": 1040
+              }
+          },
+          {
+              "type": "message",
+              "text": "1_1_20161112",
+              "area": {
+                  "x": 520,
+                  "y": 0,
+                  "width": 520,
+                  "height": 1040
+              }
+          }
+      ]
+    }    
+    
+    # template(button)の場合
+    # # 予約方法選ぶ
+    # title "- 予約したい - "
+    # text = "#{name}様のご希望宿泊日は何月でしょうか？"
+    # actions = [
+                # {
+                    # type: "postback",
+                    # label: "前月へ",
+                    # data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                # },
+                # {
+                    # type: "postback",
+                    # label: "11月",
+                    # data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                # },
+                # {
+                    # type: "postback",
+                    # label: "12月",
+                    # data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                # },
+                # {
+                    # type: "postback",
+                    # label: "次月へ",
+                    # data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                # },
+      # ]
+#     
+      # make_template_buttons_message(title, text, url, actions)
+  end
+  
+  # 1a-N 予約したい   > 宿泊日選択
+  def postback_1a_0(event)
+    # get user info
+    mid = event['source']['userId']
+    profile = get_profile(@client, mid)
+    name = profile["displayName"]
+    
+    # 予約方法選ぶ
+    title "- 予約したい - "
+    text = "#{name}様のご希望宿泊日は何日でしょうか？"
+    actions = [
+                {
+                    type: "postback",
+                    label: "前月へ",
+                    data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                },
+                {
+                    type: "postback",
+                    label: "11月",
+                    data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                },
+                {
+                    type: "postback",
+                    label: "12月",
+                    data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                },
+                {
+                    type: "postback",
+                    label: "次月へ",
+                    data: {:menu => "1a", :sel => 0, :ym => "201609"}.to_s
+                },
+      ]
+    
+      make_template_buttons_message(title, text, url, actions)
+  end
 end

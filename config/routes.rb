@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   
   # bot21 宿予約
   post 'bot21_n2rsvinn/index' # bot
+  get 'bot21_n2rsvinn/imagemap/cal/:year/:month' => 'bot21_n2rsvinn#cal_img' # bot 日付選択カレンダー画像を返す 1040x1040
   get 'bot21_n2rsvinn/mgr' # 管理画面トップ
   
   # bot  eitango 
