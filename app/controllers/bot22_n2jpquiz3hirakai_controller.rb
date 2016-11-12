@@ -142,15 +142,18 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
       messages << {
             type: 'text',
             text: "􀀄せいかい􀀄
-せいかいは「#{PREF_CD_NAME[answer_pref]} 」です。
-#{name} さん すごい！！"
+せいかいは
+「#{PREF_CD_NAME[answer_pref]} 」
+です。#{name} さん すごい！！"
           }
     else
       # 不正解
       messages << {
             type: 'text',
             text: "￼￼􀄃􀄛astonished􏿿まちがい
-せいかいは「#{PREF_CD_NAME[answer_pref]} 」です。"
+せいかいは
+「#{PREF_CD_NAME[answer_pref]} 」
+です。"
           }
     end
     
