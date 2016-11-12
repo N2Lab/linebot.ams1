@@ -158,7 +158,8 @@ class Bot21N2rsvinnController < ApplicationController
       draw.annotate(image, 100, 200, 300, 400, "foo")
       # 将来はs3管理か (CF> origin:Ec2)
       
-   send_data(image.to_blob, :type => 'image/png', :disposition=>'inline')
+   send_data(image.to_blob)
+#   send_data(image.to_blob, :type => 'image/png', :disposition=>'inline')
   end
   
   # 1-1 予約したい メニュー
