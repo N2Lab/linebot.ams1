@@ -151,6 +151,7 @@ class Bot21N2rsvinnController < ApplicationController
     
     # とりあえず固定画像を返す
     image = Image.new(1040, 1040)
+    image.format = "PNG"
     
     # draw month (title)
     
