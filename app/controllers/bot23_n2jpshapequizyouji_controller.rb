@@ -1,6 +1,6 @@
 # N2 都道府県形クイズ4択 幼児向け
 # 
-class Bot22N2jpquiz3hirakaiController < ApplicationController
+class Bot23N2jpshapequizyoujiController < ApplicationController
 
   require 'line/bot'
   require 'net/http'
