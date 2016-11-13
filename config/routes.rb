@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   
   # bot22 日本地図クイズ幼児ひらがな版 ４択
   post 'bot22_n2jpquiz3hirakai/index'
+
+  # bot23 N2 都道府県形クイズ4択 幼児向け  
+  post 'bot23_n2jpshapequizyouji/index'
   
   # bot  eitango 
   
