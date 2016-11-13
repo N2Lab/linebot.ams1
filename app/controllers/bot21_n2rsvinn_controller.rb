@@ -183,7 +183,7 @@ class Bot21N2rsvinnController < ApplicationController
     name = profile["displayName"]
     
     # imagemapの場合
-    image_url = "https://ams1.n2bot.net/bot21_n2rsvinn/imagemap/cal/2016/11"
+    image_url = "https://ams1.n2bot.net/bot21_n2rsvinn/imagemap/cal/2016/11/#{Time.now.to_i}"
     {
       "type": "imagemap",
       "baseUrl": image_url,
