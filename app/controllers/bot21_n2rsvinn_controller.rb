@@ -150,16 +150,24 @@ class Bot21N2rsvinnController < ApplicationController
     size = params[:size]
     
     # とりあえず固定画像を返す
-    image = Image.new(1040, 1040)
+    w = 1040
+    h = 1040
+    image = Image.new(w, h)
     image.format = "PNG"
     
     # draw month (title)
     
     # draw days
     draw = Draw.new
-    draw.pointsize = 16
+    draw.pointsize = 32
     draw.gravity = CenterGravity
-    draw.annotate(image, 100, 200, 300, 400, "foo")
+    
+    block_w = 1040 / 7
+    (1..31).each do |d|
+      x = block_w * ((d - 1) % 7)
+      y = block_w * (d / 7)
+      draw.annotate(image, x, y, block_w, block_w, d.to_s)
+    end
     # 将来はs3管理か (CF> origin:Ec2)
     
     send_data(image.to_blob)
