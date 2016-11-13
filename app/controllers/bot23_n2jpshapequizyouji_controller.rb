@@ -204,7 +204,7 @@ class Bot23N2jpshapequizyoujiController < ApplicationController
     if follow_flg
       messages << {
             type: 'text',
-            text: "#{name}さん 友だち登録ありがとうございます(happy)
+            text: "#{name}さん 友だち登録ありがとうございます!
 「N2都道府県形クイズ4択 幼児向け」は、都道府県の形からどの都道府県か４択で回答し続けるアカウントです。
 是非末永くご利用ください。
 
@@ -228,7 +228,7 @@ https://www.facebook.com/n2lab.inc/
   
   # 問題の画像を配信
   def create_qa_img(answer_pref)
-    url = "https://img.n2bot.net/bot22/pref/#{answer_pref}.png"
+    url = "https://img.n2bot.net/bot23/pref/#{answer_pref}.png"
     {
       type: "image",
       originalContentUrl: url,

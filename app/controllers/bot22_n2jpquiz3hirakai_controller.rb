@@ -204,7 +204,7 @@ class Bot22N2jpquiz3hirakaiController < ApplicationController
     if follow_flg
       messages << {
             type: 'text',
-            text: "#{name}さん 友だち登録ありがとうございます(happy)
+            text: "#{name}さん 友だち登録ありがとうございます!
 「N2日本地図４択幼児向け」は、地図上の都道府県がどの県か４択で回答し続けるアカウントです。
 是非末永くご利用ください。
 
