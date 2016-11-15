@@ -64,6 +64,14 @@ Rails.application.routes.draw do
   
   # bot  quizPart1 eng
   
+  
+  # bot100 LINE botハッカソン
+  post 'bot100/index'
+  get 'bot100/show' # PC/SPブラウザ向け閲覧ページ
+  post 'bot100/fetch' # ajax定期フェッチ
+  
+  
+  
   # resque
   mount Resque::Server.new, at: "/resque"
   
