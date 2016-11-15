@@ -49,6 +49,6 @@ function add_msg(ue_id, mid, user_name, user_url, user_status, msg, created_at, 
     </div>
   </div><!-- /.col-sm-4 -->
 </div>
-<%= form_tag({:controller => 'bot15_n2realtimefaq', :action => 'fetch'}, :remote => true, :class => 'form-ajax') do -%>
+<%= form_tag({:controller => 'bot100', :action => 'fetch'}, :remote => true, :class => 'form-ajax') do -%>
 <%= hidden_field_tag :last_user_event_id, @last_user_event_id -%>
 <% end %>
