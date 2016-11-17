@@ -6,6 +6,8 @@ class Bot24N2kouseichanController < ApplicationController
   require 'net/http'
   require 'uri'
   require 'json'
+  require 'kconv'
+  require 'active_support/core_ext/hash/conversions'
   
   BOT_ID = 24
   # 無視KWリスト
@@ -61,13 +63,24 @@ class Bot24N2kouseichanController < ApplicationController
   
   # 校正実行
   def execute_kousei(event)
+    text = event.message['text']
     messages = []
     
+    # call kousei api
+    url = "http://jlp.yahooapis.jp/KouseiService/V1/&=%E9%81%99%E3%81%8B%E5%BD%BC%E6%96%B9%E3%81%AB%E5%B0%8F%E5%BD%A2%E9%A3%9B%E8%A1%8C%E6%A9%9F%E3%81%8C%E8%A6%8B%E3%81%88%E3%82%8B"
+    params = {:appid => "dj0zaiZpPThFM1E1aHBqaUZHZCZzPWNvbnN1bWVyc2VjcmV0Jng9ZTE-",
+      :sentence => text,
+      :filter_group => 1,
+      }
+    res = Net::HTTP.post_form(URI.parse(url),params)
+    hash = Hash.from_xml(res.body)
 
-      messages << {
-            type: 'text',
-            text: "OK"
-          }
+    Rails.logger.debug("hash=#{hash.inspect}")
+
+    messages << {
+      type: 'text',
+      text: hash.to_s
+    }
   end
 
 end
