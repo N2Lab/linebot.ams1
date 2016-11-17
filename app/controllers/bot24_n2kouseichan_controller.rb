@@ -67,7 +67,7 @@ class Bot24N2kouseichanController < ApplicationController
     messages = []
     
     # call kousei api
-    url = "http://jlp.yahooapis.jp/KouseiService/V1/&=%E9%81%99%E3%81%8B%E5%BD%BC%E6%96%B9%E3%81%AB%E5%B0%8F%E5%BD%A2%E9%A3%9B%E8%A1%8C%E6%A9%9F%E3%81%8C%E8%A6%8B%E3%81%88%E3%82%8B"
+    url = "http://jlp.yahooapis.jp/KouseiService/V1/kousei"
     params = {:appid => "dj0zaiZpPThFM1E1aHBqaUZHZCZzPWNvbnN1bWVyc2VjcmV0Jng9ZTE-",
       :sentence => text,
       :filter_group => 1,
