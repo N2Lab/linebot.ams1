@@ -90,7 +90,7 @@ class Bot24N2kouseichanController < ApplicationController
     pos_offset = 0
     results.each_with_index do |r,i|
       fixed_text[r["StartPos"].to_i + pos_offset,r["Length"].to_i] = r["ShitekiWord"]
-      pos_offset = pos_offset + r["ShitekiWord"].length - r["StartPos"].length
+      pos_offset = pos_offset + r["ShitekiWord"].length - r["Surface"].length
     end
 
     messages << {
