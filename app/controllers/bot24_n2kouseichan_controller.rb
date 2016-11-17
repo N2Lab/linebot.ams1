@@ -40,7 +40,7 @@ class Bot24N2kouseichanController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           message = execute_kousei(event)
-          response = client.reply_message(event['replyToken'], message)
+          response = client.reply_message(event['replyToken'], message) unless message.blank?
           
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
           # message = execute_start_map(event)
@@ -75,8 +75,17 @@ class Bot24N2kouseichanController < ApplicationController
     res = Net::HTTP.post_form(URI.parse(url),params)
     hash = Hash.from_xml(res.body)
 
-    Rails.logger.debug("hash=#{hash.inspect}")
+    # Rails.logger.debug("hash=#{hash.inspect}")
+    
+    results = hash.try(:fetch, :ResultSet, nil).try(:fetch, :Result, nil)
+    Rails.logger.debug("results=#{results.inspect}")
+    
+    return messages if results.blank? # 校正なし
 
+    messages << {
+      type: 'text',
+      text: hash.to_s
+    }
     messages << {
       type: 'text',
       text: hash.to_s
