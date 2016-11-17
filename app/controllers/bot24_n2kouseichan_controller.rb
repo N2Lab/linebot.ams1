@@ -66,11 +66,11 @@ class Bot24N2kouseichanController < ApplicationController
     text = event.message['text']
     messages = []
     
-    # call kousei api
+    # call kousei api   http://developer.yahoo.co.jp/webapi/jlp/kousei/v1/kousei.html
     url = "http://jlp.yahooapis.jp/KouseiService/V1/kousei"
     params = {:appid => "dj0zaiZpPThFM1E1aHBqaUZHZCZzPWNvbnN1bWVyc2VjcmV0Jng9ZTE-",
       :sentence => text,
-      :filter_group => 1,
+      # :filter_group => 1,
       }
     res = Net::HTTP.post_form(URI.parse(url),params)
     hash = Hash.from_xml(res.body)
