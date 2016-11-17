@@ -81,14 +81,24 @@ class Bot24N2kouseichanController < ApplicationController
     Rails.logger.debug("results=#{results.inspect}")
     
     return messages if results.blank? # 校正なし
+    
+    # 校正候補
+    # results=[{"StartPos"=>"0", "Length"=>"2", "Surface"=>"遙か", "ShitekiWord"=>"●か", "ShitekiInfo"=>"表外漢字あり"}, {"StartPos"=>"2", "Length"=>"2", "Surface"=>"彼方", "ShitekiWord"=>"彼方（かなた）", "ShitekiInfo"=>"用字"}, {"StartPos"=>"5", "Length"=>"5", "Surface"=>"小形飛行機", "ShitekiWord"=>"小型飛行機", "ShitekiInfo"=>"誤変換"}]
+    
+    fixed_text = text
+    pos_offset = 0
+    results.each_with_index do |r,i|
+      fixed_text[r["StartPos"] + pos_offset,r["Length"]] = r["ShitekiWord"]
+      pos_offset = r["ShitekiWord"].length - r["StartPos"].length
+    end
 
     messages << {
       type: 'text',
-      text: hash.to_s
+      text: (校正ちゃんが校正しました)
     }
     messages << {
       type: 'text',
-      text: hash.to_s
+      text: fixed_text
     }
   end
 
