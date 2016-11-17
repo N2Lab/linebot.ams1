@@ -88,7 +88,7 @@ class Bot24N2kouseichanController < ApplicationController
     fixed_text = text
     pos_offset = 0
     results.each_with_index do |r,i|
-      fixed_text[r["StartPos"] + pos_offset,r["Length"]] = r["ShitekiWord"]
+      fixed_text[r["StartPos"].to_i + pos_offset,r["Length"].to_i] = r["ShitekiWord"]
       pos_offset = r["ShitekiWord"].length - r["StartPos"].length
     end
 
