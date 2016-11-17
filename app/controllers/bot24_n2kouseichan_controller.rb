@@ -94,7 +94,7 @@ class Bot24N2kouseichanController < ApplicationController
 
     messages << {
       type: 'text',
-      text: (校正ちゃんが校正しました)
+      text: "(校正ちゃんが校正しました)"
     }
     messages << {
       type: 'text',
