@@ -77,7 +77,7 @@ class Bot24N2kouseichanController < ApplicationController
 
     # Rails.logger.debug("hash=#{hash.inspect}")
     
-    results = hash.try(:fetch, :ResultSet, nil).try(:fetch, :Result, nil)
+    results = hash.try(:fetch, "ResultSet", nil).try(:fetch, "Result", nil)
     Rails.logger.debug("results=#{results.inspect}")
     
     return messages if results.blank? # 校正なし
