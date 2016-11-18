@@ -23,4 +23,22 @@ class ApplicationController < ActionController::Base
         }
       }      
   end
+  
+  # 1. call Google Cloud Natural Language API and parse
+  #  language.documents.analyzeEntities = Entities（固有表現抽出）
+  def google_api_natural_lang_entities(key, text)
+    url = "https://language.googleapis.com/v1/documents:analyzeEntities?key=#{key}"
+    params = {
+      :document => {
+        :type => "PLAIN_TEXT",
+        :language => "ja",
+        :content => text
+      },
+      :encodingType => "UTF8",
+    }
+    res = Net::HTTP.post_form(URI.parse(url),params)
+    res.body
+    
+  end
+
 end

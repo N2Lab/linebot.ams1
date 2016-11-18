@@ -63,6 +63,9 @@ Rails.application.routes.draw do
   # bot24 N2 校正ちゃん
   post 'bot24_n2kouseichan/index'
   
+  # bot25 N2せっかち君
+  post 'bot25_n2sekkatikun/index'
+  
   # bot  eitango 
   
   # bot  quizPart1 eng
