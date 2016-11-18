@@ -1,6 +1,6 @@
 # N2 せっかち君
 # 
-class Bot25N2Controller < ApplicationController
+class Bot25N2sekkatikunController < ApplicationController
 
   require 'line/bot'
   require 'net/http'
