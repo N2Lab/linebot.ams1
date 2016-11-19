@@ -114,7 +114,7 @@ class Bot25N2sekkatikunController < ApplicationController
   # column を返す
   def create_template_columns_by_entities(entities)
     messages = []
-    max_loop = max(5, entities.count)
+    max_loop = [5, entities.count].min
     for i in 0..entities-1
       en = entities[i]
       # type で メッセージを変える
