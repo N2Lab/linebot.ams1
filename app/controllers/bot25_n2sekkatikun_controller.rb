@@ -66,6 +66,7 @@ class Bot25N2sekkatikunController < ApplicationController
   # 返信 親
   def execute_reply(event)
     text = event.message['text']
+    source_type = event.source['type']
     messages = []
     
     # 1. call Google Cloud Natural Language API and parse
@@ -73,11 +74,148 @@ class Bot25N2sekkatikunController < ApplicationController
     #  Syntax（形態素解析、係り受け解析）
     # まずは Entities で Location > ルート検索 などを対応する
     res = google_api_natural_lang_entities(GOOGLE_API_KEY, text)
+    
+    # 2. entities 有無で分岐
+    entities = res["entities"]
+    # ルーム＆グループでマッチなしは応答なし
+    return messages if ["group", "room"].include?(source_type) && entities.blank?
 
-    messages << {
-      type: 'text',
-      text: res.inspect
-    }
+    # 個人でマッチなしは固定応答
+    if entities.blank?
+      # debug
+      messages << {
+        type: 'text',
+        text: res.inspect
+      }
+    
+      messages << {
+        type: 'text',
+        text: "何か調べる？。
+地名人名など自由に入れてね􀄃􀄃laugh􏿿"
+      }
+      return 
+    end
+    
+    # ここから分析&メッセージ作成処理
+    # template = {
+      # type: "carousel",
+      # columns: columns
+    # }
+# #     
+    
+    message = [{
+      type: "template",
+      altText: "せっかち君が先に調べたよ！",
+      template: create_template_columns_by_entities(entities)
+    }]
+  end
+  
+  # 固有表現抽出結果から応答メッセージを組み立て
+  # column を返す
+  def create_template_columns_by_entities(entities)
+    messages = []
+    max_loop = max(5, entities.count)
+    for i in 0..entities-1
+      en = entities[i]
+      # type で メッセージを変える
+      case en["type"]
+      when "LOCATION"
+        messages << create_location_msg(en)
+      # when "CONSUMER_GOOD"
+        # messages << create_good_msg(en)
+      else
+        messages << create_default_msg(en)
+      end
+    end
+    messages
+  end
+  
+  # 位置情報Msg
+  # ルート・地図表示
+  # google検索
+  # 周辺情報 > じゃらんとか
+  # type=LOCATION
+  def create_location_msg(en)
+    name = en["name"]
+    type = en["type"]
+    # TODO できれば毎回異なる画像を返したい 画像検索URLか
+    image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
+    route_map_url = "http://map.google.jp"
+    near_spots_url = "http://map.google.jp"
+    near_lanch_url = "http://map.google.jp"
+    text = "ここはまるまるだね！まるまるまるまるだね"
+    {
+        thumbnailImageUrl: image_url,
+        title: "「#{name}」を調べたよ！",
+        text: text,
+        actions: [
+            # {
+                # type: "postback",
+                # label: "ルート・地図をトークに共有",
+                # data: "action=research"
+            # },
+            {
+                type: "uri",
+                label: "ルート・地図",
+                uri: route_map_url
+            },
+            {
+                type: "uri",
+                label: "周辺スポット",
+                uri: near_spots_url
+            },
+            {
+                type: "uri",
+                label: "周辺ランチ",
+                uri: near_lanch_url
+            },
+        ]
+    }     
+    # {
+        # type: 'text',
+        # text: "create_good_msg"
+    # }
+  end
+
+  # def create_good_msg(en)
+    # {
+        # type: 'text',
+        # text: "create_good_msg"
+    # }
+  # end
+
+  # その他デフォルト
+  # type=ORGANIZATION など
+  # wikipedia_urlがあればそのリンクと画像を返したい
+  def create_default_msg(en)
+    name = en["name"]
+    type = en["type"]
+    wiki_url = "http://wikipedia.jp"
+    image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
+    text = "ここはまるまるだね！まるまるまるまるだね"
+    
+    if en["metadata"].blank?
+      # 
+    end
+
+    {
+        thumbnailImageUrl: image_url,
+        title: "「#{name}」を調べたよ！",
+        text: text,
+        actions: [
+            # {
+                # type: "postback",
+                # label: "ルート・地図をトークに共有",
+                # data: "action=research"
+            # },
+            {
+                type: "uri",
+                label: "くわしくみたい",
+                uri: wiki_url
+            }
+        ]
+    }       
+
   end
 
 end
