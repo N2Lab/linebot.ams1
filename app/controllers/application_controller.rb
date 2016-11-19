@@ -119,7 +119,7 @@ class ApplicationController < ActionController::Base
 
   # google Places API Web Service 検索
   def google_api_places_search_text(key, text)
-    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?key=#{key}&text=#{url_encode(text)}"
+    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?key=#{key}&query=#{url_encode(text)}"
     c = HTTPClient.new
     res = c.get_content(url)
     hash = JSON.parse(res)
