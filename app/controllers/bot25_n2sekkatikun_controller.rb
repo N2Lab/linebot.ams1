@@ -110,7 +110,7 @@ class Bot25N2sekkatikunController < ApplicationController
       altText: "せっかち君が先に調べたよ！",
       template: {
         :type => "carousel",
-        :columns => create_templa1te_columns_by_entities(entities)
+        :columns => create_template_columns_by_entities(entities)
       }
     }]
     Rails.logger.debug("message=#{message.inspect}")
