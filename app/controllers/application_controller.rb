@@ -29,18 +29,21 @@ class ApplicationController < ActionController::Base
   def google_api_natural_lang_entities(key, text)
     url = "https://language.googleapis.com/v1/documents:analyzeEntities?key=#{key}"
     params = {
-      "document" => {
-        "type" => "PLAIN_TEXT",
-        "language" => "ja",
-        ":content" => text
+      :document => {
+        :type => "PLAIN_TEXT",
+        :language => "ja",
+        :content => text
       },
-      "encodingType" => "UTF8",
+      :encodingType => "UTF8",
     }
-    res = Net::HTTP.post_form(URI.parse(url),params)
+    c = HTTPClient.new
+    res = c.post_content(url, params.to_json, 'Content-Type' => 'application/json')
+    hash = JSON.parse(res)
+    
     Rails.logger.debug("[analyzeEntities request url] #{url}")
     Rails.logger.debug("[analyzeEntities request req] #{params}")
-    Rails.logger.debug("[analyzeEntities request res] #{res.body}")
-    res.body
+    Rails.logger.debug("[analyzeEntities request res] #{hash}")
+    hash
     
   end
 
