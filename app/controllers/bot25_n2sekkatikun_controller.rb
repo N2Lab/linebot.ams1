@@ -8,7 +8,9 @@ class Bot25N2sekkatikunController < ApplicationController
   require 'json'
   require 'kconv'
   require 'active_support/core_ext/hash/conversions'
-  
+  require 'erb'
+  include ERB::Util
+
   BOT_ID = 25
   # 無視KWリスト
   MENUS = ["前へ", "読む", "次へ"]
@@ -63,7 +65,7 @@ class Bot25N2sekkatikunController < ApplicationController
   
   GOOGLE_API_KEY = "AIzaSyAbAK1ASX-AnyDe9QEcurKplj7ajDMmIxI"
   
-  # 返信 親
+  # 返信
   def execute_reply(event)
     text = event.message['text']
     source_type = event["source"]['type']
@@ -108,7 +110,7 @@ class Bot25N2sekkatikunController < ApplicationController
       altText: "せっかち君が先に調べたよ！",
       template: {
         :type => "carousel",
-        :columns => create_template_columns_by_entities(entities)
+        :columns => create_templa1te_columns_by_entities(entities)
       }
     }]
     Rails.logger.debug("message=#{message.inspect}")
@@ -144,14 +146,17 @@ class Bot25N2sekkatikunController < ApplicationController
     name = en["name"]
     type = en["type"]
     # TODO できれば毎回異なる画像を返したい 画像検索URLか
+    # 1. 画像検索
     image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
-    route_map_url = "http://map.google.jp"
+
+    # ルート情報
+    route_map_url = "https://maps.google.co.jp/maps?q=#{url_encde(name)}&iwloc=A"
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
-    text = "ここはまるまるだね！まるまるまるまるだね"
+    text = "「#{name}の情報だよ！"
     {
-        thumbnailImageUrl: image_url,
-        title: "「#{name}」を調べたよ！",
+        # thumbnailImageUrl: image_url,
+        # title: "「#{name}」を調べたよ！",
         text: text,
         actions: [
             # {
