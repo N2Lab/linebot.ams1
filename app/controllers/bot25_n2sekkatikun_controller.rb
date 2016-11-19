@@ -93,7 +93,7 @@ class Bot25N2sekkatikunController < ApplicationController
         text: "何か調べる？。
 地名人名など自由に入れてね􀄃􀄃laugh􏿿"
       }
-      return 
+      return messages
     end
     
     # ここから分析&メッセージ作成処理
