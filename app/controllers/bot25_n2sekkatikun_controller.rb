@@ -127,7 +127,7 @@ class Bot25N2sekkatikunController < ApplicationController
       # type で メッセージを変える
       case en["type"]
       when "LOCATION"
-        messages << create_location_msg(en)
+        messages = create_location_msg(en)
       # when "CONSUMER_GOOD"
         # messages << create_good_msg(en)
       else
@@ -138,14 +138,15 @@ class Bot25N2sekkatikunController < ApplicationController
   end
   
   # 位置情報Msg
-  # ルート・地図表示
-  # google検索
-  # 周辺情報 > じゃらんとか
+  # 1ページ目 = name 地名のStreatViewImage, ルート・詳細情報など
+  # 2ページ目 = name 関連スポット (Places API Web Service) 1個目, StreatViewImage, ルート・詳細情報
   # type=LOCATION
   def create_location_msg(en)
     name = en["name"]
     type = en["type"]
-    # TODO できれば毎回異なる画像を返したい 画像検索URLか
+    templates = []
+
+    # 1ページ目
     # 1. 画像検索  google static map api を利用  https://syncer.jp/how-to-use-google-static-maps-api
     # やっぱりストリートビューapiを利用する
     image_url = "https://maps.googleapis.com/maps/api/streetview?location=#{url_encode(name)}&size=900x600&key=#{GOOGLE_API_KEY}"
@@ -153,12 +154,13 @@ class Bot25N2sekkatikunController < ApplicationController
 
     # アクション1 用ルート情報
     route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
-
+    # TODO アクション2 周辺スポット
+    # TODO アクション3 口コミ?
 
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
     text = "「#{name}」の情報だよ！"
-    {
+    templates << {
         thumbnailImageUrl: image_url,
         # title: "「#{name}」を調べたよ！",
         text: text,
@@ -184,7 +186,13 @@ class Bot25N2sekkatikunController < ApplicationController
                 # uri: near_lanch_url
             # },
         ]
-    }     
+    }
+
+    # 2ページ目以降
+    # まず Places API Web Service 検索
+    places = google_api_places_search_text(GOOGLE_API_KEY, name)
+
+    templates
     # {
         # type: 'text',
         # text: "create_good_msg"
