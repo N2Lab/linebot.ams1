@@ -150,7 +150,7 @@ class Bot25N2sekkatikunController < ApplicationController
     image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
 
     # ルート情報
-    route_map_url = "https://maps.google.co.jp/maps?q=#{url_encde(name)}&iwloc=A"
+    route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
     text = "「#{name}の情報だよ！"
