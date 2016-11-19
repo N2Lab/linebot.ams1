@@ -108,6 +108,8 @@ class Bot25N2sekkatikunController < ApplicationController
       altText: "せっかち君が先に調べたよ！",
       template: create_template_columns_by_entities(entities)
     }]
+    Rails.logger.debug("message=#{message.inspect}")
+    message
   end
   
   # 固有表現抽出結果から応答メッセージを組み立て
@@ -159,16 +161,16 @@ class Bot25N2sekkatikunController < ApplicationController
                 label: "ルート・地図",
                 uri: route_map_url
             },
-            {
-                type: "uri",
-                label: "周辺スポット",
-                uri: near_spots_url
-            },
-            {
-                type: "uri",
-                label: "周辺ランチ",
-                uri: near_lanch_url
-            },
+            # {
+                # type: "uri",
+                # label: "周辺スポット",
+                # uri: near_spots_url
+            # },
+            # {
+                # type: "uri",
+                # label: "周辺ランチ",
+                # uri: near_lanch_url
+            # },
         ]
     }     
     # {
