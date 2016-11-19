@@ -110,7 +110,7 @@ class Bot25N2sekkatikunController < ApplicationController
       altText: "せっかち君が先に調べたよ！",
       template: {
         :type => "carousel",
-        :columns => create_template_columns_by_entities(entities)
+        :columns => create_template_columns_by_entities(entities, text)
       }
     }]
     Rails.logger.debug("message=#{message.inspect}")
@@ -119,7 +119,7 @@ class Bot25N2sekkatikunController < ApplicationController
   
   # 固有表現抽出結果から応答メッセージを組み立て
   # column を返す
-  def create_template_columns_by_entities(entities)
+  def create_template_columns_by_entities(entities, all_text)
     messages = []
     max_loop = [1, entities.count].min # 常に1件にする 各処理で5吹き出しまでOKとするので
 #    max_loop = [5, entities.count].min
@@ -128,7 +128,7 @@ class Bot25N2sekkatikunController < ApplicationController
       # type で メッセージを変える
       case en["type"]
       when "LOCATION"
-        messages = create_location_msg(en)
+        messages = create_location_msg(en, all_text)
       # when "CONSUMER_GOOD"
         # messages << create_good_msg(en)
       else
@@ -142,7 +142,7 @@ class Bot25N2sekkatikunController < ApplicationController
   # 1ページ目 = name 地名のStreatViewImage, ルート・詳細情報など
   # 2ページ目 = name 関連スポット (Places API Web Service) 1個目, StreatViewImage, ルート・詳細情報
   # type=LOCATION
-  def create_location_msg(en)
+  def create_location_msg(en, all_text)
     name = en["name"]
     type = en["type"]
     templates = []
@@ -191,7 +191,8 @@ class Bot25N2sekkatikunController < ApplicationController
 
     # 2ページ目以降
     # まず Places API Web Service 検索
-    places = google_api_places_search_text(GOOGLE_API_KEY, name)
+    pl_text = all_text
+    places = google_api_places_search_text(GOOGLE_API_KEY, pl_text) # TODO nameかall_textか考える
 
     results = places.try(:fetch, "results", [])
     max_loop = [4, results.count].min # 
