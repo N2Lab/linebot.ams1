@@ -201,7 +201,7 @@ class Bot25N2sekkatikunController < ApplicationController
       # todo 緯度経度を利用  https://developers.google.com/places/web-service/search?hl=ja
       image_url = "https://maps.googleapis.com/maps/api/streetview?location=#{url_encode(name)}&size=900x600&key=#{GOOGLE_API_KEY}"
       route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
-      text = "周辺スポット「#{name}」の情報だよ！ #{pl.types.inspect}"
+      text = "周辺スポット「#{name}」の情報だよ！ #{pl["types"].join("-")}"
       templates << {
           thumbnailImageUrl: image_url,
           text: text,
