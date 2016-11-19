@@ -83,10 +83,10 @@ class Bot25N2sekkatikunController < ApplicationController
     # 個人でマッチなしは固定応答
     if entities.blank?
       # debug
-      messages << {
-        type: 'text',
-        text: res.inspect
-      }
+      # messages << {
+        # type: 'text',
+        # text: res.inspect
+      # }
     
       messages << {
         type: 'text',
@@ -190,22 +190,23 @@ class Bot25N2sekkatikunController < ApplicationController
   # end
 
   # その他デフォルト
-  # type=ORGANIZATION など
+  # type=ORGANIZATION,COMMON,EVENT など
   # wikipedia_urlがあればそのリンクと画像を返したい
   def create_default_msg(en)
     name = en["name"]
     type = en["type"]
-    wiki_url = "http://wikipedia.jp"
+    wiki_url = "http://www.google.co.jp/search?hl=ja&q=#{name}"
     image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
-    text = "ここはまるまるだね！まるまるまるまるだね"
+    text = "「#{name}」を調べたよ！"
     
-    if en["metadata"].blank?
-      # 
+    #wiki urlがあれば利用する
+    if en["metadata"].present?
+      wiki_url = en["metadata"]["wikipedia_url"] if en["metadata"]["wikipedia_url"].present?
     end
 
     {
-        thumbnailImageUrl: image_url,
-        title: "「#{name}」を調べたよ！",
+        # thumbnailImageUrl: image_url, # 一旦省略
+#        title: "「#{name}」を調べたよ！", # 一旦省略
         text: text,
         actions: [
             # {
