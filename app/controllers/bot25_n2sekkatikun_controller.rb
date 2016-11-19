@@ -66,7 +66,7 @@ class Bot25N2sekkatikunController < ApplicationController
   # 返信 親
   def execute_reply(event)
     text = event.message['text']
-    source_type = event.source['type']
+    source_type = event["source"]['type']
     messages = []
     
     # 1. call Google Cloud Natural Language API and parse
