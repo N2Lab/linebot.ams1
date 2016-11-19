@@ -146,16 +146,20 @@ class Bot25N2sekkatikunController < ApplicationController
     name = en["name"]
     type = en["type"]
     # TODO できれば毎回異なる画像を返したい 画像検索URLか
-    # 1. 画像検索
-    image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
+    # 1. 画像検索  google static map api を利用  https://syncer.jp/how-to-use-google-static-maps-api
+    # やっぱりストリートビューapiを利用する
+    image_url = "https://maps.googleapis.com/maps/api/streetview?location=#{url_encode(name)}&size=900x600&key=#{GOOGLE_API_KEY}"
+    # image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
 
-    # ルート情報
+    # アクション1 用ルート情報
     route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
+
+
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
-    text = "「#{name}の情報だよ！"
+    text = "「#{name}」の情報だよ！"
     {
-        # thumbnailImageUrl: image_url,
+        thumbnailImageUrl: image_url,
         # title: "「#{name}」を調べたよ！",
         text: text,
         actions: [
