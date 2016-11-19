@@ -222,6 +222,8 @@ class Bot25N2sekkatikunController < ApplicationController
         # text: "create_good_msg"
     # }
   end
+  # TODO postback を利用して投票機能をつける > 表示方法を考える
+  # ランチなどで もっと検索する方法を
 
   # def create_good_msg(en)
     # {
@@ -239,6 +241,8 @@ class Bot25N2sekkatikunController < ApplicationController
     wiki_url = "https://www.google.co.jp/search?hl=ja&q=#{name}"
     image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
     text = "「#{name}」を調べたよ！"
+
+    # TODO 何か画像を表示する
     
     #wiki urlがあれば利用する
     if en["metadata"].present?
