@@ -121,7 +121,8 @@ class Bot25N2sekkatikunController < ApplicationController
   # column を返す
   def create_template_columns_by_entities(entities)
     messages = []
-    max_loop = [5, entities.count].min
+    max_loop = [1, entities.count].min # 常に1件にする 各処理で5吹き出しまでOKとするので
+#    max_loop = [5, entities.count].min
     for i in 0..max_loop-1
       en = entities[i]
       # type で メッセージを変える
@@ -144,7 +145,8 @@ class Bot25N2sekkatikunController < ApplicationController
   def create_location_msg(en)
     name = en["name"]
     type = en["type"]
-
+    templates = []
+    
     # 1ページ目
     # 1. 画像検索  google static map api を利用  https://syncer.jp/how-to-use-google-static-maps-api
     # やっぱりストリートビューapiを利用する
@@ -159,7 +161,7 @@ class Bot25N2sekkatikunController < ApplicationController
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
     text = "「#{name}」の情報だよ！"
-    templates = {
+    templates << {
         thumbnailImageUrl: image_url,
         # title: "「#{name}」を調べたよ！",
         text: text,
