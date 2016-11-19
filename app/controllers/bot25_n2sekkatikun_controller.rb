@@ -144,7 +144,6 @@ class Bot25N2sekkatikunController < ApplicationController
   def create_location_msg(en)
     name = en["name"]
     type = en["type"]
-    templates = []
 
     # 1ページ目
     # 1. 画像検索  google static map api を利用  https://syncer.jp/how-to-use-google-static-maps-api
@@ -160,7 +159,7 @@ class Bot25N2sekkatikunController < ApplicationController
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
     text = "「#{name}」の情報だよ！"
-    templates << {
+    templates = {
         thumbnailImageUrl: image_url,
         # title: "「#{name}」を調べたよ！",
         text: text,
