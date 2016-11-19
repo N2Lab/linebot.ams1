@@ -106,7 +106,10 @@ class Bot25N2sekkatikunController < ApplicationController
     message = [{
       type: "template",
       altText: "せっかち君が先に調べたよ！",
-      template: create_template_columns_by_entities(entities)
+      template: {
+        :type => "carousel",
+        :columns => create_template_columns_by_entities(entities)
+      }
     }]
     Rails.logger.debug("message=#{message.inspect}")
     message
