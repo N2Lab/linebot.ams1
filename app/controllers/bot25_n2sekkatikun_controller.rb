@@ -195,7 +195,7 @@ class Bot25N2sekkatikunController < ApplicationController
   def create_default_msg(en)
     name = en["name"]
     type = en["type"]
-    wiki_url = "http://www.google.co.jp/search?hl=ja&q=#{name}"
+    wiki_url = "https://www.google.co.jp/search?hl=ja&q=#{name}"
     image_url = "https://lh4.ggpht.com/mJDgTDUOtIyHcrb69WM0cpaxFwCNW6f0VQ2ExA7dMKpMDrZ0A6ta64OCX3H-NMdRd20=w300-rw"
     text = "「#{name}」を調べたよ！"
     
