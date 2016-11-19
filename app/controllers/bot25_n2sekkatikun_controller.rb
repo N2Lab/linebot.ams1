@@ -146,7 +146,7 @@ class Bot25N2sekkatikunController < ApplicationController
     name = en["name"]
     type = en["type"]
     templates = []
-    
+
     # 1ページ目
     # 1. 画像検索  google static map api を利用  https://syncer.jp/how-to-use-google-static-maps-api
     # やっぱりストリートビューapiを利用する
@@ -192,6 +192,28 @@ class Bot25N2sekkatikunController < ApplicationController
     # 2ページ目以降
     # まず Places API Web Service 検索
     places = google_api_places_search_text(GOOGLE_API_KEY, name)
+
+    results = places.try(:fetch, "results", [])
+    max_loop = [4, results.count].min # 
+    for i in 0..max_loop-1
+      pl = results[i]
+      name = pl["name"]
+      # todo 緯度経度を利用  https://developers.google.com/places/web-service/search?hl=ja
+      image_url = "https://maps.googleapis.com/maps/api/streetview?location=#{url_encode(name)}&size=900x600&key=#{GOOGLE_API_KEY}"
+      route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
+      text = "周辺スポット「#{name}」の情報だよ！ #{types.join("-")}"
+      templates << {
+          thumbnailImageUrl: image_url,
+          text: text,
+          actions: [
+              {
+                  type: "uri",
+                  label: "ルート・地図",
+                  uri: route_map_url
+              },
+          ]
+      }
+    end
 
     templates
     # {
