@@ -36,6 +36,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'line-bot-api'
 
+gem 'httpclient', "2.4.0"
+
 gem 'responders'
 gem 'sass-rails', '~> 5.0'
 
