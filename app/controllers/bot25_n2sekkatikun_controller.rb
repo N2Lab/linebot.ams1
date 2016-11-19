@@ -160,7 +160,7 @@ class Bot25N2sekkatikunController < ApplicationController
 
     near_spots_url = "http://map.google.jp"
     near_lanch_url = "http://map.google.jp"
-    text = "「#{name}」の情報だよ！"
+    text = "「#{name}」の情報だよ！"[0,59]
     templates << {
         thumbnailImageUrl: image_url,
         # title: "「#{name}」を調べたよ！",
@@ -201,7 +201,7 @@ class Bot25N2sekkatikunController < ApplicationController
       # todo 緯度経度を利用  https://developers.google.com/places/web-service/search?hl=ja
       image_url = "https://maps.googleapis.com/maps/api/streetview?location=#{url_encode(name)}&size=900x600&key=#{GOOGLE_API_KEY}"
       route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
-      text = "周辺スポット「#{name}」の情報だよ！ #{pl["types"].join("-")}"
+      text = "周辺スポット「#{name}」の情報だよ！ #{pl["types"].join("-")}"[0,59]
       templates << {
           thumbnailImageUrl: image_url,
           text: text,
