@@ -62,7 +62,7 @@ class Bot26N2bokashuController < ApplicationController
   end
   
   # テキストメッセージ応答メイン
-  def reply_message(event)
+  def execute_text(event)
     # ランダムメッセージ
     msgs = [
       "使い方",
