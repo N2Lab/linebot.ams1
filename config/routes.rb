@@ -75,8 +75,11 @@ Rails.application.routes.draw do
   post 'bot100/index'
   get 'bot100/show' # PC/SPブラウザ向け閲覧ページ
   post 'bot100/fetch' # ajax定期フェッチ
-  
-  
+
+  # webhook git and pull
+  get 'pullgit/index'
+  post 'pullgit/index'
+
   
   # resque
   mount Resque::Server.new, at: "/resque"
