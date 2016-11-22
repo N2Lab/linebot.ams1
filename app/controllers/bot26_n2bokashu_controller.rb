@@ -86,14 +86,50 @@ class Bot26N2bokashuController < ApplicationController
           # tf = Tempfile.open("content")
           # tf.write(response.body)
 
-    # 応答メッセージ返信
-    image_url = "https://pbs.twimg.com/media/Cw_MqqGVEAAPL6F.jpg" # 仮
-    [{
-      type: "image",
-      originalContentUrl: image_url,
-      previewImageUrl: image_url
-      }
-    ]
+    columns = []
+    
+    image_list[0,5].each do |img|
+      image_url = "https://pbs.twimg.com/media/Cw_MqqGVEAAPL6F.jpg"
+      Rails.logger.debug("add image_url=#{image_url}")
+      columns << {
+            thumbnailImageUrl: image_url,
+            title: "xxxx風",
+            # text: image_url,
+            actions: [
+                {
+                    type: "postback",
+                    label: "他の加工をみる",
+                    data: "action=research"
+                },
+                {
+                    type: "uri",
+                    label: "ダウンロード",
+                    uri: image_url
+                }
+            ]
+        }        
+    end
+
+    # カルーセルで出力
+    template = {
+      type: "carousel",
+      columns: columns
+    }
+#     
+    message = [{
+      type: "template",
+      altText: "こんな写真どう？",
+      template: template
+    }]
+
+    # # 応答メッセージ返信 例
+    # image_url = "https://pbs.twimg.com/media/Cw_MqqGVEAAPL6F.jpg" # 仮
+    # [{
+    #   type: "image",
+    #   originalContentUrl: image_url,
+    #   previewImageUrl: image_url
+    #   }
+    # ]
   end
 
 end
