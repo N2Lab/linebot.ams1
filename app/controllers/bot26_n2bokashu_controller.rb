@@ -86,13 +86,13 @@ class Bot26N2bokashuController < ApplicationController
     msg_id = event.message['id']
 
     # get image to file. 面倒なのでs3 nfs?
-    response = client.get_message_content(event.message['id'])
-    tf = Tempfile.open("content")
-    tf.write(response.body)
-
-    # response = client.get_message_content(msg_id)
-    # tf = Tempfile.open("content_#{msg_id}")
+    # response = client.get_message_content(event.message['id'])
+    # tf = Tempfile.open("content")
     # tf.write(response.body)
+
+    response = client.get_message_content(msg_id)
+    tf = Tempfile.open("content_#{msg_id}",'wb')
+    tf.write(response.body)
     @uploader ||= ImageUploader.new
     @uploader.store_dir = "public/#{BOT_ID}/#{mid}/#{msg_id}/"
     @uploader.store!(tf)
