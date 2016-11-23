@@ -8,6 +8,7 @@ CarrierWave.configure do |config|
 
   config.fog_directory = 'img.n2bot.net'
   config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/img.n2bot.net'
+  config.cache_dir = "#{Rails.root}/tmp/uploads"
   # case Rails.env
   #   when 'production'
   #     config.fog_directory = 'img.n2bot.net'

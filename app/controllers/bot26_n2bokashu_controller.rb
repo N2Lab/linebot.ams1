@@ -12,6 +12,7 @@ class Bot26N2bokashuController < ApplicationController
   require 'kconv'
   require 'active_support/core_ext/hash/conversions'
   require 'erb'
+  require 'rmagick'
   include ERB::Util
 
   BOT_ID = 26
@@ -81,10 +82,28 @@ class Bot26N2bokashuController < ApplicationController
 
   # 画像メッセージ応答メイン
   def execute_image(event)
-    # 面倒なのでs3 nfs?
-          # response = client.get_message_content(event.message['id'])
-          # tf = Tempfile.open("content")
-          # tf.write(response.body)
+    mid = event['source']['userId']
+    msg_id = event.message['id']
+
+    # get image to file. 面倒なのでs3 nfs?
+    response = client.get_message_content(msg_id)
+    tf = Tempfile.open("content_#{msg_id}")
+    tf.write(response.body)
+    @uploader ||= ImageUploader.new
+    @uploader.store_dir = "public/#{BOT_ID}/#{mid}/#{msg_id}/"
+    @uploader.store!(tf)
+    Rails.logger.info("uploaded path=#{tf.path}")
+
+    # create Magick:Image
+    image = Magick::Image.read(tf.path).first
+
+    # do convert
+
+    # ファイルに保存
+    # image.write(‘/path/to/image.jpg’)
+
+    # TODO delete org file
+
 
     columns = []
     image_list = [nil,nil,nil]
