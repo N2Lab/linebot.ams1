@@ -151,9 +151,10 @@ class Bot26N2bokashuController < ApplicationController
   # 引数のロジックでimgを変換してアップしcolumnsを返す
   def convert_image(conv, img, mid, msg_id, org_img_path, times)
     conv.each_with_index do |c, i|
-      img2 = eval(c) if i > 0 # i=0は名前
-      img.destroy!
-      img = img2
+      img = eval(c) if i > 0 # i=0は名前
+      # img.destroy!
+      # img = img2
+      # TODO メモリ解放
     end
 
     new_f = Tempfile.open("img_#{msg_id}_#{times}")
