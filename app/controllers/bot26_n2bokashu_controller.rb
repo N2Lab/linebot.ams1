@@ -94,8 +94,8 @@ class Bot26N2bokashuController < ApplicationController
       Rails.logger.debug("add image_url=#{image_url}")
       columns << {
             thumbnailImageUrl: image_url,
-            title: "xxxx風",
-            # text: image_url,
+            # title: "xxxx風",
+            text: "xxxx風",
             actions: [
                 {
                     type: "postback",
