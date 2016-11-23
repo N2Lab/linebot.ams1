@@ -88,8 +88,8 @@ class Bot26N2bokashuController < ApplicationController
   CONVERTS = [
     # ["ふわっと", "img.blur_image(10.0, 5.0)"],
     # ["おっとり", "img.blur_image(10.0, 10.0)"],
-    ["オールドレンズA", "img.radial_blur(6.0)"],
-    ["オールドレンズB", "img.radial_blur(15.0)"],
+    ["オールドレンズA", "img = img.radial_blur(6.0)"],
+    ["オールドレンズB", "img = img.radial_blur(15.0)"],
 
     # ぼかしマスクあり  
     # ["上から見た", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # GradMask 上ぼけ 下なし 上白>下黒マスク, ぼかし
@@ -99,6 +99,7 @@ class Bot26N2bokashuController < ApplicationController
 #    ["GradMask 中心からぼかすマスク(白背景,水色)", "mask = Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
 #    ["GradMask 中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
     # ["GradMask 1中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 5.0)"], # 少しぼける
+    ["ノーマル", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], #
     ["ノーマル", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], #
     ["めちゃぼけ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(40.0, 30.0)"], #
     ["オールドレンズ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.radial_blur(12.0)"], #
