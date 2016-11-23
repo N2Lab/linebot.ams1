@@ -117,9 +117,10 @@ class Bot26N2bokashuController < ApplicationController
     org_img = Magick::Image.read(tf.path).first
 
     # blur sample
-    new_img = org_img.blur_image(20.0, 10.0) # ブラーエフェクトを適用　戻り値に新しい画像が戻るよ
+    new_img = eval("org_img.blur_image(20.0, 10.0)") # ブラーエフェクトを適用　戻り値に新しい画像が戻るよ
+    # new_img = org_img.blur_image(20.0, 10.0) # ブラーエフェクトを適用　戻り値に新しい画像が戻るよ
     # new_f = File.open("/tmp/cv_#{msg_id}","wb"){|f| f << new_img.to_blob }
-    new_f = Tempfile.open("content_#{msg_id}_2")
+    new_f = Tempfile.open("img_#{msg_id}_1")
     new_f.binmode
     new_f.write(new_img.to_blob)
 
