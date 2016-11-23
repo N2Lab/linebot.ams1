@@ -87,8 +87,9 @@ class Bot26N2bokashuController < ApplicationController
           # tf.write(response.body)
 
     columns = []
+    image_list = [nil,nil,nil]
     
-    image_list[0,5].each do |img|
+    image_list.each do |img|
       image_url = "https://pbs.twimg.com/media/Cw_MqqGVEAAPL6F.jpg"
       Rails.logger.debug("add image_url=#{image_url}")
       columns << {
