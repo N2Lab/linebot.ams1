@@ -140,7 +140,7 @@ class Bot26N2bokashuController < ApplicationController
     columns = []
 
     # 変換ロジック5個抽出
-    convs = CONVERTS.sample(3) # 5だと重い
+    convs = CONVERTS.sample(1) # 5だと重い , 3 でもだめ,,
     convs.each_with_index do |conv,i|
       columns << convert_image(conv, org_img, mid, msg_id, tf.path, i)
     end
