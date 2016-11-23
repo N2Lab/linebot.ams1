@@ -90,7 +90,7 @@ class Bot26N2bokashuController < ApplicationController
     # ["オールドレンズB", "img.radial_blur(40.0)"],
 
     # 合成
-    ["夢の中", "img.radial_blur(20.0)", "img.composite(img, 30, 30, Magick::OverCompositeOp)"],
+    ["夢の中", "img.composite(img, 30, 30, Magick::OverCompositeOp)"],
 
     # selective_blur_channel > 保留 全体がぼけてしまう
     # ["ポートレート1", "img.selective_blur_channel(10.0, 5.0, 30)"],
