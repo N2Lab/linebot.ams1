@@ -81,7 +81,7 @@ class Bot26N2bokashuController < ApplicationController
   end
 
   CONVERTS = [
-    ["夢の国1", "img.blur_image(20.0, 10.0)"],
+    ["夢の国1", "img.blur_image(5.0, 2.5)"],
     ["夢の国2", "img.blur_image(20.0, 10.0)"],
     ["夢の国3", "img.blur_image(20.0, 10.0)"],
     ["夢の国4", "img.blur_image(20.0, 10.0)"],
@@ -134,76 +134,6 @@ class Bot26N2bokashuController < ApplicationController
       columns << convert_image(conv, org_img, mid, msg_id, tf.path, i)
     end
 
-
-
-    # # create Magick:Image
-    # org_img = Magick::Image.read(tf.path).first
-
-    # # blur sample
-    # new_img = eval("org_img.blur_image(20.0, 10.0)") # ブラーエフェクトを適用　戻り値に新しい画像が戻るよ
-    # # new_img = org_img.blur_image(20.0, 10.0) # ブラーエフェクトを適用　戻り値に新しい画像が戻るよ
-    # # new_f = File.open("/tmp/cv_#{msg_id}","wb"){|f| f << new_img.to_blob }
-    # new_f = Tempfile.open("img_#{msg_id}_1")
-    # new_f.binmode
-    # new_f.write(new_img.to_blob)
-
-    # @uploader.store!(new_f)
-    # Rails.logger.info("new_f = #{new_f.inspect}")
-    # filename = File.basename(new_f)
-
-    # # Rails.logger.info("store_res = #{store_res.inspect}")
-    # image_url = "https://img.n2bot.net/bot26/#{mid}/#{msg_id}/#{filename}"
-    # columns << {
-    #       thumbnailImageUrl: image_url,
-    #       # title: "xxxx風",
-    #       text: "xxxx風",
-    #       actions: [
-    #           {
-    #               type: "postback",
-    #               label: "他の加工をみる",
-    #               data: "action=research"
-    #           },
-    #           {
-    #               type: "uri",
-    #               label: "ダウンロード",
-    #               uri: image_url
-    #           }
-    #       ]
-    #   }        
-
-
-    # # do convert
-
-    # # ファイルに保存
-    # # image.write(‘/path/to/image.jpg’)
-
-    # # TODO delete org file
-
-
-    # image_list = [nil,nil,nil]
-    
-    # image_list.each do |img|
-    #   image_url = "https://pbs.twimg.com/media/Cw_MqqGVEAAPL6F.jpg"
-    #   Rails.logger.debug("add image_url=#{image_url}")
-    #   columns << {
-    #         thumbnailImageUrl: image_url,
-    #         # title: "xxxx風",
-    #         text: "xxxx風",
-    #         actions: [
-    #             {
-    #                 type: "postback",
-    #                 label: "他の加工をみる",
-    #                 data: "action=research"
-    #             },
-    #             {
-    #                 type: "uri",
-    #                 label: "ダウンロード",
-    #                 uri: image_url
-    #             }
-    #         ]
-    #     }        
-    # end
-
     # カルーセルで出力
     template = {
       type: "carousel",
@@ -216,29 +146,25 @@ class Bot26N2bokashuController < ApplicationController
       template: template
     }]
 
-    # # 応答メッセージ返信 例
-    # image_url = "https://pbs.twimg.com/media/Cw_MqqGVEAAPL6F.jpg" # 仮
-    # [{
-    #   type: "image",
-    #   originalContentUrl: image_url,
-    #   previewImageUrl: image_url
-    #   }
-    # ]
   end
 
   # 引数のロジックでimgを変換してアップしcolumnsを返す
   def convert_image(conv, img, mid, msg_id, org_img_path, times)
     conv.each_with_index do |c, i|
-      img = eval(c) if i > 0 # i=0は名前
+      img2 = eval(c) if i > 0 # i=0は名前
+      img.destroy!
+      img = img2
     end
 
     new_f = Tempfile.open("img_#{msg_id}_#{times}")
     new_f.binmode
     new_f.write(img.to_blob)
+    img.destroy!
 
     @uploader ||= ::ImageUploader.new
     @uploader.store_dir = "public/bot#{BOT_ID}/#{mid}/#{msg_id}/"
     @uploader.store!(new_f)
+
     Rails.logger.info("conv = #{conv.inspect}")
     Rails.logger.info("new_f = #{new_f.inspect}")
     filename = File.basename(new_f)
