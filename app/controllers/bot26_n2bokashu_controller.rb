@@ -124,7 +124,28 @@ class Bot26N2bokashuController < ApplicationController
 
     @uploader.store!(new_f)
     Rails.logger.info("new_f = #{new_f.inspect}")
-    Rails.logger.info("store_res = #{store_res.inspect}")
+    filename = File.basename(new_f)
+
+    # Rails.logger.info("store_res = #{store_res.inspect}")
+    image_url = "https://img.n2bot.net/bot26/#{mid}/#{msg_id}/#{filename}"
+    columns << {
+          thumbnailImageUrl: image_url,
+          # title: "xxxx風",
+          text: "xxxx風",
+          actions: [
+              {
+                  type: "postback",
+                  label: "他の加工をみる",
+                  data: "action=research"
+              },
+              {
+                  type: "uri",
+                  label: "ダウンロード",
+                  uri: image_url
+              }
+          ]
+      }        
+
 
     # do convert
 
