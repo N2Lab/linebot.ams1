@@ -101,7 +101,8 @@ class Bot26N2bokashuController < ApplicationController
     # ["下から見た", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#000', '#fff')) { self.background_color = 'white'; self.format = 'PNG'})", "img.blur_image(30.0, 5.0)"], # GradMask 下ぼけ 上なし 上白>下黒マスク, ぼかし
 # TODO img = から　eval記載とする
 #    ["GradMask 中心からぼかすマスク(白背景,水色)", "mask = Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
-    ["GradMask 中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
+#    ["GradMask 中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
+    ["GradMask 中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask", "img = img.add_compose_mask(img)", "img = img.blur_image(30.0, 5.0)"], # 
 
   
     # 合成 > あとで
