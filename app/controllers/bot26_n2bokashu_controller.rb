@@ -159,7 +159,7 @@ class Bot26N2bokashuController < ApplicationController
     new_f = Tempfile.open("img_#{msg_id}_#{times}")
     new_f.binmode
     new_f.write(img.to_blob)
-    img.destroy!
+    # img.destroy!
 
     @uploader ||= ::ImageUploader.new
     @uploader.store_dir = "public/bot#{BOT_ID}/#{mid}/#{msg_id}/"
