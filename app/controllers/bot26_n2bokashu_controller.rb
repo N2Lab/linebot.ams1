@@ -52,9 +52,9 @@ class Bot26N2bokashuController < ApplicationController
           response = client.reply_message(event['replyToken'], message) unless message.blank?
           
         end
-      # when Line::Bot::Event::Postback # 回答したので答え合わせ
-        # message = execute_answer_check(event)
-        # response = client.reply_message(event['replyToken'], message)
+      when Line::Bot::Event::Postback # 他の画像を変換
+        message = execute_postback(event)
+        response = client.reply_message(event['replyToken'], message)
       end
     }
     
