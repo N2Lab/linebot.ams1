@@ -91,7 +91,8 @@ class Bot26N2bokashuController < ApplicationController
 
     # マスクxぼかし を試す
     # まずはグラディエーションを作成
-    ["Gradiation", "Magick::Image.new(100,100,Magick::GradientFill.new(0, 0, 0, 100, '#900', '#000')) { self.background_color = 'red'; self.format = 'PNG' }"],
+#    ["Gradiation", "Magick::Image.new(100,100,Magick::GradientFill.new(0, 0, 0, 100, '#900', '#000')) { self.background_color = 'red'; self.format = 'PNG' }"], # 左右黒
+    ["Gradiation", "Magick::Image.new(100,100,Magick::GradientFill.new(0, 0, img.columns, img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' }"], # 左右黒
 
     # 合成 > あとで
 #    ["夢の中", "img.composite(img, 30, 30, Magick::OverCompositeOp)"], # 30,30右下に重ねる
