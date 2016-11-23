@@ -84,15 +84,18 @@ class Bot26N2bokashuController < ApplicationController
   # http://imagemagick.rulez.jp/archives/432
   # (radius)は、ぼかすピクセル範囲、(sigma)はぼかし量に影響を与えます。
   CONVERTS = [
-    ["ふわっと", "img.blur_image(10.0, 5.0)"],
-    ["おっとり", "img.blur_image(10.0, 10.0)"],
-    ["オールドレンズA", "img.radial_blur(20.0)"],
-    ["オールドレンズB", "img.radial_blur(40.0)"],
-    ["ポートレート1", "img.selective_blur_channel(10.0, 5.0, 1)"],
-    ["ポートレート2", "img.selective_blur_channel(10.0, 5.0, 2)"],
-    ["ポートレート3", "img.selective_blur_channel(10.0, 5.0, 3)"],
-    ["ポートレート4", "img.selective_blur_channel(10.0, 5.0, 4)"],
-    ["ポートレート5", "img.selective_blur_channel(10.0, 5.0, 5)"],
+    # ["ふわっと", "img.blur_image(10.0, 5.0)"],
+    # ["おっとり", "img.blur_image(10.0, 10.0)"],
+    # ["オールドレンズA", "img.radial_blur(20.0)"],
+    # ["オールドレンズB", "img.radial_blur(40.0)"],
+    # selective_blur_channel
+    ["ポートレート1", "img.selective_blur_channel(10.0, 5.0, 30)"],
+    ["ポートレート2", "img.selective_blur_channel(10.0, 5.0, 50)"],
+    ["ポートレート3", "img.selective_blur_channel(10.0, 5.0, 60)"],
+    ["ポートレート4", "img.selective_blur_channel(10.0, 5.0, 70)"],
+    ["ポートレート5", "img.selective_blur_channel(10.0, 5.0, 80)"],
+    ["ポートレート6", "img.selective_blur_channel(10.0, 10.0, 30)"],
+    ["ポートレート7", "img.selective_blur_channel(10.0, 10.0, 50)"],
     # ["夢の国5", "img.blur_image(20.0, 10.0)"],
     # ["夢の国6", "img.blur_image(20.0, 10.0)"],
     # ["夢の国7", "img.blur_image(20.0, 10.0)"],
