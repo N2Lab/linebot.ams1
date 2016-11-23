@@ -94,7 +94,7 @@ class Bot26N2bokashuController < ApplicationController
     tf = Tempfile.open("content_#{msg_id}")
     tf.binmode
     tf.write(response.body)
-    @uploader ||= ImageUploader.new
+    @uploader ||= ::ImageUploader.new
     @uploader.store_dir = "public/#{BOT_ID}/#{mid}/#{msg_id}/"
     @uploader.store!(tf)
     Rails.logger.info("uploaded path=#{tf.path}")
