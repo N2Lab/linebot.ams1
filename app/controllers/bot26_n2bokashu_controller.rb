@@ -95,12 +95,32 @@ class Bot26N2bokashuController < ApplicationController
     tf.binmode
     tf.write(response.body)
     @uploader ||= ::ImageUploader.new
-    @uploader.store_dir = "public/#{BOT_ID}/#{mid}/#{msg_id}/"
-    @uploader.store!(tf)
+    @uploader.store_dir = "public/bot#{BOT_ID}/#{mid}/#{msg_id}/"
+    @uploader.store!(tf) # up to s3
     Rails.logger.info("uploaded path=#{tf.path}")
 
+    # original image s3 url
+    # https://s3-ap-northeast-1.amazonaws.com/img.n2bot.net/public/bot26/Ueb7eed3a750376f6d5b47b73bbc5fbe4/5246240367991/content_524624036799120161123-6511-1jnbhvp
+
+    # original image cf url
+    # https://img.n2bot.net/bot26/Ueb7eed3a750376f6d5b47b73bbc5fbe4/5246240367991/content_524624036799120161123-6511-1jnbhvp
+
+    # example for uploader
+    # product.image.url          # => '/url/to/file.png'
+    # product.image.current_path # => 'path/to/file.png'
+    # prodcut.image.identifier   # => 'file.png'
+    # product.image?   # => imageがあるかを true or false で返す
+
+
     # create Magick:Image
-    image = Magick::Image.read(tf.path).first
+    org_img = Magick::Image.read(tf.path).first
+
+    # blur sample
+    new_img = org_img.blur_image(20.0, 10.0) # ブラーエフェクトを適用　戻り値に新しい画像が戻るよ
+    new_f = File.open("/tmp/cv_#{msg_id}","wb"){|f| f << new_img.to_blob }
+    store_res = @uploader.store!(new_f)
+    Rails.logger.info("new_f = #{new_f.inspect}")
+    Rails.logger.info("store_res = #{store_res.inspect}")
 
     # do convert
 
