@@ -104,23 +104,23 @@ class Bot26N2bokashuController < ApplicationController
 #    ["GradMask 中心からぼかすマスク(白背景,水色)", "mask = Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
 #    ["GradMask 中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
     # ["GradMask 1中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 5.0)"], # 少しぼける
-    # ["ノーマル", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], #
-    # ["めちゃぼけ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(40.0, 30.0)"], #
-    # ["オールドレンズ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.radial_blur(12.0)"], #
-    # ["ハイキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.modulate(150, 150)"], #
-    # ["ローキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.modulate(60, 50)"], #
-    # ["モノクロ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace"], #
-    # ["モノクロハイキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.modulate(150, 150)"], #
-    # ["モノクロローキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.modulate(60, 50)"], #
-    # ["セピア", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.sepiatone(80)"], #
-    # ["魔女", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = HWBColorspace"], # 紫になる
-    # ["すりガラスA", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(3)"], # # Spread 1
-    # ["すりガラスB", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(5)"], # # Spread 1
-    # ["すりガラスC", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(10)"], # # Spread 1
+    ["ノーマル", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], #
+    ["めちゃぼけ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(40.0, 30.0)"], #
+    ["オールドレンズ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.radial_blur(12.0)"], #
+    ["ハイキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.modulate(150, 150)"], #
+    ["ローキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.modulate(60, 50)"], #
+    ["モノクロ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace"], #
+    ["モノクロハイキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.modulate(150, 150)"], #
+    ["モノクロローキー", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.modulate(60, 50)"], #
+    ["セピア", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.sepiatone(80)"], #
+    ["魔女", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = HWBColorspace"], # 紫になる
+    ["すりガラスA", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(3)"], # # Spread 1
+    ["すりガラスB", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(5)"], # # Spread 1
+    ["すりガラスC", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(10)"], # # Spread 1
 
-    ["夕焼け", "img = img.colorize(0.8, 0.5, 0.5, '#FFA030')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
-    ["寒い冬", "img = img.colorize(0.5, 0.6, 0.8, '#2040E0')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
-    ["新緑", "img = img.colorize(0.8, 0.5, 0.5, '#20FF20')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
+    ["夕焼け", "img = img.colorize(0.8, 0.5, 0.5, '#E09030')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
+    ["寒い冬", "img = img.colorize(0.5, 0.6, 0.8, '#2040D0')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
+    ["新緑", "img = img.colorize(0.8, 0.5, 0.5, '#20DD20')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
 
     # ["寒い冬", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(10)"], # # Spread 1
     # ["新緑", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(10)"], # # Spread 1
@@ -165,6 +165,8 @@ class Bot26N2bokashuController < ApplicationController
     @uploader.store!(tf) # up to s3
     Rails.logger.info("uploaded path=#{tf.path}")
 
+    create_convert_img_message(mid, msg_id, tf.path)
+
     # original image s3 url
     # https://s3-ap-northeast-1.amazonaws.com/img.n2bot.net/public/bot26/Ueb7eed3a750376f6d5b47b73bbc5fbe4/5246240367991/content_524624036799120161123-6511-1jnbhvp
 
@@ -178,14 +180,54 @@ class Bot26N2bokashuController < ApplicationController
     # product.image?   # => imageがあるかを true or false で返す
 
     # create Magick:Image
-    org_img = Magick::Image.read(tf.path).first
+#     org_img = Magick::Image.read(tf.path).first
+
+#     columns = []
+
+#     # 変換ロジック5個抽出
+#     convs = CONVERTS.sample(2) # 5だと重い , 3 でもだめ,,
+#     convs.each_with_index do |conv,i|
+#       columns << convert_image(conv, org_img, mid, msg_id, tf.path, i)
+#     end
+
+#     # カルーセルで出力
+#     template = {
+#       type: "carousel",
+#       columns: columns
+#     }
+# #     
+#     message = [{
+#       type: "template",
+#       altText: "こんな写真どう？",
+#       template: template
+#     }]
+
+  end
+
+  # postback 応答メイン
+  # 最後に変換した画像を再度変換する
+  def execute_postback(event)
+    mid = event['source']['userId']
+    postback = event["postback"]
+    data = eval(postback["data"])
+    Rails.logger.debug("data = #{data.inspect}")
+    tmp_file_path = data[:org_img_path]
+    msg_id = data[:msg_id]
+
+    create_convert_img_message(mid, msg_id, tmp_file_path)
+
+  end
+
+  def create_convert_img_message(mid, msg_id, tmp_file_path)
+    # create Magick:Image for org image
+    org_img = Magick::Image.read(tmp_file_path).first
 
     columns = []
 
     # 変換ロジック5個抽出
-    convs = CONVERTS.sample(1) # 5だと重い , 3 でもだめ,,
+    convs = CONVERTS.sample(2) # 5だと重い , 3 でもだめ,,
     convs.each_with_index do |conv,i|
-      columns << convert_image(conv, org_img, mid, msg_id, tf.path, i)
+      columns << convert_image(conv, org_img, mid, msg_id, tmp_file_path, i)
     end
 
     # カルーセルで出力
