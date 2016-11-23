@@ -100,7 +100,7 @@ class Bot26N2bokashuController < ApplicationController
     # # ["GradMask 下ぼけ 上なし1", "Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' }"], # 左ボケ 右なし
     # ["下から見た", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#000', '#fff')) { self.background_color = 'white'; self.format = 'PNG'})", "img.blur_image(30.0, 5.0)"], # GradMask 下ぼけ 上なし 上白>下黒マスク, ぼかし
 
-    ["GradMask 中心からぼかすマスク", "Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'}.dup"], # 
+    ["GradMask 中心からぼかすマスク", "Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'; self.format = 'PNG'}.dup"], # 
     # ["GradMask 下ぼけ 上なし1", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
     # ["GradMask 下ぼけ 上なし2", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
     # ["GradMask 下ぼけ 上なし3", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
