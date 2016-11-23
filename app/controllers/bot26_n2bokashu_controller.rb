@@ -36,6 +36,7 @@ class Bot26N2bokashuController < ApplicationController
     events = client.parse_events_from(body)
     response = nil
     events.each { |event|
+      Rails.logger.info("event.class=#{event.class}")
       case event
       when Line::Bot::Event::Follow
           # message = execute_start_map(event, true)
