@@ -80,16 +80,24 @@ class Bot26N2bokashuController < ApplicationController
     ]
   end
 
+  # 変換ロジック定義
+  # http://imagemagick.rulez.jp/archives/432
+  # (radius)は、ぼかすピクセル範囲、(sigma)はぼかし量に影響を与えます。
   CONVERTS = [
-    ["夢の国1", "img.blur_image(5.0, 2.5)"],
-    ["夢の国2", "img.blur_image(20.0, 10.0)"],
-    ["夢の国3", "img.blur_image(20.0, 10.0)"],
-    ["夢の国4", "img.blur_image(20.0, 10.0)"],
-    ["夢の国5", "img.blur_image(20.0, 10.0)"],
-    ["夢の国6", "img.blur_image(20.0, 10.0)"],
-    ["夢の国7", "img.blur_image(20.0, 10.0)"],
-    ["夢の国8", "img.blur_image(20.0, 10.0)"],
-    ["夢の国9", "img.blur_image(20.0, 10.0)"],
+    ["ふわっと", "img.blur_image(10.0, 5.0)"],
+    ["おっとり", "img.blur_image(10.0, 10.0)"],
+    ["オールドレンズA", "img.radial_blur(20.0)"],
+    ["オールドレンズB", "img.radial_blur(40.0)"],
+    ["ポートレート1", "img.selective_blur_channel(10.0, 5.0, 1)"],
+    ["ポートレート2", "img.selective_blur_channel(10.0, 5.0, 2)"],
+    ["ポートレート3", "img.selective_blur_channel(10.0, 5.0, 3)"],
+    ["ポートレート4", "img.selective_blur_channel(10.0, 5.0, 4)"],
+    ["ポートレート5", "img.selective_blur_channel(10.0, 5.0, 5)"],
+    # ["夢の国5", "img.blur_image(20.0, 10.0)"],
+    # ["夢の国6", "img.blur_image(20.0, 10.0)"],
+    # ["夢の国7", "img.blur_image(20.0, 10.0)"],
+    # ["夢の国8", "img.blur_image(20.0, 10.0)"],
+    # ["夢の国9", "img.blur_image(20.0, 10.0)"],
   ]
 
   # 画像メッセージ応答メイン
