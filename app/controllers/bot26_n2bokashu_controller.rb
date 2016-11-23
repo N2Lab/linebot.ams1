@@ -111,6 +111,7 @@ class Bot26N2bokashuController < ApplicationController
     # prodcut.image.identifier   # => 'file.png'
     # product.image?   # => imageがあるかを true or false で返す
 
+    columns = []
 
     # create Magick:Image
     org_img = Magick::Image.read(tf.path).first
@@ -155,7 +156,6 @@ class Bot26N2bokashuController < ApplicationController
     # TODO delete org file
 
 
-    columns = []
     image_list = [nil,nil,nil]
     
     image_list.each do |img|
