@@ -123,12 +123,15 @@ class Bot26N2bokashuController < ApplicationController
     # prodcut.image.identifier   # => 'file.png'
     # product.image?   # => imageがあるかを true or false で返す
 
+    # create Magick:Image
+    org_img = Magick::Image.read(tf.path).first
+
     columns = []
 
     # 変換ロジック5個抽出
     convs = CONVERTS.sample(5)
     convs.each_with_index do |conv,i|
-      columns << convert_image(conv, org_img)
+      columns << convert_image(conv, org_img, mid, msg_id)
     end
 
 
@@ -224,7 +227,8 @@ class Bot26N2bokashuController < ApplicationController
   end
 
   # 引数のロジックでimgを変換してアップしcolumnsを返す
-  def convert_image(conv, img, msg_id)
+  def convert_image(conv, img, mid, msg_id)
+    org_img_path = img.path
     conv.each_with_index do |c, i|
       img = eval(c) if i > 0 # i=0は名前
     end
@@ -250,7 +254,7 @@ class Bot26N2bokashuController < ApplicationController
               {
                   type: "postback",
                   label: "他の加工をみる",
-                  data: "action=research"
+                  data: {:action => "other", :mid => mid, :msg_id => msg_id, :org_img_path => org_img_path}.to_s
               },
               {
                   type: "uri",
