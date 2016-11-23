@@ -51,6 +51,8 @@ gem 'twitter-bootstrap3-rails'
 
 gem "rmagick", '~> 2.13.1', :require => 'RMagick'
 
+gem 'fog'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
