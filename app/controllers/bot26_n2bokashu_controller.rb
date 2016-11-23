@@ -131,7 +131,7 @@ class Bot26N2bokashuController < ApplicationController
     # 変換ロジック5個抽出
     convs = CONVERTS.sample(5)
     convs.each_with_index do |conv,i|
-      columns << convert_image(conv, org_img, mid, msg_id)
+      columns << convert_image(conv, org_img, mid, msg_id, tf.path)
     end
 
 
@@ -227,8 +227,7 @@ class Bot26N2bokashuController < ApplicationController
   end
 
   # 引数のロジックでimgを変換してアップしcolumnsを返す
-  def convert_image(conv, img, mid, msg_id)
-    org_img_path = img.path
+  def convert_image(conv, img, mid, msg_id, org_img_path)
     conv.each_with_index do |c, i|
       img = eval(c) if i > 0 # i=0は名前
     end
