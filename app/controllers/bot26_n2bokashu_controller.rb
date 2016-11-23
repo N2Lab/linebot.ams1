@@ -88,14 +88,8 @@ class Bot26N2bokashuController < ApplicationController
   CONVERTS = [
     # ["ふわっと", "img.blur_image(10.0, 5.0)"],
     # ["おっとり", "img.blur_image(10.0, 10.0)"],
-    # ["オールドレンズA", "img.radial_blur(6.0)"],
-    # ["オールドレンズB", "img.radial_blur(15.0)"],
-
-    # マスクxぼかし を試す
-    # まずはグラディエーションを作成
-#    ["Gradiation", "Magick::Image.new(100,100,Magick::GradientFill.new(0, 0, 0, 100, '#900', '#000')) { self.background_color = 'red'; self.format = 'PNG' }"], # 左右黒
-#    ["Gradiation", "Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' }"], # 上白>下黒
-
+    ["オールドレンズA", "img.radial_blur(6.0)"],
+    ["オールドレンズB", "img.radial_blur(15.0)"],
 
     # ぼかしマスクあり  
     # ["上から見た", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # GradMask 上ぼけ 下なし 上白>下黒マスク, ぼかし
@@ -123,8 +117,7 @@ class Bot26N2bokashuController < ApplicationController
     ["寒い冬", "img = img.colorize(0.5, 0.6, 0.8, '#2040D0')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
     ["新緑", "img = img.colorize(0.8, 0.5, 0.5, '#20DD20')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
 
-    # ["寒い冬", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(10)"], # # Spread 1
-    # ["新緑", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img.colorspace = GRAYColorspace", "img = img.spread(10)"], # # Spread 1
+    ["トリップ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.cycle_colormap(10)"], # 
 
     # ["GradMask 3中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 25.0)"], #
 
