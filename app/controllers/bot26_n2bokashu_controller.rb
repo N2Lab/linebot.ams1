@@ -183,7 +183,7 @@ class Bot26N2bokashuController < ApplicationController
   def convert_image(conv, img, mid, msg_id, org_img_path, times)
     conv.each_with_index do |c, i|
       #img = eval(c) if i > 0 # i=0は名前
-      eval(c)
+      eval(c) if i > 0 # i=0は名前
       # img.destroy!
       # img = img2
       # TODO メモリ解放
