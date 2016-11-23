@@ -99,8 +99,8 @@ class Bot26N2bokashuController < ApplicationController
     # ["上から見た", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # GradMask 上ぼけ 下なし 上白>下黒マスク, ぼかし
     # # ["GradMask 下ぼけ 上なし1", "Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' }"], # 左ボケ 右なし
     # ["下から見た", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#000', '#fff')) { self.background_color = 'white'; self.format = 'PNG'})", "img.blur_image(30.0, 5.0)"], # GradMask 下ぼけ 上なし 上白>下黒マスク, ぼかし
-
-    ["GradMask 中心からぼかすマスク", "Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'; self.format = 'PNG'}.first"], # 
+# TODO img = から　eval記載とする
+    ["GradMask 中心からぼかすマスク", "mask = Magick::ImageList.new().read('radial-gradient:#7799ff-#ffffff'){ self.size = '200x200'; self.format = 'PNG'}.first; mask.format = 'PNG'; img = mask"], # 
     # ["GradMask 下ぼけ 上なし1", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
     # ["GradMask 下ぼけ 上なし2", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
     # ["GradMask 下ぼけ 上なし3", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
@@ -182,7 +182,8 @@ class Bot26N2bokashuController < ApplicationController
   # 引数のロジックでimgを変換してアップしcolumnsを返す
   def convert_image(conv, img, mid, msg_id, org_img_path, times)
     conv.each_with_index do |c, i|
-      img = eval(c) if i > 0 # i=0は名前
+      #img = eval(c) if i > 0 # i=0は名前
+      eval(c)
       # img.destroy!
       # img = img2
       # TODO メモリ解放
