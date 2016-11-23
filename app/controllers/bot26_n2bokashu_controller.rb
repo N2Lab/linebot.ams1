@@ -86,11 +86,15 @@ class Bot26N2bokashuController < ApplicationController
   CONVERTS = [
     # ["ふわっと", "img.blur_image(10.0, 5.0)"],
     # ["おっとり", "img.blur_image(10.0, 10.0)"],
-    # ["オールドレンズA", "img.radial_blur(20.0)"],
-    # ["オールドレンズB", "img.radial_blur(40.0)"],
+    # ["オールドレンズA", "img.radial_blur(6.0)"],
+    # ["オールドレンズB", "img.radial_blur(15.0)"],
 
-    # 合成
-    ["夢の中", "img.composite(img, 30, 30, Magick::OverCompositeOp)"],
+    # マスクxぼかし を試す
+    # まずはグラディエーションを作成
+    ["Gradiation", "Magick::Image.new(100,100,Magick::GradientFill.new(0, 0, 0, 100, '#900', '#000')) { self.background_color = 'red' }"],
+
+    # 合成 > あとで
+#    ["夢の中", "img.composite(img, 30, 30, Magick::OverCompositeOp)"], # 30,30右下に重ねる
 
     # selective_blur_channel > 保留 全体がぼけてしまう
     # ["ポートレート1", "img.selective_blur_channel(10.0, 5.0, 30)"],
