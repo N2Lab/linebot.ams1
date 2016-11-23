@@ -91,7 +91,7 @@ class Bot26N2bokashuController < ApplicationController
     # tf.write(response.body)
 
     response = client.get_message_content(msg_id)
-    tf = Tempfile.open("content_#{msg_id}",'wb')
+    tf = Tempfile.open("content_#{msg_id}",nil,'wb')
     tf.write(response.body)
     @uploader ||= ImageUploader.new
     @uploader.store_dir = "public/#{BOT_ID}/#{mid}/#{msg_id}/"
