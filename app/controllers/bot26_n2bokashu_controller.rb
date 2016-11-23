@@ -96,7 +96,7 @@ class Bot26N2bokashuController < ApplicationController
     # ぼかしマスクあり
     ["GradMask 上ぼけ 下なし", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, img.columns, 0, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
     ["GradMask 下ぼけ 上なし", "img.add_compose_mask(Magick::Image.new(img.columns,img.rows,Magick::GradientFill.new(0, 0, 0,    img.rows, '#fff', '#000')) { self.background_color = 'white'; self.format = 'PNG' })", "img.blur_image(30.0, 5.0)"], # 上白>下黒マスク, ぼかし
-
+ 
     # 合成 > あとで
 #    ["夢の中", "img.composite(img, 30, 30, Magick::OverCompositeOp)"], # 30,30右下に重ねる
 
