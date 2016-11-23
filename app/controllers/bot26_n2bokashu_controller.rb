@@ -13,6 +13,7 @@ class Bot26N2bokashuController < ApplicationController
   require 'active_support/core_ext/hash/conversions'
   require 'erb'
   require 'rmagick'
+  include Magick
   include ERB::Util
 
   BOT_ID = 26
