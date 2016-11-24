@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   // 
   def save_user(bot_id, event)
-    LineUser.insert(bot_id, event['source']['userId'])
+    LineUser.insert(bot_id, event)
   end
 
   def groop_or_room?(event)
