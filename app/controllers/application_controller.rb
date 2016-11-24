@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
   def save_user(bot_id, event)
     LineUser.insert(bot_id, event['source']['userId'])
   end
+
+  def groop_or_room?(event)
+    source_type = event["source"]['type']
+    ["group", "room"].include?(source_type)
+  end
   
   # 1. call Google Cloud Natural Language API and parse
   #  language.documents.analyzeEntities = Entities（固有表現抽出）
