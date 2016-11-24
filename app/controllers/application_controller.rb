@@ -25,6 +25,11 @@ class ApplicationController < ActionController::Base
         }
       }      
   end
+
+  // 
+  def save_user(bot_id, event)
+    LineUser.insert(bot_id, event['source']['userId'])
+  end
   
   # 1. call Google Cloud Natural Language API and parse
   #  language.documents.analyzeEntities = Entities（固有表現抽出）

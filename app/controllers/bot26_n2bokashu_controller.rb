@@ -37,6 +37,7 @@ class Bot26N2bokashuController < ApplicationController
     response = nil
     events.each { |event|
       Rails.logger.info("event.class=#{event.class}")
+      save_user(BOT_ID, event)
       case event
       when Line::Bot::Event::Follow
           # message = execute_start_map(event, true)

@@ -33,6 +33,7 @@ class Bot25N2sekkatikunController < ApplicationController
     events = client.parse_events_from(body)
     response = nil
     events.each { |event|
+      save_user(BOT_ID, event)
       case event
       when Line::Bot::Event::Follow
           # message = execute_start_map(event, true)
