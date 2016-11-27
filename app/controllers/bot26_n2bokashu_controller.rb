@@ -135,8 +135,8 @@ class Bot26N2bokashuController < ApplicationController
 
 #     ["トリップ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.cycle_colormap(10)"], # 
 
-    ["セピア", "img = img.sepiatone(80)"], #
-    ["セピアb", "img = img.sepiatone(80)"], #
+    ["セピア", "img = img.sepiatone(0.8)"], #
+    ["セピアb", "img = img.sepiatone(20)"], #
 
     # ["GradMask 3中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 25.0)"], #
 
