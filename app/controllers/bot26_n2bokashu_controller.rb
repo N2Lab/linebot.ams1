@@ -132,7 +132,7 @@ class Bot26N2bokashuController < ApplicationController
     # ["寒い冬", "img = img.colorize(0.5, 0.6, 0.8, '#2040D0')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
     # ["新緑", "img = img.colorize(0.8, 0.5, 0.5, '#20DD20')", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)"], # オレンジっぽく
 
-    ["トリップ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.cycle_colormap(10)"], # 
+#    ["トリップ", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 20.0)", "img = img.cycle_colormap(10)"], # 
 
     # ["GradMask 3中心からぼかすマスク(白背景,黒)", "mask = Magick::ImageList.new().read('radial-gradient:#000000-#ffffff'){ self.size = img.columns.to_s + 'x' + img.rows.to_s; self.format = 'PNG'}.first; mask.format = 'PNG'; img = img.add_compose_mask(mask)", "img = img.blur_image(30.0, 25.0)"], #
 
