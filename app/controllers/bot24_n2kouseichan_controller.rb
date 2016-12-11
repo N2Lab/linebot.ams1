@@ -98,7 +98,7 @@ class Bot24N2kouseichanController < ApplicationController
 
     messages << {
       type: 'text',
-      text: "<􀔃􀆈documents􏿿校正ちゃんが修正したよ！>
+      text: "􀔃􀆈documents􏿿校正ちゃんが修正したよ！
 「#{fixed_text}」"
     }
     # messages << {
