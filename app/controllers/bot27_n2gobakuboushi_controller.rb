@@ -258,7 +258,7 @@ https://www.facebook.com/n2lab.inc/
     when Line::Bot::Event::MessageType::Text
       text = event.message['text']
       m = text.match(/マークは(.+)/)
-      unless m[1].blank? # 一致
+      unless m.blank? && m[1].blank? # 一致
         #マークを更新
         mark_attr = Attr.create(BOT_ID, mid, ATTR_MARK_ID, 0, m[1])
         msg = "マークを「#{mark_attr.text}」に更新しました"
