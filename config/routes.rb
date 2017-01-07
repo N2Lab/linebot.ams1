@@ -66,8 +66,11 @@ Rails.application.routes.draw do
   # bot25 N2せっかち君
   post 'bot25_n2sekkatikun/index'
   
-  # bot25 N2ぼかっしゅ
+  # bot26 N2ぼかっしゅ
   post 'bot26_n2bokashu/index'
+  
+  # bot27 N2誤爆防止ボット
+  post 'bot27_n2gobakuboushi/index'
   
   # bot  eitango 
   
