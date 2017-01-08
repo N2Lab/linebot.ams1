@@ -261,6 +261,8 @@ https://www.facebook.com/n2lab.inc/
       if !m.blank? && !m[0].blank? && !m[1].blank? # 一致
         #マークを更新
         mark_attr = Attr.create(BOT_ID, mid, ATTR_MARK_ID, 0, m[1])
+        mark_attr.text = m[1]
+        mark_attr.save
         msg = "マークを「#{mark_attr.text}」に更新しました"
         return [{type: 'text',text: msg}]
       end
