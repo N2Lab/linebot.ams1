@@ -267,7 +267,7 @@ https://www.facebook.com/n2lab.inc/
     end
 
     # 一致しなければマークメッセージを応答
-    msg = create_mark_reply_msg
+    msg = create_mark_reply_msg(event)
     return [
           {
             type: 'text',
