@@ -74,8 +74,6 @@ class Bot25N2sekkatikunController < ApplicationController
 
   # グループ招待時返信
   def execute_on_join(event)
-    text = event.message['text']
-    source_type = event["source"]['type']
     messages = []
 
     messages << {
@@ -85,9 +83,8 @@ class Bot25N2sekkatikunController < ApplicationController
 　 新宿で飲む？
 　 アントニオ猪木いたよ！
 退出させたいときは「バイバイ」と送ってね！"
-      }
+    }
     return messages
-
   end
 
   # 通常返信
