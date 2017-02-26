@@ -54,6 +54,8 @@ class Bot25N2sekkatikunController < ApplicationController
           # response = client.get_message_content(event.message['id'])
           # tf = Tempfile.open("content")
           # tf.write(response.body)
+        when Line::Bot::Event::Join # グループ・ルーム追加
+          response = client.reply_message(event['replyToken'], execute_on_join(event))
         end
       # when Line::Bot::Event::Postback # 回答したので答え合わせ
         # message = execute_answer_check(event)
@@ -67,8 +69,24 @@ class Bot25N2sekkatikunController < ApplicationController
   end
   
   GOOGLE_API_KEY = "AIzaSyAbAK1ASX-AnyDe9QEcurKplj7ajDMmIxI"
-  
-  # 返信
+
+  # グループ招待時返信
+  def execute_on_join(event)
+    text = event.message['text']
+    source_type = event["source"]['type']
+    messages = []
+
+    messages << {
+        type: 'text',
+        text: "招待ありがとう！以下のメッセージを受信するとおすすめ情報を送るよ！
+例)渋谷でラーメン食う？
+　 新宿で飲む？
+退出させたいときは「バイバイ」と送ってね！"
+      }
+
+  end
+
+  # 通常返信
   def execute_reply(event)
     text = event.message['text']
     source_type = event["source"]['type']
@@ -102,8 +120,7 @@ class Bot25N2sekkatikunController < ApplicationController
       messages << {
         type: 'text',
         text: "何か調べる？。
-例)渋谷でラーメン食う？
-　 新宿で飲む？"
+例)渋谷でラーメン食う？新宿で飲む？"
       }
       return messages
     end
