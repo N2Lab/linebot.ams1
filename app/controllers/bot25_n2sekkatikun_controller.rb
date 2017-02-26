@@ -94,7 +94,8 @@ class Bot25N2sekkatikunController < ApplicationController
       messages << {
         type: 'text',
         text: "何か調べる？。
-地名人名など自由に入れてね􀄃􀄃laugh􏿿"
+例)渋谷でラーメン食う？
+　 新宿で飲む？"
       }
       return messages
     end
@@ -200,10 +201,17 @@ class Bot25N2sekkatikunController < ApplicationController
     for i in 0..max_loop-1
       pl = results[i]
       name = pl["name"]
+      opening_hours = pl["opening_hours"]
+      open_now = opening_hours.try(:fetch, "open_now", false) ? "[営業中]" : "[準備中]"
+#          "opening_hours" : {
+#             "open_now" : true
+#          },
+
       # todo 緯度経度を利用  https://developers.google.com/places/web-service/search?hl=ja
       image_url = "https://maps.googleapis.com/maps/api/streetview?location=#{url_encode(name)}&size=900x600&key=#{GOOGLE_API_KEY}"
       route_map_url = "https://maps.google.co.jp/maps?q=#{url_encode(name)}&iwloc=A"
-      text = "周辺スポット「#{name}」の情報だよ！ #{pl["types"].join("-")}"[0,59]
+      text = "周辺スポット「#{name}」の情報だよ！ #{open_now}"[0,59]
+      # text = "周辺スポット「#{name}」の情報だよ！ #{open_now} #{pl["types"].join("-")}"[0,59]
       templates << {
           thumbnailImageUrl: image_url,
           text: text,
