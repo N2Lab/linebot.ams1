@@ -95,7 +95,7 @@ class Bot25N2sekkatikunController < ApplicationController
 
     # 0. グループ退会文字チェック
     if group_or_room_event?(event) && BYE_MSG == text
-      client.leave_group_or_room(event)
+      leave_group_or_room(event)
       return messages
     end
     
