@@ -81,6 +81,7 @@ class Bot25N2sekkatikunController < ApplicationController
         text: "招待ありがとう！以下のメッセージを受信するとおすすめ情報を送るよ！
 例)渋谷でラーメン食う？
 　 新宿で飲む？
+　 アントニオ猪木いたよ！
 退出させたいときは「バイバイ」と送ってね！"
       }
 
