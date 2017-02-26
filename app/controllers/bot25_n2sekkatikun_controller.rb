@@ -41,6 +41,9 @@ class Bot25N2sekkatikunController < ApplicationController
       when Line::Bot::Event::Follow
           # message = execute_start_map(event, true)
           # response = client.reply_message(event['replyToken'], message)
+
+      when Line::Bot::Event::Join # グループ・ルーム追加
+        response = client.reply_message(event['replyToken'], execute_on_join(event))
         
       when Line::Bot::Event::Message
         case event.type
@@ -55,8 +58,6 @@ class Bot25N2sekkatikunController < ApplicationController
           # response = client.get_message_content(event.message['id'])
           # tf = Tempfile.open("content")
           # tf.write(response.body)
-        when Line::Bot::Event::Join # グループ・ルーム追加
-          response = client.reply_message(event['replyToken'], execute_on_join(event))
         end
       # when Line::Bot::Event::Postback # 回答したので答え合わせ
         # message = execute_answer_check(event)
