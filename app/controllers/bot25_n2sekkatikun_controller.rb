@@ -35,6 +35,7 @@ class Bot25N2sekkatikunController < ApplicationController
     events = client.parse_events_from(body)
     response = nil
     events.each { |event|
+      Rails.logger.debug("event = #{event}")
       save_user(BOT_ID, event)
       case event
       when Line::Bot::Event::Follow
@@ -84,6 +85,7 @@ class Bot25N2sekkatikunController < ApplicationController
 　 アントニオ猪木いたよ！
 退出させたいときは「バイバイ」と送ってね！"
       }
+    return messages
 
   end
 
