@@ -15,6 +15,8 @@ class Bot25N2sekkatikunController < ApplicationController
   # 無視KWリスト
   MENUS = ["前へ", "読む", "次へ"]
 
+  BYE_MSG = "バイバイ"
+
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = "56ea561f5f1ddf589140cd3ee51e1851"
@@ -71,6 +73,12 @@ class Bot25N2sekkatikunController < ApplicationController
     text = event.message['text']
     source_type = event["source"]['type']
     messages = []
+
+    # 0. グループ退会文字チェック
+    if group_or_room_event?(event) && BYE_MSG == text
+      client.leave_group_or_room(event)
+      return messages
+    end
     
     # 1. call Google Cloud Natural Language API and parse
     #  language.documents.analyzeEntities = Entities（固有表現抽出）

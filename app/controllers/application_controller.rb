@@ -178,4 +178,18 @@ class ApplicationController < ActionController::Base
     
   end
 
+  # イベントが room or group からか
+  def group_or_room_event?(event)
+    source_type = event["source"]['type']
+    ["group", "room"].include?(source_type) 
+  end
+
+  # 現在リクエストがあったgroup_roomから退会
+  # 
+  # @param event
+  # @param client
+  def leave_group_or_room(client, event)
+    client.leave_group_or_room(event)
+  end
+
 end
