@@ -189,7 +189,12 @@ class ApplicationController < ActionController::Base
   # @param event
   # @param client
   def leave_group_or_room(client, event)
-    client.leave_group_or_room(event)
+    source_type = event["source"]['type']
+    if ("group" == source_type) 
+      client.leave_group(event["source"]['groupId'])
+    else
+      client.leave_room(event["source"]['roomId'])
+    end
   end
 
 end
