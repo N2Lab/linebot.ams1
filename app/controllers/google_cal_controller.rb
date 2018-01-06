@@ -8,6 +8,7 @@ class GoogleCalController < ApplicationController
 
   def callback
     Rails.logger.debug("params=#{params}")
+    Rails.logger.debug("request.raw_post=#{request.raw_post}")
     render text: ""
   end
 end
