@@ -7,6 +7,7 @@ class GoogleCalController < ApplicationController
   require 'json'
 
   def callback
+    Rails.logger.debug("params=#{params}")
     render text: ""
   end
 end
