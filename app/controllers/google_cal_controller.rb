@@ -7,5 +7,6 @@ class GoogleCalController < ApplicationController
   require 'json'
 
   def callback
+    render text: ""
   end
 end
