@@ -86,6 +86,9 @@ Rails.application.routes.draw do
   get 'pullgit/index'
   post 'pullgit/index'
 
+  # google calendar api oauth callback
+  get 'google_cal/callback'
+
   
   # resque
   mount Resque::Server.new, at: "/resque"
