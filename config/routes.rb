@@ -87,7 +87,8 @@ Rails.application.routes.draw do
   post 'pullgit/index'
 
   # google calendar api oauth callback
-  get 'google_cal/callback'
+  get 'google_cal/callback' # dummy
+  get 'oauth2callback' => 'google_cal#callback' # 実際
 
   
   # resque
