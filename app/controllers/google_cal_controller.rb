@@ -22,26 +22,23 @@ class GoogleCalController < ApplicationController
 
     # 長期間トークンを取得
     # 以下はコマンドラインでもOK
-    # 参考 https://qiita.com/giiko_/items/b0b2ff41dfb0a62d628b
-    # 自己入力部分
+    # コマンドラインの場合
+    # curl -d client_id=#{クライアントID} -d client_secret=#{クライアントシークレット} -d redirect_uri=#{リダイレクトURI} -d grant_type=authorization_code -d code=#{認証コード} https://accounts.google.com/o/oauth2/token
 
-    # 自動部分
+    # 参考 https://qiita.com/giiko_/items/b0b2ff41dfb0a62d628b
+
+    # パラメータ
     q_hash = {
-      client_id: "453886901491-evvsmmc5ei10tss4nlqab3f72k0ddmlh.apps.googleusercontent.com",
+      client_id: "453886901491-evvsmmc5ei10tss4nlqab3f72k0ddmlh.apps.googleusercontent.com"
       client_secret: "_teiidDLMuEEyKN4JCVddsri",
       redirect_uri: "https://ams1.n2bot.net/oauth2callback",
-      scope: "https://www.googleapis.com/auth/calendar",
-      response_type: "code",
-      approval_prompt: "force",
-      access_type: "offline"
+      grant_type: "authorization_code",
+      code: code
     }
-    query = q_hash.to_query
-    oauth_url = "https://accounts.google.com/o/oauth2/auth?#{query}"
-
-#    oauth_url = "https://accounts.google.com/o/oauth2/auth?client_id=#{client_id}&redirect_uri=#{redirect_uri}&scope=#{scope}&response_type=code&approval_prompt=force&access_type=offline"
+    oauth_url = "https://accounts.google.com/o/oauth2/token"
 
     uri = URI(oauth_url)
-    response = Net::HTTP.get(uri)
+    response = Net::HTTP.post_form(uri, q_hash)
 
     Rails.logger.debug("get token response=#{response}")
 
