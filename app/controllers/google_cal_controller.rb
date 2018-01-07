@@ -56,8 +56,10 @@ class GoogleCalController < ApplicationController
   def webhook
     Rails.logger.debug("request=#{request}")
     Rails.logger.debug("params=#{params}")
+    Rails.logger.debug("request.raw_post=#{request.raw_post}")
 
     # ヘッダーで事前通知かどうか判別する
 
+    render text: "#{request.raw_post}"
   end
 end
