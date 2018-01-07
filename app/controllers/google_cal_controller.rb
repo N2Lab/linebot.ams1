@@ -57,6 +57,7 @@ class GoogleCalController < ApplicationController
     Rails.logger.debug("request=#{request}")
     Rails.logger.debug("params=#{params}")
     Rails.logger.debug("request.raw_post=#{request.raw_post}")
+    Rails.logger.debug("requeset.headers=#{request.headers}")
 
     # ヘッダーで事前通知かどうか判別する
 
