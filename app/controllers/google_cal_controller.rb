@@ -26,8 +26,7 @@ class GoogleCalController < ApplicationController
     uri.query = URI.encode_www_form(get_token_params)
     response = Net::HTTP.get(uri)
 
-    Rails.logger.debug("get token response.body=#{response.body} response=#{response}")
-
+    Rails.logger.debug("get token response=#{response}")
 
     render text: "#{response.inspect}"
   end
