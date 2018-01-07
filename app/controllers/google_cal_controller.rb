@@ -22,7 +22,7 @@ class GoogleCalController < ApplicationController
 
     # 長期間トークンを取得
     uri = URI('https://accounts.google.com/o/oauth2/revoke')
-    get_token_params = { :token => auth_client.access_token }
+    get_token_params = { :token => code }
     uri.query = URI.encode_www_form(get_token_params)
     response = Net::HTTP.get(uri)
 
