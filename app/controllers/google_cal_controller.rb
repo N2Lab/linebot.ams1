@@ -41,7 +41,8 @@ class GoogleCalController < ApplicationController
     response = Net::HTTP.post_form(uri, q_hash)
 
     Rails.logger.debug("get token response=#{response}")
+    Rails.logger.debug("get token response.body=#{response.try(:body)}")
 
-    render text: "#{response.inspect}"
+    render text: "#{response.try(:body)}"
   end
 end
