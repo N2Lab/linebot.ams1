@@ -90,6 +90,8 @@ Rails.application.routes.draw do
   get 'google_cal/callback' # dummy
   get 'oauth2callback' => 'google_cal#callback' # 実際
 
+  # google calendar event watch webhook url
+  get 'google_cal/webhook' # dummy
   
   # resque
   mount Resque::Server.new, at: "/resque"

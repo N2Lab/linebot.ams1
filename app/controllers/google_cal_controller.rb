@@ -45,4 +45,13 @@ class GoogleCalController < ApplicationController
 
     render text: "#{response.try(:body)}"
   end
+
+  # Googleカレンダー変更時にコールされる
+  def webhook
+    Rails.logger.debug("request=#{request}")
+    Rails.logger.debug("params=#{params}")
+
+    # ヘッダーで事前通知かどうか判別する
+
+  end
 end
