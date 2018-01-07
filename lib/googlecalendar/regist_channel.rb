@@ -46,7 +46,7 @@ service.authorization = client
 calendar_id = 'primary' # カレンダーを変更する場合はここで指定する
 
 # 監視開始(channel 登録)
-channel_id = 'test_channel_4' # 任意のIDを指定可能
+channel_id = 'test_channel_5' # 任意のIDを指定可能
 success_callback_url = 'https://ams1.n2bot.net/google_cal/webhook' # イベント変更時に通知されるURL
 channel = Google::Apis::CalendarV3::Channel.new(address: success_callback_url, id: channel_id, type: "web_hook")
 res = service.watch_event(calendar_id, channel, single_events: true, time_min: Time.now.iso8601)

@@ -57,10 +57,27 @@ class GoogleCalController < ApplicationController
     Rails.logger.debug("request=#{request}")
     Rails.logger.debug("params=#{params}")
     Rails.logger.debug("request.raw_post=#{request.raw_post}")
-    request.headers.sort.map { |k, v| Rails.logger.debug("requeset.header #{k}:#{v}") }
-    
+    # request.headers.sort.map { |k, v| Rails.logger.debug("requeset.header #{k}:#{v}") }
 
-    # ヘッダーで事前通知かどうか判別する
+    state = request.headers['HTTP_X_GOOG_RESOURCE_STATE']
+    resource_id = request.headers['HTTP_X_GOOG_RESOURCE_ID']
+    channel_id = request.headers['HTTP_X_GOOG_CHANNEL_ID']
+    Rails.logger.debug("state = #{state} channel_id=#{channel_id} resource_id = #{resource_id}")
+
+    if state == 'sync'
+      # 登録完了通知の場合
+      Rails.logger.debug("Channel 登録完了")
+    elsif state == 'exists'
+      # イベント変更通知の場合
+      Rails.logger.debug("イベント変更通知受信")
+      # 差分だけ取得する場合は resource_id を利用する？　（要調査）
+
+      # Funeralではここでchannel_idに紐づくJA_IDを取得し
+      # JA_IDに紐づくデバイストークンに対してプッシュ通知を行う。
+      # webhookに予定自体が通知されるわけではないので、
+      # プッシュ通知の内容を登録・削除・更新でプッシュ通知メッセージを切り替える場合は
+      # 再度GoogleCalendarから変更イベントを取得する必要がある
+    end
 
     render text: "#{request.raw_post}"
   end
