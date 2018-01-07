@@ -29,7 +29,7 @@ class GoogleCalController < ApplicationController
 
     # パラメータ
     q_hash = {
-      client_id: "453886901491-evvsmmc5ei10tss4nlqab3f72k0ddmlh.apps.googleusercontent.com"
+      client_id: "453886901491-evvsmmc5ei10tss4nlqab3f72k0ddmlh.apps.googleusercontent.com",
       client_secret: "_teiidDLMuEEyKN4JCVddsri",
       redirect_uri: "https://ams1.n2bot.net/oauth2callback",
       grant_type: "authorization_code",
