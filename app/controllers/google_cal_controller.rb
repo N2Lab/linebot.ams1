@@ -1,7 +1,8 @@
 # Google Calendar API controller
 # 
 #
-require 'google/apis/calendar_v3'
+require 'google/api_client' # https://teratail.com/questions/26046
+# NG require 'google/apis/calendar_v3'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
