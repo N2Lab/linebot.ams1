@@ -47,6 +47,12 @@ class GoogleCalController < ApplicationController
   end
 
   # Googleカレンダー変更時にコールされる
+  # Unsubscribe Calendar
+  # Channel には有効期限があるため、定期的に unsubscribe -> 再度 subscribe を行う必要があります。 Google::Apis::CalendarV3::CalendarService#watch_event の返り値が Google::Apis::CalendarV3::Channel のインスタンスですが、expiration という attribute に値が入っているので念のため, これも DB に保存しておきましょう。
+  # ActiveJob とかに「期限が切れる 1h 前に unsubscribe -> subscribe して！」とかって渡しておくとかでもいいでしょう。
+  # この際 Unix time (millisec 込み) が string として入っているので, datetime 型のカラムに保存する場合は Time.zone.at(channel.expiration.to_i / 1000.0) のようにする必要があります :sweat:
+  # 一つのカレンダーを何回も subscribe しちゃうとカレンダーに何かしら予定を入れたりした際に、 channel の数分 callback が飛んでくるので注意してくださいmm
+  # Channel に限らないんですが、APIで利用する様々なオブジェクトにはそれぞれ resource_id というものが割り振られているので、それも一緒に保存しておき、subscribe する際にはそれも一緒に使います。
   def webhook
     Rails.logger.debug("request=#{request}")
     Rails.logger.debug("params=#{params}")
